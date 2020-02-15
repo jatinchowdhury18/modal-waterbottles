@@ -1,0 +1,24 @@
+# Large files
+*.mat
+
+# Python stuff
+__pycache__
+
+# extra folders
+.vscode
+
+# JUCE stuff
+Builds
+BinaryData.h
+BinaryData*.cpp
+JuceLibraryCode
+
+# Windows Temp files
+[Tt]humbs.db
+
+# macOS garbage
+.DS_Store
+*.DS_Store
+*.swp
+*~
+
