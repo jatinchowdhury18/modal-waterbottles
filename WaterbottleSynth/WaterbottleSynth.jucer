@@ -6,11 +6,14 @@
               cppLanguageStandard="17">
   <MAINGROUP id="TtZ0B3" name="WaterbottleSynth">
     <GROUP id="{760FB4F2-0426-2F5C-F0EF-B79D415E9A35}" name="Resources">
+      <FILE id="vt56PS" name="dafx_sticker.jpg" compile="0" resource="1"
+            file="Resources/dafx_sticker.jpg"/>
       <FILE id="WziImQ" name="Drawing.svg" compile="0" resource="1" file="Resources/Drawing.svg"/>
       <FILE id="wBko6O" name="Hydroflask.jpg" compile="0" resource="1" file="Resources/Hydroflask.jpg"/>
       <FILE id="OkKUEF" name="water.png" compile="0" resource="1" file="Resources/water.png"/>
     </GROUP>
     <GROUP id="{573A3561-25C8-0EE1-A88F-DD1CDE61DE49}" name="Source">
+      <FILE id="xxNchN" name="Stickers.h" compile="0" resource="0" file="Source/Stickers.h"/>
       <FILE id="d1gmqa" name="BottleComponent.cpp" compile="1" resource="0"
             file="Source/BottleComponent.cpp"/>
       <FILE id="JNDDSV" name="BottleComponent.h" compile="0" resource="0"

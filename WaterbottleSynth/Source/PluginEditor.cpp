@@ -17,6 +17,7 @@ WaterbottleSynthAudioProcessorEditor::WaterbottleSynthAudioProcessorEditor (Wate
     waterAttach.reset (new AudioProcessorValueTreeState::SliderAttachment (p.vts, "water", waterSlide));
     waterSlide.setTextBoxStyle (Slider::TextBoxBelow, false, 60, 15);
     waterSlide.onValueChange = [=] { listeners.call (&WaterbottleSynthAudioProcessorEditor::Listener::waterAmountChanged, (float) waterSlide.getValue()); };
+    listeners.call (&WaterbottleSynthAudioProcessorEditor::Listener::waterAmountChanged, (float) waterSlide.getValue());
 
     addAndMakeVisible (keyboard);
 
