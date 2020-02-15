@@ -21,6 +21,7 @@ for m in modes:
 # get_mode_freqs(xs[i], modes[i])
 
 # %%
+mode_data = np.zeros((len(modes), 120), dtype=np.complex128)
 for i, m in enumerate(modes):
     x = xs[i]
     freqs, peaks = adsp.find_freqs(x, 48000, thresh=m['thresh'], above=m['above'], frac_off=m['frac_off'], plot=False)
@@ -28,11 +29,16 @@ for i, m in enumerate(modes):
     amps = adsp.find_complex_amplitudes(freqs, taus, len(x), x, 48000)
     y = adsp.generate_modal_signal(amps, freqs, taus, len(amps), len(x), 48000)
 
-    plt.figure()
-    plot_signals(x, y, title='HydroFlask {} Modal Model'.format(m['tag']))
-    plt.savefig('Figures/HydroFlask_Stickers/{}.png'.format(m['name']))
+    mode_data[i][:40] = freqs
+    mode_data[i][40:80] = taus
+    mode_data[i][80:] = amps
 
-    write_to_file(x, y, 'HydroFlask_Stickers/{}'.format(m['name']))
+    # plt.figure()
+    # plot_signals(x, y, title='HydroFlask {} Modal Model'.format(m['tag']))
+    # plt.savefig('Figures/HydroFlask_Stickers/{}.png'.format(m['name']))
 
+    # write_to_file(x, y, 'HydroFlask_Stickers/{}'.format(m['name']))
+
+np.savetxt('hydroflask_sticker_modes.csv', mode_data)
 
 # %%
