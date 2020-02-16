@@ -2,10 +2,10 @@
 #define BOTTLECOMPONENT_H_INCLUDED
 
 #include "Stickers.h"
-#include"PluginEditor.h"
+#include "BottomComponent.h"
 
 class BottleComponent : public Component,
-                        public WaterbottleSynthAudioProcessorEditor::Listener
+                        public BottomComponent::Listener
 {
 public:
     BottleComponent();

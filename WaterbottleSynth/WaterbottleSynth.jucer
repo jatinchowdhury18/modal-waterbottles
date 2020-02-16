@@ -13,6 +13,11 @@
       <FILE id="OkKUEF" name="water.png" compile="0" resource="1" file="Resources/water.png"/>
     </GROUP>
     <GROUP id="{573A3561-25C8-0EE1-A88F-DD1CDE61DE49}" name="Source">
+      <FILE id="rcx5aS" name="BottomComponent.cpp" compile="1" resource="0"
+            file="Source/BottomComponent.cpp"/>
+      <FILE id="kgKaTH" name="BottomComponent.h" compile="0" resource="0"
+            file="Source/BottomComponent.h"/>
+      <GROUP id="{60319EE2-264E-2621-39AD-E6C18D230544}" name="Source"/>
       <FILE id="xxNchN" name="Stickers.h" compile="0" resource="0" file="Source/Stickers.h"/>
       <FILE id="d1gmqa" name="BottleComponent.cpp" compile="1" resource="0"
             file="Source/BottleComponent.cpp"/>
