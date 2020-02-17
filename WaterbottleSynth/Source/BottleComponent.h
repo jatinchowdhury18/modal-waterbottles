@@ -3,12 +3,13 @@
 
 #include "Stickers.h"
 #include "BottomComponent.h"
+#include "PluginProcessor.h"
 
 class BottleComponent : public Component,
                         public BottomComponent::Listener
 {
 public:
-    BottleComponent();
+    BottleComponent (WaterbottleSynthAudioProcessor& p);
     ~BottleComponent();
 
     void paint (Graphics&) override;
@@ -21,6 +22,8 @@ public:
     void mouseUp (const MouseEvent& e) override;
 
 private:
+    WaterbottleSynthAudioProcessor& processor;
+
     std::unique_ptr<Drawable> bottlePic;
     std::unique_ptr<Drawable> water;
     std::unique_ptr<Drawable> draw;
@@ -28,8 +31,6 @@ private:
     StickerLasso lasso;
 
     float waterAmt = 0.0f;
-
-    OwnedArray<Sticker> stickers;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BottleComponent)
 };

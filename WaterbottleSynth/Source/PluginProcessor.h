@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "Stickers.h"
 #include "WaterSynth.h"
 
 class WaterbottleSynthAudioProcessor  : public AudioProcessor
@@ -39,10 +40,14 @@ public:
 
     MidiKeyboardState keyBoardState;
     AudioProcessorValueTreeState vts;
+    OwnedArray<Sticker> stickers;
 
 private:
     static AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     float* waterParam = nullptr;
+
+    void calcStickerCoverage();
+    float stickerAmt = 0.0f;
 
     WaterSynth synth;
 

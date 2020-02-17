@@ -4,6 +4,7 @@
 WaterbottleSynthAudioProcessorEditor::WaterbottleSynthAudioProcessorEditor (WaterbottleSynthAudioProcessor& p) :
     AudioProcessorEditor (&p),
     processor (p),
+    bottle (p),
     bottom (p)
 {
     addAndMakeVisible (bottle);

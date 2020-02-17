@@ -32,6 +32,14 @@ void BaseMode::setWaterLevel (float water)
     tau = tauLambda (water);
 }
 
+void BaseMode::setStickerAmt (float sticker)
+{
+    auto normalTau = (float) (1.864e4 * 1.0f + 4.3896e3);
+    auto stickerTau = (float) (1.864e4 *  exp(-4.333 * sticker) + 4.3896e3);
+
+    tau = -1.0f / ((1.0f / normalTau) - (1.0f / tau) - (1.0f / stickerTau));
+}
+
 void BaseMode::triggerNote (float newFreqMult)
 {
     freqMult = newFreqMult;

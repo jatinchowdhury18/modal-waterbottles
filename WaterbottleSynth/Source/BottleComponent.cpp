@@ -1,6 +1,7 @@
 #include "BottleComponent.h"
 
-BottleComponent::BottleComponent()
+BottleComponent::BottleComponent (WaterbottleSynthAudioProcessor& p) :
+    processor (p)
 {
     bottlePic = Drawable::createFromImageData (BinaryData::Hydroflask_jpg, BinaryData::Hydroflask_jpgSize);
     water = Drawable::createFromImageData (BinaryData::water_png, BinaryData::water_pngSize);
@@ -36,18 +37,18 @@ void BottleComponent::mouseUp (const MouseEvent& e)
 {
     if (! lasso.isVisible())
     {
-        for (auto* sticker : stickers)
+        for (auto* sticker : processor.stickers)
         {
             if (sticker->getBounds().contains (e.x, e.y))
             {
-                stickers.removeObject (sticker);
+                processor.stickers.removeObject (sticker);
                 break;
             }
         }
     }
 
-    stickers.add (new Sticker (lasso.getBounds()));
-    addAndMakeVisible (stickers.getLast());
+    processor.stickers.add (new Sticker (lasso.getBounds()));
+    addAndMakeVisible (processor.stickers.getLast());
 
     lasso.endLasso();
 

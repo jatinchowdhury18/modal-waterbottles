@@ -42,6 +42,7 @@ public:
     {
         setSize (0, 0);
         dragStartPos = e.getMouseDownPosition();
+        toFront (false);
     }
 
     void dragLasso (const MouseEvent& e)

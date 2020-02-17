@@ -69,7 +69,10 @@ void ModalVoice::startNote (int midiNoteNumber, float velocity, SynthesiserSound
     for (int ch = 0; ch < 2; ++ch)
     {
         for (int m = 0; m < numModes; ++m)
+        {
             mode[m][ch]->setWaterLevel (waterLevel);
+            mode[m][ch]->setStickerAmt (stickersAmt);
+        }
     }
 
     auto freq = MidiMessage::getMidiNoteInHertz (midiNoteNumber);

@@ -17,7 +17,13 @@ WaterbottleSynthAudioProcessor::WaterbottleSynthAudioProcessor()
 {
     waterParam = vts.getRawParameterValue ("water");
 
-    for (int i = 0; i < 16; ++i)
+#if JUCE_DEBUG
+    const int nVoices = 2;
+#else // Release
+    const  int nVoices = 16;
+#endif
+
+    for (int i = 0; i < nVoices; ++i)
         synth.addVoice (new ModalVoice);
 
     synth.addSound (new ModalSound);
@@ -131,6 +137,17 @@ bool WaterbottleSynthAudioProcessor::isBusesLayoutSupported (const BusesLayout& 
 }
 #endif
 
+void WaterbottleSynthAudioProcessor::calcStickerCoverage()
+{
+    float totalArea = 250.0f * 400.0f;
+    float stickerArea = 0.0f;
+
+    for (auto* sticker : stickers)
+        stickerArea += (float) sticker->getWidth() * (float) sticker->getHeight();
+
+    stickerAmt = jmin (stickerArea, totalArea) / totalArea;
+}
+
 void WaterbottleSynthAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
     ScopedNoDenormals noDenormals;
@@ -139,7 +156,9 @@ void WaterbottleSynthAudioProcessor::processBlock (AudioBuffer<float>& buffer, M
 
     keyBoardState.processNextMidiBuffer (midiMessages, 0, buffer.getNumSamples(), true);
 
+    calcStickerCoverage();
     synth.setWaterLevel (*waterParam);
+    synth.setStickersAmt (stickerAmt);
     synth.renderNextBlock (buffer, midiMessages, 0, buffer.getNumSamples());
 }
 

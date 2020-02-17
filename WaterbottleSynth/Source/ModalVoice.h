@@ -19,9 +19,11 @@ public:
     bool canPlaySound (SynthesiserSound* sound) override;
 
     void setCurrentPlaybackSampleRate (double sampleRate) override;
-    void setWaterLevel (float water) { waterLevel = water; }
     void startNote (int midiNoteNumber, float velocity, SynthesiserSound*, int /*pitchWheelPos*/) override;
     void stopNote (float /*velocity*/, bool allowTailOff) override;
+
+    void setWaterLevel (float water) { waterLevel = water; }
+    void setStickersAmt (float stickers) { stickersAmt = stickers; }
 
     void pitchWheelMoved (int) override      {}
     void controllerMoved (int, int) override {}
@@ -30,6 +32,7 @@ public:
 
 private:
     float waterLevel = 0.0f;
+    float stickersAmt = 0.0f;
 
     const static int numModes = 40;
     std::unique_ptr<BaseMode> mode[numModes][2];
