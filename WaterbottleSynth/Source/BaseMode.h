@@ -12,9 +12,8 @@ public:
 
     void prepare (double sampleRate);
     void calcCoefs();
-    void triggerNote (float newFreqMult);
-    void setWaterLevel (float water);
-    void setStickerAmt (float stickers);
+    void triggerNote (float newFreqMult, float velocity);
+    void setParameters (float water, float stickers);
     float getBaseFreq() const noexcept { return freq; }
 
     inline float getNextSample() noexcept

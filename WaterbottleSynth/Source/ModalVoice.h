@@ -22,8 +22,7 @@ public:
     void startNote (int midiNoteNumber, float velocity, SynthesiserSound*, int /*pitchWheelPos*/) override;
     void stopNote (float /*velocity*/, bool allowTailOff) override;
 
-    void setWaterLevel (float water) { waterLevel = water; }
-    void setStickersAmt (float stickers) { stickersAmt = stickers; }
+    void setParameters (float water, float stickers);
 
     void pitchWheelMoved (int) override      {}
     void controllerMoved (int, int) override {}

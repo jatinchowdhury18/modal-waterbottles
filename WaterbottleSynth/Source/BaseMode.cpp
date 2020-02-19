@@ -26,26 +26,25 @@ void BaseMode::prepare (double sampleRate)
     calcCoefs();
 }
 
-void BaseMode::setWaterLevel (float water)
+void BaseMode::setParameters (float water, float stickers)
 {
     freq = freqLambda (water);
     tau = tauLambda (water);
-}
 
-void BaseMode::setStickerAmt (float sticker)
-{
     auto normalTau = (float) (1.864e4 * 1.0f + 4.3896e3);
-    auto stickerTau = (float) (1.864e4 *  exp(-4.333 * sticker) + 4.3896e3);
+    auto stickerTau = (float) (1.864e4 *  exp(-4.333 * stickers) + 4.3896e3);
 
     tau = -1.0f / ((1.0f / normalTau) - (1.0f / tau) - (1.0f / stickerTau));
+
+    calcCoefs();
 }
 
-void BaseMode::triggerNote (float newFreqMult)
+void BaseMode::triggerNote (float newFreqMult, float velocity)
 {
     freqMult = newFreqMult;
     calcCoefs();
 
-    x = 1.0f;
+    x = powf (velocity, 1.0f);
 }
 
 void BaseMode::calcCoefs()

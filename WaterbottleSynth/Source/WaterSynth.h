@@ -8,28 +8,19 @@ class WaterSynth : public Synthesiser
 public:
     WaterSynth() {}
 
-    void setWaterLevel (float water)
+    void setParameters (float water, float stickers)
     {
+        if (water == waterLevel && stickers == stickersAmt) // no need to update
+            return;
+
         waterLevel = jlimit (0.0f, 1.0f, water);
-    }
-
-    void setStickersAmt (float stickers)
-    {
         stickersAmt = jlimit (0.0f, 1.0f, stickers);
-    }
 
-    void noteOn (const int midiChannel, const int midiNoteNumber, const float velocity) override
-    {
         for (auto* voice : voices)
         {
             if (auto* voiceCast = dynamic_cast<ModalVoice*> (voice))
-            {
-                voiceCast->setWaterLevel (waterLevel);
-                voiceCast->setStickersAmt (stickersAmt);
-            }
+                voiceCast->setParameters (waterLevel, stickersAmt);
         }
-
-        Synthesiser::noteOn (midiChannel, midiNoteNumber, velocity);
     }
 
 private:

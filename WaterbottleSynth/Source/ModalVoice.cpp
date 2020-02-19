@@ -63,25 +63,27 @@ void ModalVoice::setCurrentPlaybackSampleRate (double sampleRate)
     }
 }
 
-void ModalVoice::startNote (int midiNoteNumber, float velocity, SynthesiserSound*, int /*currentPitchWheelPosition*/)
+void ModalVoice::setParameters (float water, float stickers)
 {
-    //@TODO: use velocity to inform mode volume
+    waterLevel = water;
+    stickersAmt = stickers;
+
     for (int ch = 0; ch < 2; ++ch)
     {
         for (int m = 0; m < numModes; ++m)
-        {
-            mode[m][ch]->setWaterLevel (waterLevel);
-            mode[m][ch]->setStickerAmt (stickersAmt);
-        }
+            mode[m][ch]->setParameters (waterLevel, stickersAmt);
     }
+}
 
+void ModalVoice::startNote (int midiNoteNumber, float velocity, SynthesiserSound*, int /*currentPitchWheelPosition*/)
+{
     auto freq = MidiMessage::getMidiNoteInHertz (midiNoteNumber);
     auto freqMult = freq / mode[0][0]->getBaseFreq();
 
     for (int ch = 0; ch < 2; ++ch)
     {
         for (int m = 0; m < numModes; ++m)
-            mode[m][ch]->triggerNote (freqMult);
+            mode[m][ch]->triggerNote (freqMult, velocity);
     }
 }
 

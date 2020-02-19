@@ -157,8 +157,7 @@ void WaterbottleSynthAudioProcessor::processBlock (AudioBuffer<float>& buffer, M
     keyBoardState.processNextMidiBuffer (midiMessages, 0, buffer.getNumSamples(), true);
 
     calcStickerCoverage();
-    synth.setWaterLevel (*waterParam);
-    synth.setStickersAmt (stickerAmt);
+    synth.setParameters (*waterParam, stickerAmt);
     synth.renderNextBlock (buffer, midiMessages, 0, buffer.getNumSamples());
 }
 
