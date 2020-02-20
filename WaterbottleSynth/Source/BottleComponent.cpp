@@ -3,6 +3,8 @@
 BottleComponent::BottleComponent (WaterbottleSynthAudioProcessor& p) :
     processor (p)
 {
+    p.addStickerListener (this);
+
     bottlePic = Drawable::createFromImageData (BinaryData::Hydroflask_jpg, BinaryData::Hydroflask_jpgSize);
     water = Drawable::createFromImageData (BinaryData::water_png, BinaryData::water_pngSize);
     draw = Drawable::createFromImageData (BinaryData::Drawing_svg, BinaryData::Drawing_svgSize);
@@ -14,12 +16,21 @@ BottleComponent::BottleComponent (WaterbottleSynthAudioProcessor& p) :
 
 BottleComponent::~BottleComponent()
 {
+    processor.removeStickerListener (this);
 }
 
 void BottleComponent::waterAmountChanged (float newAmt)
 {
     waterAmt = newAmt;
     MessageManager::callAsync ([=] { repaint(); });
+}
+
+void BottleComponent::stickersUpdate()
+{
+    for (auto* sticker : processor.stickers)
+        addAndMakeVisible (sticker);
+
+    repaint();
 }
 
 void BottleComponent::mouseDown (const MouseEvent& e)

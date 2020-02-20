@@ -6,7 +6,8 @@
 #include "PluginProcessor.h"
 
 class BottleComponent : public Component,
-                        public BottomComponent::Listener
+                        public BottomComponent::Listener,
+                        private WaterbottleSynthAudioProcessor::StickerListener
 {
 public:
     BottleComponent (WaterbottleSynthAudioProcessor& p);
@@ -16,6 +17,7 @@ public:
     void resized() override;
 
     void waterAmountChanged (float newAmt) override;
+    void stickersUpdate() override;
 
     void mouseDown (const MouseEvent& e) override;
     void mouseDrag (const MouseEvent& e) override;

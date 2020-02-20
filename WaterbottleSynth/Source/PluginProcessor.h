@@ -42,12 +42,23 @@ public:
     AudioProcessorValueTreeState vts;
     OwnedArray<Sticker> stickers;
 
+    struct StickerListener
+    {
+    public:
+        virtual ~StickerListener() {}
+        virtual void stickersUpdate() {}
+    };
+
+    void addStickerListener (StickerListener* l) { listeners.add (l); }
+    void removeStickerListener (StickerListener* l) { listeners.remove (l); }
+
 private:
     static AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     float* waterParam = nullptr;
 
     void calcStickerCoverage();
     float stickerAmt = 0.0f;
+    ListenerList<StickerListener> listeners;
 
     WaterSynth synth;
 

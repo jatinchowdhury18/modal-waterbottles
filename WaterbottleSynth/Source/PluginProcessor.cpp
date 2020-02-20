@@ -173,18 +173,54 @@ AudioProcessorEditor* WaterbottleSynthAudioProcessor::createEditor()
 
 void WaterbottleSynthAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
+    // save parameters
     auto state = vts.copyState();
-    std::unique_ptr<XmlElement> xml (state.createXml());
+    std::unique_ptr<XmlElement> xmlState (state.createXml());
+
+    // save stickers
+    auto xmlStickers = std::make_unique<XmlElement> (String ("Stickers"));
+    for (int i = 0; i < stickers.size(); ++i)
+    {
+        auto name = String ("Sticker") + String (i);
+        auto xmlSticker = std::make_unique<XmlElement> (name);
+        xmlSticker->setAttribute ("bounds", stickers[i]->getBounds().toString());
+        xmlStickers->addChildElement (xmlSticker.release());
+    }
+
+    auto xml = std::make_unique<XmlElement> (String ("StateInfo"));
+    xml->addChildElement (xmlState.release());
+    xml->addChildElement (xmlStickers.release());
+
     copyXmlToBinary (*xml, destData);
 }
 
 void WaterbottleSynthAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    std::unique_ptr<XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
+    std::unique_ptr<XmlElement> xml (getXmlFromBinary (data, sizeInBytes));
 
-    if (xmlState.get() != nullptr)
-        if (xmlState->hasTagName (vts.state.getType()))
+    stickers.clear();
+
+    if (xml.get() != nullptr)
+    {
+        // parameters
+        auto xmlState = xml->getChildByName (vts.state.getType());
+        if (xmlState != nullptr)
             vts.replaceState (ValueTree::fromXml (*xmlState));
+
+        // stickers
+        auto xmlStickers = xml->getChildByName ("Stickers");
+        if (xmlStickers != nullptr)
+        {
+            for (int i = 0; i < xmlStickers->getNumChildElements(); ++i)
+            {
+                auto xmlSticker = xmlStickers->getChildElement (i);
+                auto bounds = Rectangle<int>::fromString (xmlSticker->getStringAttribute ("bounds"));
+                stickers.add (new Sticker (bounds));
+            }
+
+            listeners.call (&StickerListener::stickersUpdate);
+        }
+    }
 }
 
 // This creates new instances of the plugin..
