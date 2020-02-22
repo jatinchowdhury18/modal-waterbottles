@@ -11,6 +11,7 @@ WaterbottleSynthAudioProcessorEditor::WaterbottleSynthAudioProcessorEditor (Wate
     addAndMakeVisible (bottom);
 
     bottom.addListener (&bottle);
+    bottom.updateWaterAmount();
 
     setSize (500, 500);
 }

@@ -20,6 +20,8 @@ public:
         virtual void waterAmountChanged (float /*newAmt*/) {}
     };
 
+    void updateWaterAmount() { listeners.call (&Listener::waterAmountChanged, (float) waterSlide.getValue()); }
+
     void addListener (Listener* l) { listeners.add (l); }
     void removeListener (Listener* l) { listeners.remove (l); }
 
