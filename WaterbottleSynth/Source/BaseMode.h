@@ -7,8 +7,8 @@
 class BaseMode
 {
 public:
-    BaseMode (std::function<float(float)> freqLambda, std::function<float(float)> tauLambda, std::complex<float> amp);
-    BaseMode (float freq, float tau, std::complex<float> amp);
+    BaseMode (std::function<float(float)> freqLambda, std::function<float(float)> tauLambda, std::complex<float> amp, float stickerFactor=0.0f);
+    BaseMode (float freq, float tau, std::complex<float> amp, float stickerFactor=0.0f);
 
     void prepare (double sampleRate);
     void calcCoefs();
@@ -32,6 +32,9 @@ private:
     std::complex<float> decayCoef = 0.0f;
     std::complex<float> oscCoef = 0.0f;
     std::complex<float> ampCoef = 0.0f;
+
+    const float stickerFactor;
+    float stickerCoef = 1.0f;
 
     std::function<float(float)> freqLambda;
     std::function<float(float)> tauLambda;
