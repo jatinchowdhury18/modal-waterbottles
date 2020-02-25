@@ -139,7 +139,7 @@ bool WaterbottleSynthAudioProcessor::isBusesLayoutSupported (const BusesLayout& 
 
 void WaterbottleSynthAudioProcessor::calcStickerCoverage()
 {
-    float totalArea = 250.0f * 400.0f;
+    float totalArea = 120.0f * 255.0f; // 250.0f * 400.0f;
     float stickerArea = 0.0f;
 
     for (auto* sticker : stickers)

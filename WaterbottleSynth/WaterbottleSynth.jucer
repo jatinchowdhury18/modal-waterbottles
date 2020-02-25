@@ -6,10 +6,12 @@
               cppLanguageStandard="17">
   <MAINGROUP id="TtZ0B3" name="WaterbottleSynth">
     <GROUP id="{760FB4F2-0426-2F5C-F0EF-B79D415E9A35}" name="Resources">
+      <FILE id="Zhyi1k" name="ccrma_logo.png" compile="0" resource="1" file="Resources/ccrma_logo.png"/>
       <FILE id="vt56PS" name="dafx_sticker.jpg" compile="0" resource="1"
             file="Resources/dafx_sticker.jpg"/>
       <FILE id="WziImQ" name="Drawing.svg" compile="0" resource="1" file="Resources/Drawing.svg"/>
       <FILE id="wBko6O" name="Hydroflask.jpg" compile="0" resource="1" file="Resources/Hydroflask.jpg"/>
+      <FILE id="wQjCL9" name="matlab.jpg" compile="0" resource="1" file="Resources/matlab.jpg"/>
       <FILE id="OkKUEF" name="water.png" compile="0" resource="1" file="Resources/water.png"/>
     </GROUP>
     <GROUP id="{573A3561-25C8-0EE1-A88F-DD1CDE61DE49}" name="Source">

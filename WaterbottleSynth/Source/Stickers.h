@@ -6,9 +6,12 @@
 class Sticker : public Component
 {
 public:
-    Sticker (Rectangle<int> bounds)
+    Sticker (Rectangle<int> bounds, const Drawable* pic = nullptr)
     {
-        dafx = Drawable::createFromImageData (BinaryData::dafx_sticker_jpg, BinaryData::dafx_sticker_jpgSize);
+        if (pic == nullptr)
+            dafx = Drawable::createFromImageData (BinaryData::dafx_sticker_jpg, BinaryData::dafx_sticker_jpgSize);
+        else
+            dafx = pic->createCopy();
 
         setBounds (bounds);
         setInterceptsMouseClicks (false, false);
@@ -18,7 +21,6 @@ public:
 
     void paint (Graphics& g)
     {
-        g.fillAll (Colours::black);
         dafx->drawWithin (g, getLocalBounds().toFloat(), RectanglePlacement::stretchToFit, 1.0f);
     }
 
@@ -38,8 +40,22 @@ public:
 
     ~StickerLasso() {}
 
+    const Drawable* getDrawable() const
+    {
+        return dafx.get();
+    }
+
     void beginLasso (const MouseEvent& e)
     {
+        if (choice % 3 == 0)
+            dafx = Drawable::createFromImageData (BinaryData::dafx_sticker_jpg, BinaryData::dafx_sticker_jpgSize);
+        if (choice % 3 == 1)
+            dafx = Drawable::createFromImageData (BinaryData::ccrma_logo_png, BinaryData::ccrma_logo_pngSize);
+        if (choice % 3 == 2)
+            dafx = Drawable::createFromImageData (BinaryData::matlab_jpg, BinaryData::matlab_jpgSize);
+
+        choice++;
+
         setSize (0, 0);
         dragStartPos = e.getMouseDownPosition();
         toFront (false);
@@ -58,8 +74,6 @@ public:
 
     void paint (Graphics& g)
     {
-        // getLookAndFeel().drawLasso (g, *this);
-        g.fillAll (Colours::black);
         dafx->drawWithin (g, getLocalBounds().toFloat(), RectanglePlacement::stretchToFit, 1.0f);
     }
 
@@ -72,6 +86,8 @@ public:
 private:
     Point<int> dragStartPos;
     std::unique_ptr<Drawable> dafx;
+
+    int choice = 0;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StickerLasso)
 };

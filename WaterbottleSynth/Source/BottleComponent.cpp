@@ -58,8 +58,45 @@ void BottleComponent::mouseUp (const MouseEvent& e)
         }
     }
 
-    processor.stickers.add (new Sticker (lasso.getBounds()));
-    addAndMakeVisible (processor.stickers.getLast());
+    processor.stickers.add (new Sticker (lasso.getBounds(), lasso.getDrawable()));
+    auto addedSticker = processor.stickers.getLast();
+    if (addedSticker != nullptr)
+    {
+        addAndMakeVisible (addedSticker);
+
+        Rectangle<int> bottleRect (190, 130, 120, 255);
+        auto leftOverlap = bottleRect.getX() - addedSticker->getX();
+        if (leftOverlap > 0)
+        {
+            addedSticker->setBounds (bottleRect.getX(), addedSticker->getY(),
+                                     addedSticker->getWidth() - leftOverlap,
+                                     addedSticker->getHeight());
+        }
+
+        auto rightOverlap = addedSticker->getRight() - bottleRect.getRight();
+        if (rightOverlap > 0)
+        {
+            addedSticker->setBounds (addedSticker->getX(), addedSticker->getY(),
+                                     addedSticker->getWidth() - rightOverlap,
+                                     addedSticker->getHeight());
+        }
+
+        auto topOverlap = bottleRect.getY() - addedSticker->getY();
+        if (topOverlap > 0)
+        {
+            addedSticker->setBounds (bottleRect.getX(), bottleRect.getY(),
+                                     addedSticker->getWidth(),
+                                     addedSticker->getHeight() - topOverlap);
+        }
+
+        auto bottomOverlap = addedSticker->getBottom() - bottleRect.getBottom();
+        if (bottomOverlap > 0)
+        {
+            addedSticker->setBounds (addedSticker->getX(), addedSticker->getY(),
+                                     addedSticker->getWidth(),
+                                     addedSticker->getHeight() - bottomOverlap);
+        }
+    }
 
     lasso.endLasso();
 
