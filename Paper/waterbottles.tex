@@ -1,0 +1,171 @@
+% !TeX program = pdflatex
+% !BIB program = bibtex
+% Template LaTeX file for DAFx-19 papers
+
+%------------------------------------------------------------------------------------------
+%  !  !  !  !  !  !  !  !  !  !  !  ! user defined variables  !  !  !  !  !  !  !  !  !  !  !  !  !  !
+% Please use these commands to define title and author(s) of the paper:
+\def\papertitle{Bad Circuit Modelling}
+\def\paperauthorA{Elliot K. Canfield-Dafilou, Mark Rau, Jatin Chowdhury}
+
+% Authors' affiliations have to be set below
+
+%------------------------------------------------------------------------------------------
+\documentclass[twoside,a4paper]{article}
+\usepackage{etoolbox}
+\usepackage{dafx_20}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{euscript}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{ifpdf}
+
+\usepackage[english]{babel}
+\usepackage{caption}
+\usepackage{subfig} % or can use subcaption package
+\usepackage{xcolor}
+
+\input glyphtounicode
+\pdfgentounicode=1
+
+\setcounter{page}{1}
+\ninept
+
+% build the list of authors and set the flag \multipleauth to handle the et al. in the copyright note (in DAFx_20.sty)
+%==============================DO NOT MODIFY =======================================
+\newcounter{numauth}\setcounter{numauth}{1}
+\newcounter{listcnt}\setcounter{listcnt}{1}
+\newcommand\authcnt[1]{\ifdefined#1 \stepcounter{numauth} \fi}
+
+\newcommand\addauth[1]{
+\ifdefined#1 
+\stepcounter{listcnt}
+\ifnum \value{listcnt}<\value{numauth}
+\appto\authorslist{, #1}
+\else
+\appto\authorslist{~and~#1}
+\fi
+\fi}
+%======DO NOT MODIFY UNLESS YOUR PAPER HAS MORE THAN 10 AUTHORS========================
+%==we count the authors defined at the beginning of the file (paperauthorA is mandatory and already accounted for)
+\authcnt{\paperauthorB}
+\authcnt{\paperauthorC}
+\authcnt{\paperauthorD}
+\authcnt{\paperauthorE}
+\authcnt{\paperauthorF}
+\authcnt{\paperauthorG}
+\authcnt{\paperauthorH}
+\authcnt{\paperauthorI}
+\authcnt{\paperauthorJ}
+%==we create a list of authors for pdf tagging, for example: paperauthorA, paperauthorB, ... and paperauthorF (last author)
+\def\authorslist{\paperauthorA}
+\addauth{\paperauthorB}
+\addauth{\paperauthorC}
+\addauth{\paperauthorD}
+\addauth{\paperauthorE}
+\addauth{\paperauthorF}
+\addauth{\paperauthorG}
+\addauth{\paperauthorH}
+\addauth{\paperauthorI}
+\addauth{\paperauthorJ}
+%====================================================================================
+
+\usepackage{times}
+% Saves a lot of ouptut space in PDF... after conversion with the distiller
+% Delete if you cannot get PS fonts working on your system.
+
+% pdf-tex settings: detect automatically if run by latex or pdflatex
+\newif\ifpdf
+\ifx\pdfoutput\relax
+\else
+   \ifcase\pdfoutput
+      \pdffalse
+   \else
+      \pdftrue
+\fi
+
+\ifpdf % compiling with pdflatex
+  \usepackage[pdftex,
+    pdftitle={\papertitle},
+    pdfauthor={\paperauthorA},
+    colorlinks=false, % links are activated as colror boxes instead of color text
+    bookmarksnumbered, % use section numbers with bookmarks
+    pdfstartview=XYZ % start with zoom=100% instead of full screen; especially useful if working with a big screen :-)
+  ]{hyperref}
+  \pdfcompresslevel=9
+  \usepackage[pdftex]{graphicx}
+%   \usepackage[figure,table]{hypcap}
+\else % compiling with latex
+  \usepackage[dvips]{epsfig,graphicx}
+  \usepackage[dvips,
+    colorlinks=false, % no color links
+    bookmarksnumbered, % use section numbers with bookmarks
+    pdfstartview=XYZ % start with zoom=100% instead of full screen
+  ]{hyperref}
+  % hyperrefs are active in the pdf file after conversion
+  % \usepackage[figure,table]{hypcap}
+\fi
+\usepackage[hypcap=true]{caption}
+
+% My packages
+\usepackage{tikz}
+\usepackage{tkz-euclide}
+\usetkzobj{all}
+\usepackage{cleveref}
+
+\usepackage{listings}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    columns=flexible,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                               
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=4
+}
+ 
+\lstset{style=mystyle}
+
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+\newcommand{\z}{\mathpzc{z}}
+
+\title{\papertitle}
+
+\affiliation{
+\paperauthorA \, }
+{\href{http://ccrma.stanford.edu}{Center for Computer Research in Music and Acoustics} \\ Stanford University \\ Palo Alto, CA \\ {\tt\{kermit|mrau|jatin\}@ccrma.stanford.edu}}
+
+\begin{document}
+% more pdf-tex settings:
+\ifpdf % used graphic file format for pdflatex
+  \DeclareGraphicsExtensions{.png,.jpg,.pdf}
+\else  % used graphic file format for latex
+  \DeclareGraphicsExtensions{.eps}
+\fi
+
+\maketitle
+%
+\begin{abstract}
+TODO
+\end{abstract}
+
+
+%\newpage
+\nocite{*}
+\bibliographystyle{IEEEbib}
+\bibliography{references}
+
+\end{document}
