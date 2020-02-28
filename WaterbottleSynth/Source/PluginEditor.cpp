@@ -13,7 +13,7 @@ WaterbottleSynthAudioProcessorEditor::WaterbottleSynthAudioProcessorEditor (Wate
     bottom.addListener (&bottle);
     bottom.updateWaterAmount();
 
-    setSize (500, 500);
+    setSize (700, 700);
 }
 
 WaterbottleSynthAudioProcessorEditor::~WaterbottleSynthAudioProcessorEditor()
@@ -28,6 +28,6 @@ void WaterbottleSynthAudioProcessorEditor::paint (Graphics& g)
 
 void WaterbottleSynthAudioProcessorEditor::resized()
 {
-    bottle.setBounds (0, 0, 500, 400);
-    bottom.setBounds (0, 400, getWidth(), 100);
+    bottle.setBounds (0, 0, getWidth(), getHeight() - 100);
+    bottom.setBounds (0, bottle.getBottom(), getWidth(), 100);
 }

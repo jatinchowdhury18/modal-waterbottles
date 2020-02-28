@@ -34,5 +34,5 @@ void BottomComponent::paint (Graphics& g)
 void BottomComponent::resized()
 {
     waterSlide.setBounds (10, 10, 80, 90);
-    keyboard.setBounds (getLocalBounds().removeFromRight (400));
+    keyboard.setBounds (getLocalBounds().removeFromRight (getWidth() - 100));
 }

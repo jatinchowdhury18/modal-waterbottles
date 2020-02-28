@@ -47,12 +47,20 @@ public:
 
     void beginLasso (const MouseEvent& e)
     {
-        if (choice % 3 == 0)
+        if (choice % numStickers == 0)
             dafx = Drawable::createFromImageData (BinaryData::dafx_sticker_jpg, BinaryData::dafx_sticker_jpgSize);
-        if (choice % 3 == 1)
+        if (choice % numStickers == 1)
             dafx = Drawable::createFromImageData (BinaryData::ccrma_logo_png, BinaryData::ccrma_logo_pngSize);
-        if (choice % 3 == 2)
+        if (choice % numStickers == 2)
             dafx = Drawable::createFromImageData (BinaryData::matlab_jpg, BinaryData::matlab_jpgSize);
+        if (choice % numStickers == 3)
+            dafx = Drawable::createFromImageData (BinaryData::polytec_jpg, BinaryData::polytec_jpgSize);
+        if (choice % numStickers == 4)
+            dafx = Drawable::createFromImageData (BinaryData::python_jpg, BinaryData::python_jpgSize);
+        if (choice % numStickers == 5)
+            dafx = Drawable::createFromImageData (BinaryData::NILogo_jpg, BinaryData::NILogo_jpgSize);
+        if (choice % numStickers == 6)
+            dafx = Drawable::createFromImageData (BinaryData::JUCE_png, BinaryData::JUCE_pngSize);
 
         choice++;
 
@@ -88,6 +96,7 @@ private:
     std::unique_ptr<Drawable> dafx;
 
     int choice = 0;
+    const int numStickers = 7;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StickerLasso)
 };

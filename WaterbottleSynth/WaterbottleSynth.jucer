@@ -11,7 +11,11 @@
             file="Resources/dafx_sticker.jpg"/>
       <FILE id="WziImQ" name="Drawing.svg" compile="0" resource="1" file="Resources/Drawing.svg"/>
       <FILE id="wBko6O" name="Hydroflask.jpg" compile="0" resource="1" file="Resources/Hydroflask.jpg"/>
+      <FILE id="Sn0RW8" name="JUCE.png" compile="0" resource="1" file="Resources/JUCE.png"/>
       <FILE id="wQjCL9" name="matlab.jpg" compile="0" resource="1" file="Resources/matlab.jpg"/>
+      <FILE id="Po9xZN" name="NILogo.jpg" compile="0" resource="1" file="Resources/NILogo.jpg"/>
+      <FILE id="khXgqn" name="polytec.jpg" compile="0" resource="1" file="Resources/polytec.jpg"/>
+      <FILE id="XftoA9" name="python.jpg" compile="0" resource="1" file="Resources/python.jpg"/>
       <FILE id="OkKUEF" name="water.png" compile="0" resource="1" file="Resources/water.png"/>
     </GROUP>
     <GROUP id="{573A3561-25C8-0EE1-A88F-DD1CDE61DE49}" name="Source">

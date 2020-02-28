@@ -3,6 +3,8 @@
 BottleComponent::BottleComponent (WaterbottleSynthAudioProcessor& p) :
     processor (p)
 {
+    setBufferedToImage (true);
+
     p.addStickerListener (this);
 
     bottlePic = Drawable::createFromImageData (BinaryData::Hydroflask_jpg, BinaryData::Hydroflask_jpgSize);
@@ -48,7 +50,7 @@ void BottleComponent::mouseUp (const MouseEvent& e)
 {
     if (! lasso.isVisible())
     {
-        for (auto* sticker : processor.stickers)
+        for (auto* sticker : reverse (processor.stickers))
         {
             if (sticker->getBounds().contains (e.x, e.y))
             {
@@ -63,13 +65,13 @@ void BottleComponent::mouseUp (const MouseEvent& e)
     if (addedSticker != nullptr)
     {
         addAndMakeVisible (addedSticker);
+        const int minDim = 3;
 
-        Rectangle<int> bottleRect (190, 130, 120, 255);
         auto leftOverlap = bottleRect.getX() - addedSticker->getX();
         if (leftOverlap > 0)
         {
             addedSticker->setBounds (bottleRect.getX(), addedSticker->getY(),
-                                     addedSticker->getWidth() - leftOverlap,
+                                     jmax (addedSticker->getWidth() - leftOverlap, minDim),
                                      addedSticker->getHeight());
         }
 
@@ -77,7 +79,7 @@ void BottleComponent::mouseUp (const MouseEvent& e)
         if (rightOverlap > 0)
         {
             addedSticker->setBounds (addedSticker->getX(), addedSticker->getY(),
-                                     addedSticker->getWidth() - rightOverlap,
+                                     jmax (addedSticker->getWidth() - rightOverlap, minDim),
                                      addedSticker->getHeight());
         }
 
@@ -86,7 +88,7 @@ void BottleComponent::mouseUp (const MouseEvent& e)
         {
             addedSticker->setBounds (bottleRect.getX(), bottleRect.getY(),
                                      addedSticker->getWidth(),
-                                     addedSticker->getHeight() - topOverlap);
+                                     jmax (addedSticker->getHeight() - topOverlap, minDim));
         }
 
         auto bottomOverlap = addedSticker->getBottom() - bottleRect.getBottom();
@@ -94,7 +96,7 @@ void BottleComponent::mouseUp (const MouseEvent& e)
         {
             addedSticker->setBounds (addedSticker->getX(), addedSticker->getY(),
                                      addedSticker->getWidth(),
-                                     addedSticker->getHeight() - bottomOverlap);
+                                     jmax (addedSticker->getHeight() - bottomOverlap, minDim));
         }
     }
 
@@ -110,7 +112,7 @@ void BottleComponent::paint (Graphics& g)
     bottlePic->drawWithin (g, getLocalBounds().toFloat(), RectanglePlacement::centred, 1.0f);
 
     // draw water meter
-    Rectangle<float> waterRect (400.0f, 0.0f, 100.0f, (float) getHeight());
+    Rectangle<float> waterRect ((float) getWidth() - 100.0f, 0.0f, 100.0f, (float) getHeight());
     water->drawWithin (g, waterRect, RectanglePlacement::stretchToFit, 1.0f);
 
     Rectangle<float> coverRect = waterRect.withHeight (waterRect.getHeight() * (1.0f - waterAmt));
@@ -118,8 +120,12 @@ void BottleComponent::paint (Graphics& g)
     g.fillRect (coverRect);
 
     draw->drawWithin (g, waterRect.reduced (12.0f), RectanglePlacement::stretchToFit, 1.0f);
+
+    // g.setColour (Colours::red);
+    // g.drawRect (bottleRect);
 }
 
 void BottleComponent::resized()
 {
+    bottleRect.setBounds ((getWidth() - bottleWidth) / 2, 200, bottleWidth, bottleHeight);
 }
