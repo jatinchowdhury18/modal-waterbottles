@@ -165,22 +165,104 @@ of a waterbottle using modal decomposition.
 
 \section{Introduction} \label{sec:intro}
 %
-Intro here \dots
+Previous works have examined the use of modal signal processing
+for synthesizing carillon bells
+\cite{canfielddafilou:werner:bellEffects:2017,rau:das:canfielddafilou:carillon:2019},
+artificial reverberation \cite{abel2014a}, cymbal synthesis \cite{travis_cymbals},
+and more \cite{abel_kurt_modal}.
+In this paper, we extend this previous work to use modal Synthesis
+for the accurate modelling of waterbottle acoustics. Waterbottles are
+particularly well-suited for modal modelling since they have inharmonic
+partials. Further, certain waterbottles have been known to have a
+pleasing acoustic response, while others sound notably worse.
+Additionally, the acoustic response of a waterbottle changes
+depending on the amount and the type of liquid contained within, as
+well as the potential placement of stickers on the exterior of the bottle.
+In this writing, we take measurements from a 32 oz. Wide Mouth
+HydroFlask\footnote{\url{https://www.hydroflask.com/32-oz-wide-mouth/color,cobalt,a,92,o,53}},
+compared to the waterbottle given to attendees of the 2019 DAFx
+conference, measured containing different amounts of water and maple
+syrup, as well different placements of stickers on the exteriors of the
+bottles.
+\newline\newline
+The structure of the paper is as follows \dots.
 
 \section{Measurements} \label{sec:measure}
 %
 Talk about measurements \dots
+%
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=3in]{Figures/hydroflask_measure}
+    \caption{\it{Measurement setup for the HydroFlask waterbottle}}
+    \label{fig:hydro_measure}
+\end{figure}
+%
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=3in]{Figures/dafx_measure}
+    \caption{\it{Measurement setup for the DAFx waterbottle}}
+    \label{fig:dafx_measure}
+\end{figure}
 
 \section{Analysis} \label{sec:analysis}
 %
-Talk about analysis \dots
+For modal analysis we use the method described in
+\cite{canfielddafilou:werner:bellEffects:2017}, using helper functions
+provided by the \texttt{Python} audio signal processing library
+\texttt{audio\_dspy}\footnote{\url{https://github.com/jatinchowdhury18/audio_dspy}}.
+This process involves the following steps:
+\begin{enumerate}
+    \item Picking the modal frequencies from the original recording.
+    \item Estimate the decay rate of each mode.
+    \item Estimate the complex amplitude of each mode.
+\end{enumerate}
+%
+The process is shown in  full in \cref{fig:modal_analysis}.
+\newline\newline
+For finding the mode frequencies, we use a simple peak picking
+algorithm over the Fourier Transform of the original signal.
+\newline\newline
+For estimating the mode decay rates, we begin by filtering
+the signal using a 4th order Butterworth bandpass filter
+centered on the mode frequency, with a bandwidth of 30 Hz.
+We then apply a Root-Mean-Squared level detector as defined
+in \cite{giannoulis2012compressor} to estimate the energy
+envelope of the mode. Finally, we use a linear regression
+to estimate the slope of the energy envelope (measured in
+Decibels). The slope can be used to find a decay
+factor $\tau$ such that the mode decays by a factor of
+$e^{-1/\tau}$ every sample.
+\newline\newline
+After computing the mode frequencies and decay
+rate, we can do a simple least squares fit to
+estimate the complex amplitude of each mode that
+most accurately resynthesizes the original recording.
+\newline\newline
+Finally, for synthesizing each mode we use the Max Matthews
+phasor filter, as introduced in \cite{phasorfilter}.
+This filter is described by the difference equation:
+\begin{equation}
+    y[n] = A x[n] + e^{j\omega} e^{-1/\tau} y[n-1]
+\end{equation}
+%
+where $\tau$ is the mode decay rate described above, $A$ is
+the cocmplex amplitude of the mode, and $\omega$ is the mode
+frequency.
 
-\begin{figure}
+
+\begin{figure*}
     \centering
-    \includegraphics[width=3in]{../Figures/HydroFlask/empty.png}
-    \caption{Figure here}
-    \label{fig:empty}
-\end{figure}
+    \includegraphics[width=2.25in]{Figures/ModePick_ex}
+    \includegraphics[width=2.25in]{Figures/DecayFit_ex}
+    \includegraphics[width=2.25in]{../Figures/HydroFlask/empty}
+    \caption{\it{Modal analysis pipeline: (left) picking the mode frequencies,
+    (center) estimating the decay rate of a single mode,
+    (right) using least-squares to estimate the complex
+    amplitudes of the modes that ideally resynthesize the
+    original signal.}}
+    \label{fig:modal_analysis}
+\end{figure*}
 
 %\newpage
 \nocite{*}

@@ -22,3 +22,11 @@ JuceLibraryCode
 *.swp
 *~
 
+# Tex artifacts
+*.synctex.gz
+*.synctex(busy)
+*.aux
+*.bbl
+*.blg
+*.out
+*.log
