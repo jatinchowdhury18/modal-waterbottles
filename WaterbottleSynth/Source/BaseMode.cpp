@@ -48,7 +48,7 @@ void BaseMode::triggerNote (float newFreqMult, float velocity)
 
 void BaseMode::calcCoefs()
 {
-    decayCoef = expf (-1.0f / tau) * stickerCoef;
+    decayCoef = expf (-1.0f / (tau * fs / fsMeasure)) * stickerCoef;
     oscCoef = exp (jImag * MathConstants<float>::twoPi * freq * freqMult / fs);
     ampCoef = 1000.0f*amp;
 }

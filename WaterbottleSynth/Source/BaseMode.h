@@ -47,6 +47,8 @@ private:
     float fs = 44100.0f;
     const std::complex<float> jImag = std::complex<float> (0, 1);
 
+    const float fsMeasure = 48000.0f;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BaseMode)
 };
 
