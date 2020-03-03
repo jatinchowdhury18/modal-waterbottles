@@ -1,5 +1,7 @@
 # Modal Waterbottles
 
+[![Build Status](https://travis-ci.com/jatinchowdhury18/modal-waterbottles.svg?token=Ub9niJrqG1Br1qaaxp7E&branch=master)](https://travis-ci.com/jatinchowdhury18/modal-waterbottles)
+
 This repository contains materials for performing modal synthesis of 
 waterbottles. Currently we have measurements for two waterbottles,
 a 32 oz. Wide Mouth [HydroFlask](https://www.hydroflask.com/32-oz-wide-mouth/color,cobalt,a,92,o,53), and a DAFx 2019 bottle.
