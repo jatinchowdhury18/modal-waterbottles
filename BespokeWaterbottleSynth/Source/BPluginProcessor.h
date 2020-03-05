@@ -12,6 +12,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "BWaterSynth.h"
+#include "StrikerFilter.h"
 
 //==============================================================================
 /**
@@ -57,6 +58,7 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
     MidiKeyboardState keyboardState;
+    AudioProcessorValueTreeState& getVTS() { return vts; }
 
     void reloadSynth (File& bottleFile)
     {
@@ -66,6 +68,11 @@ public:
 private:
     const int nVoices = 2;
     BWaterSynth synth;
+    StrikerFilter strikerFilter;
+
+    static AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+    AudioProcessorValueTreeState vts;
+    float* strikerParam = nullptr;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BespokeWaterbottleSynthAudioProcessor)

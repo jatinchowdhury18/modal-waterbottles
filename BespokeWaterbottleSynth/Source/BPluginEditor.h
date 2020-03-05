@@ -34,6 +34,10 @@ private:
     BespokeWaterbottleSynthAudioProcessor& processor;
 
     TextButton reloadButton;
+
+    ComboBox strikerBox;
+    std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> strikerAttach;
+
     MidiKeyboardComponent keyboard;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BespokeWaterbottleSynthAudioProcessorEditor)

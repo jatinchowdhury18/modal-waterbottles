@@ -34,6 +34,10 @@ BespokeWaterbottleSynthAudioProcessorEditor::BespokeWaterbottleSynthAudioProcess
         }
     };
 
+    addAndMakeVisible (strikerBox);
+    strikerBox.addItemList (StrikerFilter::getChoices(), 1);
+    strikerAttach.reset (new AudioProcessorValueTreeState::ComboBoxAttachment (p.getVTS(), "striker", strikerBox));
+
     addAndMakeVisible (keyboard);
     keyboard.setKeyPressBaseOctave (3);
     keyboard.setLowestVisibleKey (24);
@@ -58,6 +62,7 @@ void BespokeWaterbottleSynthAudioProcessorEditor::paint (Graphics& g)
 void BespokeWaterbottleSynthAudioProcessorEditor::resized()
 {
     reloadButton.setBounds (10, 40, 80, 20);
+    strikerBox.setBounds (100, 40, 90, 20);
 
-    keyboard.setBounds (getBounds().removeFromRight (400));
+    keyboard.setBounds (getBounds().removeFromRight (300));
 }

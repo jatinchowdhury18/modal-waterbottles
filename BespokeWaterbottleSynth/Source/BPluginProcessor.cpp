@@ -22,9 +22,12 @@ BespokeWaterbottleSynthAudioProcessor::BespokeWaterbottleSynthAudioProcessor()
                       #endif
                        .withOutput ("Output", AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ),
 #endif
+    vts (*this, nullptr, Identifier ("Parameters"), createParameterLayout())
 {
+    strikerParam = vts.getRawParameterValue ("striker");
+
     for (int i = 0; i < nVoices; ++i)
         synth.addVoice (new BModalVoice);
 
@@ -33,6 +36,15 @@ BespokeWaterbottleSynthAudioProcessor::BespokeWaterbottleSynthAudioProcessor()
 
 BespokeWaterbottleSynthAudioProcessor::~BespokeWaterbottleSynthAudioProcessor()
 {
+}
+
+AudioProcessorValueTreeState::ParameterLayout BespokeWaterbottleSynthAudioProcessor::createParameterLayout()
+{
+    std::vector<std::unique_ptr<RangedAudioParameter>> params;
+
+    params.push_back (std::make_unique<AudioParameterChoice> ("striker", "Striker", StrikerFilter::getChoices(), 0));
+
+    return { params.begin(), params.end() };
 }
 
 //==============================================================================
@@ -101,6 +113,7 @@ void BespokeWaterbottleSynthAudioProcessor::changeProgramName (int index, const 
 void BespokeWaterbottleSynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     synth.setCurrentPlaybackSampleRate (sampleRate);
+    strikerFilter.prepareToPlay (sampleRate, samplesPerBlock);
 }
 
 void BespokeWaterbottleSynthAudioProcessor::releaseResources()
@@ -139,6 +152,9 @@ void BespokeWaterbottleSynthAudioProcessor::processBlock (AudioBuffer<float>& bu
     keyboardState.processNextMidiBuffer (midiMessages, 0, buffer.getNumSamples(), true);
 
     synth.renderNextBlock (buffer, midiMessages, 0, buffer.getNumSamples());
+
+    strikerFilter.setStriker ((int) *strikerParam);
+    strikerFilter.processBlock (buffer);
 }
 
 //==============================================================================

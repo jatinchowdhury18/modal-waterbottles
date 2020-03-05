@@ -4,9 +4,27 @@
               jucerVersion="5.4.4" companyName="chowdsp" pluginFormats="buildAU,buildStandalone,buildVST,buildVST3"
               cppLanguageStandard="17" headerPath="../../../WaterbottleSynth/Source">
   <MAINGROUP id="GtEpn3" name="BespokeWaterbottleSynth">
+    <GROUP id="{327ECF8B-DF07-58A2-0C16-F4DF202D4046}" name="Impact_Wavs">
+      <FILE id="bCvsu8" name="Brush.wav" compile="0" resource="1" file="../Impact_Wavs/Brush.wav"/>
+      <FILE id="CdpD6s" name="DAFx.wav" compile="0" resource="1" file="../Impact_Wavs/DAFx.wav"/>
+      <FILE id="WJTWlB" name="Elbow.wav" compile="0" resource="1" file="../Impact_Wavs/Elbow.wav"/>
+      <FILE id="QNFJ2o" name="Gong_Mallet.wav" compile="0" resource="1" file="../Impact_Wavs/Gong_Mallet.wav"/>
+      <FILE id="rjikyq" name="Head.wav" compile="0" resource="1" file="../Impact_Wavs/Head.wav"/>
+      <FILE id="px6XyL" name="Heel.wav" compile="0" resource="1" file="../Impact_Wavs/Heel.wav"/>
+      <FILE id="ZnYyNY" name="Knee.wav" compile="0" resource="1" file="../Impact_Wavs/Knee.wav"/>
+      <FILE id="rhkAEu" name="Knuckles.wav" compile="0" resource="1" file="../Impact_Wavs/Knuckles.wav"/>
+      <FILE id="keloMX" name="Nail.wav" compile="0" resource="1" file="../Impact_Wavs/Nail.wav"/>
+      <FILE id="ia4Qki" name="One Knuckle.wav" compile="0" resource="1" file="../Impact_Wavs/One Knuckle.wav"/>
+      <FILE id="jk0Lr5" name="Palm.wav" compile="0" resource="1" file="../Impact_Wavs/Palm.wav"/>
+      <FILE id="xVYgjG" name="Shoulder.wav" compile="0" resource="1" file="../Impact_Wavs/Shoulder.wav"/>
+      <FILE id="uSQKLy" name="Toe.wav" compile="0" resource="1" file="../Impact_Wavs/Toe.wav"/>
+    </GROUP>
     <GROUP id="{694DC864-FF33-B70B-C23F-38ECB1304B4A}" name="Shared">
       <FILE id="RsNmI5" name="BaseMode.cpp" compile="1" resource="0" file="../WaterbottleSynth/Source/BaseMode.cpp"/>
       <FILE id="k3QId1" name="BaseMode.h" compile="0" resource="0" file="../WaterbottleSynth/Source/BaseMode.h"/>
+      <FILE id="LR16xb" name="StrikerFilter.cpp" compile="1" resource="0"
+            file="../WaterbottleSynth/Source/StrikerFilter.cpp"/>
+      <FILE id="PItbHX" name="StrikerFilter.h" compile="0" resource="0" file="../WaterbottleSynth/Source/StrikerFilter.h"/>
     </GROUP>
     <GROUP id="{E96FE9B9-75FB-4105-D4C1-F33D204512A1}" name="Source">
       <FILE id="yBp0hi" name="BWaterSynth.h" compile="0" resource="0" file="Source/BWaterSynth.h"/>
