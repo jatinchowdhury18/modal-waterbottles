@@ -91,6 +91,12 @@ void StrikerFilter::prepareToPlay (double sampleRate, int samplesPerBlock)
     }
 }
 
+void StrikerFilter::releaseResources()
+{
+    for (auto filter : filters)
+        filter->reset();
+}
+
 void StrikerFilter::processBlock (AudioBuffer<float>& buffer)
 {
     dsp::AudioBlock<float> block (buffer);

@@ -118,7 +118,7 @@ void BespokeWaterbottleSynthAudioProcessor::prepareToPlay (double sampleRate, in
 
 void BespokeWaterbottleSynthAudioProcessor::releaseResources()
 {
-
+    strikerFilter.releaseResources();
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations

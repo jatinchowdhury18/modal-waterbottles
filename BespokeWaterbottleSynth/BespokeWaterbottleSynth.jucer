@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="d8J8WO" name="BespokeWaterbottleSynth" projectType="audioplug"
-              jucerVersion="5.4.4" companyName="chowdsp" pluginFormats="buildAU,buildStandalone,buildVST,buildVST3"
+              jucerVersion="5.4.4" companyName="GASP" pluginFormats="buildAU,buildStandalone,buildVST,buildVST3"
               cppLanguageStandard="17" headerPath="../../../WaterbottleSynth/Source">
   <MAINGROUP id="GtEpn3" name="BespokeWaterbottleSynth">
     <GROUP id="{327ECF8B-DF07-58A2-0C16-F4DF202D4046}" name="Impact_Wavs">

@@ -34,6 +34,7 @@ public:
     void setStriker (int striker) { currStriker = static_cast<Striker> (striker); }
 
     void prepareToPlay (double sampleRate, int samplesPerBlock);
+    void releaseResources();
     void processBlock (AudioBuffer<float>& buffer);
 
 private:

@@ -113,7 +113,7 @@ void WaterbottleSynthAudioProcessor::prepareToPlay (double sampleRate, int sampl
 
 void WaterbottleSynthAudioProcessor::releaseResources()
 {
-    
+    strikerFilter.releaseResources();
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations

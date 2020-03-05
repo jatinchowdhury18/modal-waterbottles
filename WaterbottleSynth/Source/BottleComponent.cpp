@@ -24,7 +24,9 @@ BottleComponent::~BottleComponent()
 void BottleComponent::waterAmountChanged (float newAmt)
 {
     waterAmt = newAmt;
-    MessageManager::callAsync ([=] { repaint(); });
+
+    MessageManagerLock mml;
+    repaint();
 }
 
 void BottleComponent::stickersUpdate()
@@ -44,6 +46,8 @@ void BottleComponent::mouseDown (const MouseEvent& e)
 void BottleComponent::mouseDrag (const MouseEvent& e)
 {
     lasso.dragLasso (e);
+
+    MessageManagerLock mml;
     repaint();
 }
 
@@ -103,6 +107,7 @@ void BottleComponent::mouseUp (const MouseEvent& e)
 
     lasso.endLasso();
 
+    MessageManagerLock mml;
     repaint();
 }
 
