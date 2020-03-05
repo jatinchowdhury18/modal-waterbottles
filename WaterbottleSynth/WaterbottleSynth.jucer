@@ -5,6 +5,21 @@
               pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
               cppLanguageStandard="17">
   <MAINGROUP id="TtZ0B3" name="WaterbottleSynth">
+    <GROUP id="{15EC8205-A719-4CC3-D840-C6A081854F6E}" name="Impact_Wavs">
+      <FILE id="LOk16h" name="Brush.wav" compile="0" resource="1" file="../Impact_Wavs/Brush.wav"/>
+      <FILE id="q0a4qE" name="DAFx.wav" compile="0" resource="1" file="../Impact_Wavs/DAFx.wav"/>
+      <FILE id="RDSPNr" name="Elbow.wav" compile="0" resource="1" file="../Impact_Wavs/Elbow.wav"/>
+      <FILE id="VEZRhj" name="Gong_Mallet.wav" compile="0" resource="1" file="../Impact_Wavs/Gong_Mallet.wav"/>
+      <FILE id="wWCu6C" name="Head.wav" compile="0" resource="1" file="../Impact_Wavs/Head.wav"/>
+      <FILE id="pjvQK9" name="Heel.wav" compile="0" resource="1" file="../Impact_Wavs/Heel.wav"/>
+      <FILE id="EeGZq2" name="Knee.wav" compile="0" resource="1" file="../Impact_Wavs/Knee.wav"/>
+      <FILE id="XVholv" name="Knuckles.wav" compile="0" resource="1" file="../Impact_Wavs/Knuckles.wav"/>
+      <FILE id="PZyzdz" name="Nail.wav" compile="0" resource="1" file="../Impact_Wavs/Nail.wav"/>
+      <FILE id="dZYFVz" name="One Knuckle.wav" compile="0" resource="1" file="../Impact_Wavs/One Knuckle.wav"/>
+      <FILE id="ciWFVc" name="Palm.wav" compile="0" resource="1" file="../Impact_Wavs/Palm.wav"/>
+      <FILE id="ijOU04" name="Shoulder.wav" compile="0" resource="1" file="../Impact_Wavs/Shoulder.wav"/>
+      <FILE id="wtwKmg" name="Toe.wav" compile="0" resource="1" file="../Impact_Wavs/Toe.wav"/>
+    </GROUP>
     <GROUP id="{760FB4F2-0426-2F5C-F0EF-B79D415E9A35}" name="Resources">
       <FILE id="Zhyi1k" name="ccrma_logo.png" compile="0" resource="1" file="Resources/ccrma_logo.png"/>
       <FILE id="vt56PS" name="dafx_sticker.jpg" compile="0" resource="1"
@@ -19,6 +34,9 @@
       <FILE id="OkKUEF" name="water.png" compile="0" resource="1" file="Resources/water.png"/>
     </GROUP>
     <GROUP id="{573A3561-25C8-0EE1-A88F-DD1CDE61DE49}" name="Source">
+      <FILE id="HP4dZL" name="StrikerFilter.cpp" compile="1" resource="0"
+            file="Source/StrikerFilter.cpp"/>
+      <FILE id="nhZiiw" name="StrikerFilter.h" compile="0" resource="0" file="Source/StrikerFilter.h"/>
       <FILE id="rcx5aS" name="BottomComponent.cpp" compile="1" resource="0"
             file="Source/BottomComponent.cpp"/>
       <FILE id="kgKaTH" name="BottomComponent.h" compile="0" resource="0"

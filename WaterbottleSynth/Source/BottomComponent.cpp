@@ -11,6 +11,9 @@ BottomComponent::BottomComponent (WaterbottleSynthAudioProcessor& p) :
     waterSlide.setTextBoxStyle (Slider::TextBoxBelow, false, 60, 15);
     waterSlide.onValueChange = [=] { updateWaterAmount(); };
     
+    addAndMakeVisible (strikerBox);
+    strikerBox.addItemList (StrikerFilter::getChoices(), 1);
+    strikerAttach.reset (new AudioProcessorValueTreeState::ComboBoxAttachment (p.vts, "striker", strikerBox));
 
     addAndMakeVisible (keyboard);
     keyboard.setLowestVisibleKey (24);
@@ -34,5 +37,6 @@ void BottomComponent::paint (Graphics& g)
 void BottomComponent::resized()
 {
     waterSlide.setBounds (10, 10, 80, 90);
-    keyboard.setBounds (getLocalBounds().removeFromRight (getWidth() - 100));
+    strikerBox.setBounds (100, 40, 90, 20);
+    keyboard.setBounds (getLocalBounds().removeFromRight (getWidth() - 200));
 }

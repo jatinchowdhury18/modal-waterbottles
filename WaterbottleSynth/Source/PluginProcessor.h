@@ -3,6 +3,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Stickers.h"
 #include "WaterSynth.h"
+#include "StrikerFilter.h"
 
 class WaterbottleSynthAudioProcessor  : public AudioProcessor
 {
@@ -55,12 +56,14 @@ public:
 private:
     static AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     float* waterParam = nullptr;
+    float* strikerParam = nullptr;
 
     void calcStickerCoverage();
     float stickerAmt = 0.0f;
     ListenerList<StickerListener> listeners;
 
     WaterSynth synth;
+    StrikerFilter strikerFilter;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WaterbottleSynthAudioProcessor)
 };

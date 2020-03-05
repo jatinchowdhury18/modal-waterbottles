@@ -33,6 +33,9 @@ private:
     Slider waterSlide;
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> waterAttach;
 
+    std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> strikerAttach;
+    ComboBox strikerBox;
+
     MidiKeyboardComponent keyboard;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BottomComponent)

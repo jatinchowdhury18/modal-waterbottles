@@ -16,6 +16,7 @@ WaterbottleSynthAudioProcessor::WaterbottleSynthAudioProcessor()
     vts (*this, nullptr, Identifier ("Parameters"), createParameterLayout())
 {
     waterParam = vts.getRawParameterValue ("water");
+    strikerParam = vts.getRawParameterValue ("striker");
 
 #if JUCE_DEBUG
     const int nVoices = 2;
@@ -38,6 +39,7 @@ AudioProcessorValueTreeState::ParameterLayout WaterbottleSynthAudioProcessor::cr
     std::vector<std::unique_ptr<RangedAudioParameter>> params;
 
     params.push_back (std::make_unique<AudioParameterFloat> ("water", "Water", 0.0f, 1.0f, 0.0f));
+    params.push_back (std::make_unique<AudioParameterChoice> ("striker", "Striker", StrikerFilter::getChoices(), 0));
 
     return { params.begin(), params.end() };
 }
@@ -106,6 +108,7 @@ void WaterbottleSynthAudioProcessor::changeProgramName (int index, const String&
 void WaterbottleSynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     synth.setCurrentPlaybackSampleRate (sampleRate);
+    strikerFilter.prepareToPlay (sampleRate, samplesPerBlock);
 }
 
 void WaterbottleSynthAudioProcessor::releaseResources()
@@ -159,6 +162,9 @@ void WaterbottleSynthAudioProcessor::processBlock (AudioBuffer<float>& buffer, M
     calcStickerCoverage();
     synth.setParameters (*waterParam, stickerAmt);
     synth.renderNextBlock (buffer, midiMessages, 0, buffer.getNumSamples());
+
+    strikerFilter.setStriker ((int) *strikerParam);
+    strikerFilter.processBlock (buffer);
 }
 
 bool WaterbottleSynthAudioProcessor::hasEditor() const
