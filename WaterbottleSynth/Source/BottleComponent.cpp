@@ -32,6 +32,7 @@ void BottleComponent::stickersUpdate()
     for (auto* sticker : processor.stickers)
         addAndMakeVisible (sticker);
 
+    MessageManagerLock mml;
     repaint();
 }
 

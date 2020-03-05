@@ -94,7 +94,7 @@ void StrikerFilter::prepareToPlay (double sampleRate, int samplesPerBlock)
 void StrikerFilter::processBlock (AudioBuffer<float>& buffer)
 {
     dsp::AudioBlock<float> block (buffer);
-    dsp::ProcessContextReplacing context (block);
+    dsp::ProcessContextReplacing<float> context (block);
 
     filters[int (currStriker)]->process (context);
 }
