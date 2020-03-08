@@ -25,6 +25,8 @@ public:
     void pitchWheelMoved (int) override      {}
     void controllerMoved (int, int) override {}
 
+    void setWater (float water);
+
     void renderNextBlock (AudioSampleBuffer& outputBuffer, int startSample, int numSamples) override;
 
     void reload (File& bottleFile);

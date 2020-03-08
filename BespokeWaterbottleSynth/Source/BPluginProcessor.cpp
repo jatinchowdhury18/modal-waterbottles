@@ -26,6 +26,7 @@ BespokeWaterbottleSynthAudioProcessor::BespokeWaterbottleSynthAudioProcessor()
 #endif
     vts (*this, nullptr, Identifier ("Parameters"), createParameterLayout())
 {
+    waterParam   = vts.getRawParameterValue ("water");
     strikerParam = vts.getRawParameterValue ("striker");
 
     for (int i = 0; i < nVoices; ++i)
@@ -42,6 +43,7 @@ AudioProcessorValueTreeState::ParameterLayout BespokeWaterbottleSynthAudioProces
 {
     std::vector<std::unique_ptr<RangedAudioParameter>> params;
 
+    params.push_back (std::make_unique<AudioParameterFloat> ("water", "Water", 0.0f, 1.0f, 0.0f));
     params.push_back (std::make_unique<AudioParameterChoice> ("striker", "Striker", StrikerFilter::getChoices(), 0));
 
     return { params.begin(), params.end() };
@@ -151,10 +153,13 @@ void BespokeWaterbottleSynthAudioProcessor::processBlock (AudioBuffer<float>& bu
 
     keyboardState.processNextMidiBuffer (midiMessages, 0, buffer.getNumSamples(), true);
 
+    synth.setWater (*waterParam);
     synth.renderNextBlock (buffer, midiMessages, 0, buffer.getNumSamples());
 
     strikerFilter.setStriker ((int) *strikerParam);
     strikerFilter.processBlock (buffer);
+
+    buffer.applyGain (0.5f);
 }
 
 //==============================================================================
@@ -171,15 +176,18 @@ AudioProcessorEditor* BespokeWaterbottleSynthAudioProcessor::createEditor()
 //==============================================================================
 void BespokeWaterbottleSynthAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
+    auto state = vts.copyState();
+    std::unique_ptr<XmlElement> xml (state.createXml());
+    copyXmlToBinary (*xml, destData);
 }
 
 void BespokeWaterbottleSynthAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
+    std::unique_ptr<XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
+
+    if (xmlState.get() != nullptr)
+        if (xmlState->hasTagName (vts.state.getType()))
+            vts.replaceState (ValueTree::fromXml (*xmlState));
 }
 
 //==============================================================================

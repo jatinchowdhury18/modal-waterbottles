@@ -70,8 +70,14 @@ void ModalVoice::setParameters (float water, float stickers)
 
     for (int ch = 0; ch < 2; ++ch)
     {
-        for (int m = 0; m < numModes; ++m)
+        mode[0][ch]->setParameters (waterLevel, stickersAmt);
+
+        for (int m = 1; m < numModes; ++m)
+        {
+            auto freqMult = mode[m][ch]->getBaseFreq() / mode[0][ch]->getBaseFreq();
             mode[m][ch]->setParameters (waterLevel, stickersAmt);
+            mode[m][ch]->setFrequency (freqMult);
+        }
     }
 }
 
@@ -100,7 +106,7 @@ void ModalVoice::renderNextBlock (AudioSampleBuffer& buffer, int startSample, in
 
         for (int n = 0; n < buffer.getNumSamples(); ++n)
         {
-            for (int m = 0; m < 40; ++m)
+            for (int m = 0; m < numModes; ++m)
                 x[n] += mode[m][ch]->getNextSample();
         }
     }

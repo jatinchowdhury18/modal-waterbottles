@@ -11,10 +11,15 @@ public:
     BaseMode (float freq, float tau, std::complex<float> amp, float stickerFactor=0.0f);
 
     void prepare (double sampleRate);
-    void calcCoefs();
     void triggerNote (float newFreqMult, float velocity);
     void setParameters (float water, float stickers);
+
+    void setFrequency (float newFreqMult);
     float getBaseFreq() const noexcept { return freq; }
+
+    void calcCoefs();
+    void calcOscCoef();
+    void calcDecayCoef();
 
     inline float getNextSample() noexcept
     {

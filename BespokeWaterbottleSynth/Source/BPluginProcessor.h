@@ -72,6 +72,7 @@ private:
 
     static AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     AudioProcessorValueTreeState vts;
+    float* waterParam = nullptr;
     float* strikerParam = nullptr;
 
     //==============================================================================

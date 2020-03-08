@@ -35,6 +35,9 @@ private:
 
     TextButton reloadButton;
 
+    Slider waterSlide;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> waterAttach;
+
     ComboBox strikerBox;
     std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> strikerAttach;
 

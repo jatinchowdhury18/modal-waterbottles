@@ -17,7 +17,7 @@ BespokeWaterbottleSynthAudioProcessorEditor::BespokeWaterbottleSynthAudioProcess
     processor (p),
     keyboard (p.keyboardState, MidiKeyboardComponent::Orientation::horizontalKeyboard)
 {
-    setSize (500, 100);
+    setSize (560, 100);
 
     startTimer (400);
 
@@ -33,6 +33,11 @@ BespokeWaterbottleSynthAudioProcessorEditor::BespokeWaterbottleSynthAudioProcess
             p.reloadSynth (file);
         }
     };
+
+    addAndMakeVisible (waterSlide);
+    waterSlide.setSliderStyle (Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    waterAttach.reset (new AudioProcessorValueTreeState::SliderAttachment (p.getVTS(), "water", waterSlide));
+    waterSlide.setTextBoxStyle (Slider::TextBoxBelow, false, 60, 15);
 
     addAndMakeVisible (strikerBox);
     strikerBox.addItemList (StrikerFilter::getChoices(), 1);
@@ -57,12 +62,16 @@ void BespokeWaterbottleSynthAudioProcessorEditor::timerCallback()
 void BespokeWaterbottleSynthAudioProcessorEditor::paint (Graphics& g)
 {
     g.fillAll (Colours::black);
+
+    g.setColour (Colours::white);
+    g.drawFittedText ("Water", 180, 3, 90, 10, Justification::centred, 1);
 }
 
 void BespokeWaterbottleSynthAudioProcessorEditor::resized()
 {
     reloadButton.setBounds (10, 40, 80, 20);
     strikerBox.setBounds (100, 40, 90, 20);
+    waterSlide.setBounds (180, 10, 90, 90);
 
     keyboard.setBounds (getBounds().removeFromRight (300));
 }

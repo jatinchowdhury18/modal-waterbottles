@@ -30,8 +30,23 @@ public:
         Synthesiser::renderVoices (buffer, startSample, numSamples);
     }
 
+    void setWater (float water)
+    {
+        if (water == waterLevel || reloading) // no updating needed
+            return;
+
+        waterLevel = water;
+
+        for (auto* voice : voices)
+        {
+            if (auto* voiceCast = dynamic_cast<BModalVoice*> (voice))
+                voiceCast->setWater (waterLevel);
+        }
+    }
+
 private:
     std::atomic_bool reloading;
+    float waterLevel = 0.0f;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BWaterSynth)
 };

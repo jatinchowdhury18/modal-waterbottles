@@ -163,6 +163,8 @@ void WaterbottleSynthAudioProcessor::processBlock (AudioBuffer<float>& buffer, M
     synth.setParameters (*waterParam, stickerAmt);
     synth.renderNextBlock (buffer, midiMessages, 0, buffer.getNumSamples());
 
+    buffer.applyGain (0.2f);
+
     strikerFilter.setStriker ((int) *strikerParam);
     strikerFilter.processBlock (buffer);
 }

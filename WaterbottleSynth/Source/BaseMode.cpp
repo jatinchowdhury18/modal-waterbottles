@@ -28,6 +28,12 @@ void BaseMode::prepare (double sampleRate)
     calcCoefs();
 }
 
+void BaseMode::setFrequency (float newFreqMult)
+{
+    freqMult = newFreqMult;
+    calcOscCoef();
+}
+
 void BaseMode::setParameters (float water, float stickers)
 {
     freq = freqLambda (water);
@@ -48,9 +54,19 @@ void BaseMode::triggerNote (float newFreqMult, float velocity)
 
 void BaseMode::calcCoefs()
 {
-    decayCoef = expf (-1.0f / (tau * fs / fsMeasure)) * stickerCoef;
-    oscCoef = exp (jImag * MathConstants<float>::twoPi * freq * freqMult / fs);
+    calcOscCoef();
+    calcDecayCoef();
     ampCoef = 1000.0f*amp;
+}
+
+void BaseMode::calcOscCoef()
+{
+    oscCoef = exp (jImag * MathConstants<float>::twoPi * freq * freqMult / fs);
+}
+
+void BaseMode::calcDecayCoef()
+{
+    decayCoef = expf (-1.0f / (tau * fs / fsMeasure)) * stickerCoef;
 }
 
 // void BaseMode::processBlock (float* buffer, const int numSamples)

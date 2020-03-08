@@ -5,7 +5,7 @@ BModalVoice::BModalVoice()
     for (int ch = 0; ch < 2; ++ch)
     {
         for (int i = 0; i < 4; ++i)
-            modes[ch].add (std::make_unique<BaseMode> (100.0f*(i+1), 10000.0f, std::complex<float> (1.4482e-4, 1.9481e-4)));
+            modes[ch].add (std::make_unique<BaseMode> (100.0f*(i+1), 20000.0f, std::complex<float> (1.4482e-4, 1.9481e-4)));
     }
 }
 
@@ -53,6 +53,22 @@ void BModalVoice::setCurrentPlaybackSampleRate (double sampleRate)
     {
         for (auto* m : modes[ch])
             m->prepare (sampleRate);
+    }
+}
+
+void BModalVoice::setWater (float water)
+{
+    if (modes[0].isEmpty())
+        return;
+
+    auto baseFreq = modes[0][0]->getBaseFreq();
+    auto newBaseFreq = baseFreq * (1.0f + water);
+    auto freqMult = newBaseFreq / modes[0][0]->getBaseFreq();
+
+    for (int ch = 0; ch < 2; ++ch)
+    {
+        for (auto* m : modes[ch])
+            m->setFrequency (freqMult);
     }
 }
 
