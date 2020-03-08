@@ -40,8 +40,14 @@ void BModalVoice::reload (File& bottleFile)
         float real = (float) line[2].getDoubleValue();
         float imag = (float) line[3].getDoubleValue();
 
+        if (i == 1) // use freq of second mode to calc waterbottle length
+        {
+            const float bottleHeight = 343.0f / (2 * freq); // meters
+            swingFreq = 1.0f / (MathConstants<float>::twoPi * sqrtf(bottleHeight / 9.8f));
+        }
+
         for (int ch = 0; ch < 2; ++ch)
-            modes[ch].add (std::make_unique<BaseMode> (freq, tau, std::complex<float> (real, imag)));
+            modes[ch].add (std::make_unique<BaseMode> (freq, tau, std::complex<float> (real, imag), 0.0f, fsMeasure));
     }
 }
 
@@ -60,6 +66,8 @@ void BModalVoice::setWater (float water)
 {
     if (modes[0].isEmpty())
         return;
+
+    waterLevel = water;
 
     auto baseFreq = modes[0][0]->getBaseFreq();
     auto newBaseFreq = baseFreq * (1.0f + water);
@@ -80,10 +88,19 @@ void BModalVoice::startNote (int midiNoteNumber, float velocity, SynthesiserSoun
     auto freq = MidiMessage::getMidiNoteInHertz (midiNoteNumber);
     auto freqMult = freq / modes[0][0]->getBaseFreq();
 
+    auto swingDamp = 0.0f;
+    if (waterLevel > 1.0f / 64.0f)
+        swingDamp = 1.0f - powf (waterLevel, 7.0f);
+
+    const int swingCutoff = jmin (modes[0].size(), 5);
+
     for (int ch = 0; ch < 2; ++ch)
     {
-        for (auto* m : modes[ch])
-            m->triggerNote (freqMult, velocity);
+        for (int m = 0; m < swingCutoff; ++m)
+            modes[ch][m]->triggerNote (freqMult, velocity, swingDamp, swingFreq);
+
+        for (int m = swingCutoff; m < modes[0].size(); ++m)
+            modes[ch][m]->triggerNote (freqMult, velocity);
     }
 }
 

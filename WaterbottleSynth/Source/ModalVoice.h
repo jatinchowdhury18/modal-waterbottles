@@ -36,6 +36,9 @@ private:
     const static int numModes = 40;
     std::unique_ptr<BaseMode> mode[numModes][2];
 
+    const float bottleHeight = 0.239f; // meters
+    const float swingFreq = 1.0f / (MathConstants<float>::twoPi * sqrtf(bottleHeight / 9.8f));
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ModalVoice)
 };
 

@@ -32,8 +32,10 @@ public:
     void reload (File& bottleFile);
 
 private:
-
     OwnedArray<BaseMode> modes[2];
+
+    float waterLevel = 0.0f;
+    float swingFreq = 0.0f;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BModalVoice)
 };

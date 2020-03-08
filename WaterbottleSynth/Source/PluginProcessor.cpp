@@ -21,7 +21,7 @@ WaterbottleSynthAudioProcessor::WaterbottleSynthAudioProcessor()
 #if JUCE_DEBUG
     const int nVoices = 2;
 #else // Release
-    const  int nVoices = 16;
+    const  int nVoices = 8;
 #endif
 
     for (int i = 0; i < nVoices; ++i)

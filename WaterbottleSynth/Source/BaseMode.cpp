@@ -6,17 +6,19 @@ BaseMode::BaseMode (std::function<float(float)> freqLambda, std::function<float(
     freq (freqLambda (0.0f)),
     tau (tauLambda (0.0f)),
     amp (amp),
-    stickerFactor (stickerFactor)
+    stickerFactor (stickerFactor),
+    fsMeasure (48000.0f)
 {
 }
 
-BaseMode::BaseMode (float freq, float tau, std::complex<float> amp, float stickerFactor) :
+BaseMode::BaseMode (float freq, float tau, std::complex<float> amp, float stickerFactor, float fsMeasure) :
     freqLambda ([freq] (float) { return freq; }),
     tauLambda ([tau] (float) { return tau; }),
     freq (freq),
     tau (tau),
     amp (amp),
-    stickerFactor (stickerFactor)
+    stickerFactor (stickerFactor),
+    fsMeasure (fsMeasure)
 {
 }
 
@@ -44,10 +46,17 @@ void BaseMode::setParameters (float water, float stickers)
     calcCoefs();
 }
 
-void BaseMode::triggerNote (float newFreqMult, float velocity)
+void BaseMode::triggerNote (float newFreqMult, float velocity, float newSwingDamp, float newSwingFreq)
 {
+    swingDamp = newSwingDamp;
+    freqOff = velocity * freq / 25.0f;
+    swingCoef = newSwingDamp * exp (jImag * MathConstants<float>::twoPi * newSwingFreq / fs);
+
     freqMult = newFreqMult;
     calcCoefs();
+
+    if (freq * freqMult > fs / 2.0f) // no aliasing
+        velocity = 0.0f;
 
     x = powf (velocity, 1.0f);
 }
@@ -61,7 +70,7 @@ void BaseMode::calcCoefs()
 
 void BaseMode::calcOscCoef()
 {
-    oscCoef = exp (jImag * MathConstants<float>::twoPi * freq * freqMult / fs);
+    oscCoef = exp (jImag * MathConstants<float>::twoPi * (freq + std::imag (freqOff)) * freqMult / fs);
 }
 
 void BaseMode::calcDecayCoef()

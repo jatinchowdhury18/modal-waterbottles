@@ -8,10 +8,10 @@ class BaseMode
 {
 public:
     BaseMode (std::function<float(float)> freqLambda, std::function<float(float)> tauLambda, std::complex<float> amp, float stickerFactor=0.0f);
-    BaseMode (float freq, float tau, std::complex<float> amp, float stickerFactor=0.0f);
+    BaseMode (float freq, float tau, std::complex<float> amp, float stickerFactor=0.0f, float fsMeasure=48000.0f);
 
     void prepare (double sampleRate);
-    void triggerNote (float newFreqMult, float velocity);
+    void triggerNote (float newFreqMult, float velocity, float newSwingDamp=0.0f, float newSwingFreq=0.0f);
     void setParameters (float water, float stickers);
 
     void setFrequency (float newFreqMult);
@@ -23,6 +23,12 @@ public:
 
     inline float getNextSample() noexcept
     {
+        if (swingDamp > 0.0f)
+        {
+            freqOff = swingCoef * freqOff;
+            calcOscCoef();
+        }
+
         auto y = ampCoef * x + oscCoef * decayCoef * y1;
 
         y1 = y;
@@ -48,11 +54,14 @@ private:
     float tau = 28340.8f;
     std::complex<float> amp = std::complex<float> (1.6375e-4, 8.2776e-4);
     float freqMult = 1.0f;
+    float swingDamp = 0.0f;
+    std::complex<float> freqOff = 0.0f;
+    std::complex<float> swingCoef = 0.0f;
 
     float fs = 44100.0f;
     const std::complex<float> jImag = std::complex<float> (0, 1);
 
-    const float fsMeasure = 48000.0f;
+    const float fsMeasure;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BaseMode)
 };
