@@ -164,7 +164,7 @@ of a waterbottle using modal signal processing. We take extensive
 measurements of two waterbottles with considerations for the water
 contained within the bottles, and stickers attached to the exterior
 of the bottles. We perform modal analysis of these measurements and
-implementa a modal waterbottle model as a real-time synthesizer.
+implement a modal waterbottle model as a real-time synthesizer.
 \end{abstract}
 
 \section{Introduction} \label{sec:intro}
@@ -175,13 +175,19 @@ for synthesizing carillon bells
 artificial reverberation \cite{abel2014a}, cymbal synthesis \cite{travis_cymbals},
 and more \cite{abel_kurt_modal}.
 In this paper, we extend this previous work to use modal synthesis
-for the accurate modelling of waterbottle acoustics. Waterbottles are
-particularly well-suited for modal modelling since they have inharmonic
-partials. Further, certain waterbottles have been known to have a
-pleasing acoustic response, while others sound notably worse.
-Additionally, the acoustic response of a waterbottle changes
-depending on the amount and the type of liquid contained within, as
-well as the potential placement of stickers on the exterior of the bottle.
+for the accurate modelling of waterbottle acoustics.
+\newline\newline
+Although most waterbottles are not designed to function as musical
+instruments, the authors have noticed that certain waterbottles
+can produce a pleasing resonant sound when struck with a knee, hand,
+or other body part. The authors further noticed that waterbottles can
+produce a great variety of sounds, depending not only on the shape and
+material of the bottle, but also on the amount and type of liquid contained
+within the bottle, as well as the potential placement of stickers on the
+exterior of the bottle. Waterbottle acoustics have not gone unnoticed
+by waterbottle manufacturers, as at least one prominent manufacturer claims
+to be well aware of the pleasing acoustic properties of their bottles
+\cite{hydroflask_email}.
 In this writing, we take measurements from a 32 oz. Wide Mouth
 HydroFlask\footnote{\url{https://www.hydroflask.com/32-oz-wide-mouth/color,cobalt,a,92,o,53}},
 compared to the waterbottle given to attendees of the 2019 DAFx
@@ -274,6 +280,21 @@ This process is described in full in \cite{rau:das:canfielddafilou:carillon:2019
     \label{fig:modal_analysis}
 \end{figure*}
 %
+\subsubsection{Mode Synthesis} \label{sec:synthesis}
+%
+For synthesizing the modes we use the Max Matthews
+phasor filter, as introduced in \cite{phasorfilter}.
+This filter is described by the difference equation:
+\begin{equation}
+    y_m[n] = \alpha_m x[n] + e^{j\omega_m} e^{-1/\tau_m} y_m[n-1]
+    \label{eq:phasor}
+\end{equation}
+%
+where $\tau_m$ is the mode decay rate described above,
+$\alpha_m$ is the complex amplitude of the mode, and $\omega_m$
+is the mode frequency. This filter structure is known for
+having favorable numerical properties, as well as for being
+stable regardless of real-time parameter modulation.
 \subsection{Water Level Analysis} \label{sec:water}
 %
 Next we examine the how the modal response of the waterbottle
@@ -284,7 +305,8 @@ changes as the water level in the waterbottle changes.
 Measurements od the HydroFlask bottle show that as the water
 level increases, the first mode frequency increases, while the
 higher modes stay at the same frequency. This makes physical
-sense because having a higher water level inside the bottle
+sense since the lowest mode frequency corresponds to the Helmholtz
+resonance of the bottle, and changing the water level
 effectively decreases the size of the air column inside the
 bottle, thereby causing the lowest mode frequency to increase
 (@TODO: ask Mark if this is correct).
@@ -337,22 +359,81 @@ variations (see \cref{fig:sticker-mode-damp}).
     \label{fig:sticker-mode-damp}
 \end{figure}
 %
-\subsection{Mode Synthesis} \label{sec:synthesis}
+\subsection{Swinging Vibrato} \label{sec:swing}
 %
-For synthesizing the modes we use the Max Matthews
-phasor filter, as introduced in \cite{phasorfilter}.
-This filter is described by the difference equation:
+When a waterbottle is struck in such a way to produce an acoustic
+response, it often swings back and forth a little bit. This swinging
+causes the water within the bottle to move with the swinging, thereby
+causing the lowest mode frequency to oscillate. This oscillation
+manifests itself perceptually as a sort of vibrato effect. In
+order to model this ``swinging vibrato'' we use the following
+steps:
+\begin{enumerate}
+    \item Measure (or estimate) the height of the bottle.
+    \item Calculate the swinging frequency of the bottle.
+    \item Synthesize an initial amplitude and damping factor
+        for the swinging oscillations.
+\end{enumerate}
+%
+\subsubsection{Bottle Height}
+%
+In cases where the height of the waterbottle cannot be measured directly,
+it is possible to estimate the height from the bottle's modal characteristics.
+For a typical cylindrical waterbottle, the second lowest mode frequency
+corresponds to the bottle's resonance along it's vertical length. As such,
+the bottle height can be estimated as:
 \begin{equation}
-    y_m[n] = \alpha_m x[n] + e^{j\omega_m} e^{-1/\tau_m} y_m[n-1]
-    \label{eq:phasor}
+    L = \frac{v_{sound}}{2 f_2}
+    \label{eq:bottle-height}
 \end{equation}
+where $v_{sound} = 343 m/s$ is the speed of sound in air, $f_2$ is the second
+lowest mode frequency, and $L$ is the height of the bottle.
 %
-where $\tau_m$ is the mode decay rate described above,
-$\alpha_m$ is the complex amplitude of the mode, and $\omega_m$
-is the mode frequency. This filter structure is known for
-having favorable numerical properties, as well as for being
-stable regardless of real-time parameter modulation.
+\subsubsection{Swinging Frequency}
 %
+The frequency of a pendulum can be derived from Newton's Laws as:
+\begin{equation}
+    f_{swing} = \frac{1}{2\pi} \sqrt{\frac{g}{L}}
+    \label{eq:swing-freq}
+\end{equation}
+where $g = 9.8 m/s^2$ is the acceleration due to gravity at the surface
+of Earth.
+%
+\subsubsection{Swinging Amplitude and Damping}
+%
+The amplitude of a waterbottle's swinging oscillations typically depends
+on how hard the bottle is struck. As such, the amplitude of the swinging
+vibrato should vary proportionally with the desired volume of the synthesized
+waterbottle strike, for example with the ``velocity'' of a MIDI note.
+The damping of a waterbottle's swinging can be highly dependent on the method
+by which the waterbottle is anchored. As such, the damping factor is left
+for the reader to determine for their own specific use cases.
+
+@TODO: make a plot for this section.
+%
+\subsection{Impact Analysis} \label{sec:impact}
+%
+In real-world situations, a waterbottle is typically struck using a body part
+(knee, elbow, knuckles, etc), or using a striker that can be easily found in
+nature, for instance a stick. With the goal of being able to synthesize these
+types of impacts, we used an accelerometer to measure the impacts of
+several body parts, as well as several types of drumsticks on a waterbottle.
+\Cref{fig:impact-time,fig:impact-freq} shows the time and frequency domain
+measurements of the various impact types.
+\begin{figure}
+    \centering
+    \includegraphics[width=3in]{../Figures/Impacts_time}
+    \caption{\it{asdf}}
+    \label{fig:impact-time}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=3in]{../Figures/Impacts_freq}
+    \caption{\it{asdf}}
+    \label{fig:impact-freq}
+\end{figure}
+
+
 \section{Results} \label{sec:results}
 %
 Some general results \dots
