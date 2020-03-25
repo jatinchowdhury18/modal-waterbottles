@@ -106,7 +106,13 @@ void BModalVoice::startNote (int midiNoteNumber, float velocity, SynthesiserSoun
 
 void BModalVoice::stopNote (float /*velocity*/, bool  allowTailOff)
 {
-    clearCurrentNote();
+    if (! allowTailOff)
+    {
+        clearCurrentNote();
+        for (int ch = 0; ch < 2; ++ch)
+            for (int m = 0; m < numModes; ++m)
+                mode[m][ch]->reset();
+    }
 }
 
 void BModalVoice::renderNextBlock (AudioSampleBuffer& buffer, int startSample, int numSamples)

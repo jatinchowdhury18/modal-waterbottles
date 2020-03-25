@@ -104,7 +104,13 @@ void ModalVoice::startNote (int midiNoteNumber, float velocity, SynthesiserSound
 
 void ModalVoice::stopNote (float /*velocity*/, bool  allowTailOff)
 {
-    clearCurrentNote();
+    if (! allowTailOff)
+    {
+        clearCurrentNote();
+        for (int ch = 0; ch < 2; ++ch)
+            for (int m = 0; m < numModes; ++m)
+                mode[m][ch]->reset();
+    }
 }
 
 void ModalVoice::renderNextBlock (AudioSampleBuffer& buffer, int startSample, int numSamples)
@@ -119,6 +125,4 @@ void ModalVoice::renderNextBlock (AudioSampleBuffer& buffer, int startSample, in
                 x[n] += mode[m][ch]->getNextSample();
         }
     }
-
-    // buffer.applyGain (0.5f);
 }

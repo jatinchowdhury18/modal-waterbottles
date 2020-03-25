@@ -11,6 +11,7 @@ public:
     BaseMode (float freq, float tau, std::complex<float> amp, float stickerFactor=0.0f, float fsMeasure=48000.0f);
 
     void prepare (double sampleRate);
+    void reset() { y1 = 0.0f; }
     void triggerNote (float newFreqMult, float velocity, float newSwingDamp=0.0f, float newSwingFreq=0.0f);
     void setParameters (float water, float stickers);
 
