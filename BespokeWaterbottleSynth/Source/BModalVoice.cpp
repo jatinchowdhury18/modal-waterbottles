@@ -110,8 +110,8 @@ void BModalVoice::stopNote (float /*velocity*/, bool  allowTailOff)
     {
         clearCurrentNote();
         for (int ch = 0; ch < 2; ++ch)
-            for (int m = 0; m < numModes; ++m)
-                mode[m][ch]->reset();
+            for (auto* m : modes[ch])
+                m->reset();
     }
 }
 
