@@ -26,7 +26,7 @@ BespokeWaterbottleSynthAudioProcessorEditor::BespokeWaterbottleSynthAudioProcess
     reloadButton.onClick = [&p]
     {
         FileChooser fileChooser (String ("Open waterbottle file"), File(), "*.waterbottle");
-
+        
         if (fileChooser.browseForFileToOpen())
         {
             auto file = fileChooser.getResult();
