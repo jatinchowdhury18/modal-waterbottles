@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <h1>Choose a file to analyze</h1>
+    <form action="." method="POST" enctype="multipart/form-data">
+        <input type="file" name="file"/>
+        <input type="submit" value="Upload"/>
+    </form><br></br>
+    <audio controls>
+        <source src="{{ actual_audio }}">
+    </audio><br></br>
+    <img src="{{ measurement }}"/>
+    <form action="." method="POST">
+        <input type="submit" value="Analyze"/>
+    </form><br></br>
+    <audio controls>
+        <source src="{{ synth_audio }}">
+    </audio><br></br>
+    <img src="{{ synthesized }}"/>
+    <form action="/download">
+        <input type="submit" value="Download"/>
+    </form>
+</body>
+</html>

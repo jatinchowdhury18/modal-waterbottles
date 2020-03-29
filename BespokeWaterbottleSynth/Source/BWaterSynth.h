@@ -27,6 +27,7 @@ public:
         if (reloading) // watching out for threads...
             return;
 
+        MessageManagerLock mml;
         Synthesiser::renderVoices (buffer, startSample, numSamples);
     }
 
@@ -46,6 +47,7 @@ public:
 
 private:
     std::atomic_bool reloading;
+
     float waterLevel = 0.0f;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BWaterSynth)
