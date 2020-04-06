@@ -12,15 +12,10 @@ import numpy as np
 from scipy.io import wavfile
 import audio_dspy as adsp
 
-from measurements_page import render_measurements_page
 from database_page import render_database
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = app.root_path + '/uploads/'
-
-@app.route('/measurements')
-def measurements():
-    return render_measurements_page()
 
 @app.route('/database')
 def database():
