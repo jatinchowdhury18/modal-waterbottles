@@ -37,7 +37,7 @@ as well as through a connected MIDI keyboard.
 
 ### WaterbottleSynth
 
-<img src="./Figures/WaterBottleSynthPlugin.png" alt="Pic" width="500">
+<img src="https://raw.githubusercontent.com/jatinchowdhury18/modal-waterbottles/master/Figures/WaterbottleSynthPlugin.PNG" alt="Pic" width="500">
 
 The WaterbottleSynth is a real-time modal synthesizer model of a 32 Oz.
 Wide-Mouth HydroFlask. The amount of water inside the bottle, as well as
@@ -50,7 +50,7 @@ sticker. The stickers alter the damping of the waterbottle modes.
 
 ### BespokeWaterbottleSynth
 
-<img src="./Figures/BespokeWaterBottleSynthPlugin.png" alt="Pic" width="500">
+<img src="https://raw.githubusercontent.com/jatinchowdhury18/modal-waterbottles/master/Figures/BespokeWaterbottleSynthPlugin.PNG" alt="Pic" width="500">
 
 The BespokeWaterBottleSynth is a real-time synthesizer that can be used
 to model any waterbottle. To load your own waterbottle, click the "reload"
