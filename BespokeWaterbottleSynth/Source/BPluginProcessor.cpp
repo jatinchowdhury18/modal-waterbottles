@@ -50,7 +50,7 @@ AudioProcessorValueTreeState::ParameterLayout BespokeWaterbottleSynthAudioProces
     params.push_back (std::make_unique<AudioParameterChoice> ("striker", "Striker", StrikerFilter::getChoices(), 0));
     params.push_back (std::make_unique<AudioParameterFloat> ("swingdamp", "Swing Damp", 0.0f, 1.0f, 0.0f));
     params.push_back (std::make_unique<AudioParameterInt> ("swingmodes", "Swing Modes", 0, 10, 0));
-    params.push_back (std::make_unique<AudioParameterFloat> ("gain", "GainDB", -30.0f, 30.0f, 0.0f));
+    params.push_back (std::make_unique<AudioParameterFloat> ("gain", "Gain [dB]", -30.0f, 30.0f, 0.0f));
 
     return { params.begin(), params.end() };
 }

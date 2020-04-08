@@ -34,34 +34,26 @@ BespokeWaterbottleSynthAudioProcessorEditor::BespokeWaterbottleSynthAudioProcess
         }
     };
 
-    // Water amount slider
-    addAndMakeVisible (waterSlide);
-    waterSlide.setSliderStyle (Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    waterAttach.reset (new AudioProcessorValueTreeState::SliderAttachment (p.getVTS(), "water", waterSlide));
-    waterSlide.setTextBoxStyle (Slider::TextBoxBelow, false, 60, 15);
+    auto setupSlider = [=, &p] (Slider& slide, std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment>& attach,
+        String paramID, std::function<void()> onClick = {})
+    {
+        addAndMakeVisible (slide);
+        slide.setSliderStyle (Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+        attach.reset (new AudioProcessorValueTreeState::SliderAttachment (p.getVTS(), paramID, slide));
+        slide.setTextBoxStyle (Slider::TextBoxBelow, false, 60, 15);
+        slide.setName (p.getVTS().getParameter (paramID)->name);
+        slide.onValueChange = onClick;
+    };
+
+    setupSlider (waterSlide, waterAttach, "water");
+    setupSlider (swingDampSlide, swingDampAttach, "swingdamp");
+    setupSlider (swingModesSlide, swingModesAttach, "swingmodes");
+    setupSlider (gainSlide, gainAttach, "gain");
 
     // Striker combobox
     addAndMakeVisible (strikerBox);
     strikerBox.addItemList (StrikerFilter::getChoices(), 1);
     strikerAttach.reset (new AudioProcessorValueTreeState::ComboBoxAttachment (p.getVTS(), "striker", strikerBox));
-
-    // Swing damping slider
-    addAndMakeVisible (swingDampSlide);
-    swingDampSlide.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    swingDampSlide.setTextBoxStyle (Slider::TextBoxBelow, false, 60, 15);
-    swingDampAttach.reset (new AudioProcessorValueTreeState::SliderAttachment (p.getVTS(), "swingdamp", swingDampSlide));
-
-    // Swing modes slider
-    addAndMakeVisible (swingModesSlide);
-    swingModesSlide.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    swingModesSlide.setTextBoxStyle (Slider::TextBoxBelow, false, 60, 15);
-    swingModesAttach.reset (new AudioProcessorValueTreeState::SliderAttachment (p.getVTS(), "swingmodes", swingModesSlide));
-
-    // Gain slider
-    addAndMakeVisible (gainSlide);
-    gainSlide.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    gainSlide.setTextBoxStyle (Slider::TextBoxBelow, false, 60, 15);
-    gainAttach.reset (new AudioProcessorValueTreeState::SliderAttachment (p.getVTS(), "gain", gainSlide));
 
     addAndMakeVisible (keyboard);
     keyboard.setKeyPressBaseOctave (3);
@@ -84,10 +76,15 @@ void BespokeWaterbottleSynthAudioProcessorEditor::paint (Graphics& g)
     g.fillAll (Colours::black);
 
     g.setColour (Colours::white);
-    g.drawFittedText ("Water",       110, 3, 90, 10, Justification::centred, 1);
-    g.drawFittedText ("Swing Damp",  210, 3, 90, 10, Justification::centred, 1);
-    g.drawFittedText ("Swing Modes", 310, 3, 90, 10, Justification::centred, 1);
-    g.drawFittedText ("Gain [dB]",   410, 3, 90, 10, Justification::centred, 1);
+    auto makeName = [&g] (Component& comp)
+    {
+        g.drawFittedText (comp.getName(), comp.getX(), comp.getY() - 5, comp.getWidth(), 10, Justification::centred, 1);
+    };
+
+    makeName (waterSlide);
+    makeName (swingDampSlide);
+    makeName (swingModesSlide);
+    makeName (gainSlide);
 }
 
 void BespokeWaterbottleSynthAudioProcessorEditor::resized()
