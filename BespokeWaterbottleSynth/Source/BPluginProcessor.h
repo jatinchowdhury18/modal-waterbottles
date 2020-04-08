@@ -13,6 +13,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "BWaterSynth.h"
 #include "StrikerFilter.h"
+#include "Gain.h"
 
 //==============================================================================
 /**
@@ -69,6 +70,7 @@ private:
     const int nVoices = 2;
     BWaterSynth synth;
     StrikerFilter strikerFilter;
+    Gain gain;
 
     static AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     AudioProcessorValueTreeState vts;
@@ -76,6 +78,7 @@ private:
     float* strikerParam = nullptr;
     float* swingDampParam = nullptr;
     float* swingModesParam = nullptr;
+    float* gainDBParam = nullptr;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BespokeWaterbottleSynthAudioProcessor)

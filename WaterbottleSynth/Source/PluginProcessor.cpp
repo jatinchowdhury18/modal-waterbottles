@@ -19,6 +19,7 @@ WaterbottleSynthAudioProcessor::WaterbottleSynthAudioProcessor()
     strikerParam = vts.getRawParameterValue ("striker");
     swingDampParam = vts.getRawParameterValue ("swingdamp");
     swingModesParam = vts.getRawParameterValue ("swingmodes");
+    gainParamDB = vts.getRawParameterValue ("gain");
 
 #if JUCE_DEBUG
     const int nVoices = 2;
@@ -44,6 +45,7 @@ AudioProcessorValueTreeState::ParameterLayout WaterbottleSynthAudioProcessor::cr
     params.push_back (std::make_unique<AudioParameterChoice> ("striker", "Striker", StrikerFilter::getChoices(), 0));
     params.push_back (std::make_unique<AudioParameterFloat> ("swingdamp", "Swing Damp", 0.0f, 1.0f, 0.0f));
     params.push_back (std::make_unique<AudioParameterInt> ("swingmodes", "Swing Modes", 0, 10, 0));
+    params.push_back (std::make_unique<AudioParameterFloat> ("gain", "GainDB", -30.0f, 30.0f, 0.0f));
 
     return { params.begin(), params.end() };
 }
@@ -113,6 +115,7 @@ void WaterbottleSynthAudioProcessor::prepareToPlay (double sampleRate, int sampl
 {
     synth.setCurrentPlaybackSampleRate (sampleRate);
     strikerFilter.prepareToPlay (sampleRate, samplesPerBlock);
+    gain.prepare();
 }
 
 void WaterbottleSynthAudioProcessor::releaseResources()
@@ -171,6 +174,9 @@ void WaterbottleSynthAudioProcessor::processBlock (AudioBuffer<float>& buffer, M
 
     strikerFilter.setStriker ((int) *strikerParam);
     strikerFilter.processBlock (buffer);
+
+    gain.setGain (Decibels::decibelsToGain (*gainParamDB));
+    gain.processBlock (buffer);
 }
 
 bool WaterbottleSynthAudioProcessor::hasEditor() const

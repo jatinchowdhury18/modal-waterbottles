@@ -34,6 +34,7 @@
       <FILE id="OkKUEF" name="water.png" compile="0" resource="1" file="Resources/water.png"/>
     </GROUP>
     <GROUP id="{573A3561-25C8-0EE1-A88F-DD1CDE61DE49}" name="Source">
+      <FILE id="JpGJC1" name="Gain.h" compile="0" resource="0" file="Source/Gain.h"/>
       <FILE id="GOPNmn" name="KnobsComponent.cpp" compile="1" resource="0"
             file="Source/KnobsComponent.cpp"/>
       <FILE id="fkOzbx" name="KnobsComponent.h" compile="0" resource="0"

@@ -57,6 +57,12 @@ BespokeWaterbottleSynthAudioProcessorEditor::BespokeWaterbottleSynthAudioProcess
     swingModesSlide.setTextBoxStyle (Slider::TextBoxBelow, false, 60, 15);
     swingModesAttach.reset (new AudioProcessorValueTreeState::SliderAttachment (p.getVTS(), "swingmodes", swingModesSlide));
 
+    // Gain slider
+    addAndMakeVisible (gainSlide);
+    gainSlide.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
+    gainSlide.setTextBoxStyle (Slider::TextBoxBelow, false, 60, 15);
+    gainAttach.reset (new AudioProcessorValueTreeState::SliderAttachment (p.getVTS(), "gain", gainSlide));
+
     addAndMakeVisible (keyboard);
     keyboard.setKeyPressBaseOctave (3);
     keyboard.setLowestVisibleKey (24);
@@ -78,18 +84,20 @@ void BespokeWaterbottleSynthAudioProcessorEditor::paint (Graphics& g)
     g.fillAll (Colours::black);
 
     g.setColour (Colours::white);
-    g.drawFittedText ("Water",       180, 3, 90, 10, Justification::centred, 1);
-    g.drawFittedText ("Swing Damp",  280, 3, 90, 10, Justification::centred, 1);
-    g.drawFittedText ("Swing Modes", 380, 3, 90, 10, Justification::centred, 1);
+    g.drawFittedText ("Water",       110, 3, 90, 10, Justification::centred, 1);
+    g.drawFittedText ("Swing Damp",  210, 3, 90, 10, Justification::centred, 1);
+    g.drawFittedText ("Swing Modes", 310, 3, 90, 10, Justification::centred, 1);
+    g.drawFittedText ("Gain [dB]",   410, 3, 90, 10, Justification::centred, 1);
 }
 
 void BespokeWaterbottleSynthAudioProcessorEditor::resized()
 {
     reloadButton.setBounds (10, 140, 80, 20);
     strikerBox.setBounds   (10,  40, 90, 20);
-    waterSlide.setBounds  (180,  10, 90, 85);
-    swingDampSlide.setBounds   (280,  10, 90, 85);
-    swingModesSlide.setBounds  (380,  10, 90, 85);
+    waterSlide.setBounds       (110,  10, 90, 85);
+    swingDampSlide.setBounds   (210,  10, 90, 85);
+    swingModesSlide.setBounds  (310,  10, 90, 85);
+    gainSlide.setBounds        (410,  10, 90, 85);
 
     keyboard.setBounds (getBounds().removeFromRight (460).removeFromBottom (100));
 }

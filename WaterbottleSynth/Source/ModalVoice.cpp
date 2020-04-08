@@ -125,4 +125,7 @@ void ModalVoice::renderNextBlock (AudioSampleBuffer& buffer, int startSample, in
                 x[n] += mode[m][ch]->getNextSample();
         }
     }
+
+    if (buffer.getMagnitude (0, buffer.getNumSamples()) < 0.0005f)
+        clearCurrentNote();
 }

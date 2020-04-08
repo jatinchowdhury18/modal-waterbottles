@@ -26,8 +26,10 @@ public:
     {
         if (swingDamp > 0.0f)
         {
+            auto oldFreqOff = freqOff;
             freqOff = swingCoef * freqOff;
-            calcOscCoef();
+            oscCoef = pow (oscCoef, (freq + std::imag (freqOff)) / (freq + std::imag (oldFreqOff)));
+            totCoef = oscCoef * decayCoef;
         }
 
         auto y = x + totCoef * y1;

@@ -22,6 +22,7 @@
     <GROUP id="{694DC864-FF33-B70B-C23F-38ECB1304B4A}" name="Shared">
       <FILE id="RsNmI5" name="BaseMode.cpp" compile="1" resource="0" file="../WaterbottleSynth/Source/BaseMode.cpp"/>
       <FILE id="k3QId1" name="BaseMode.h" compile="0" resource="0" file="../WaterbottleSynth/Source/BaseMode.h"/>
+      <FILE id="PiYwio" name="Gain.h" compile="0" resource="0" file="../WaterbottleSynth/Source/Gain.h"/>
       <FILE id="LR16xb" name="StrikerFilter.cpp" compile="1" resource="0"
             file="../WaterbottleSynth/Source/StrikerFilter.cpp"/>
       <FILE id="PItbHX" name="StrikerFilter.h" compile="0" resource="0" file="../WaterbottleSynth/Source/StrikerFilter.h"/>

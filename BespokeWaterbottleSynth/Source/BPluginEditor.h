@@ -47,6 +47,9 @@ private:
     Slider swingModesSlide;
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> swingModesAttach;
 
+    Slider gainSlide;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> gainAttach;
+
     MidiKeyboardComponent keyboard;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BespokeWaterbottleSynthAudioProcessorEditor)

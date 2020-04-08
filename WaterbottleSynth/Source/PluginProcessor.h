@@ -4,6 +4,7 @@
 #include "Stickers.h"
 #include "WaterSynth.h"
 #include "StrikerFilter.h"
+#include "Gain.h"
 
 class WaterbottleSynthAudioProcessor  : public AudioProcessor
 {
@@ -59,6 +60,7 @@ private:
     float* strikerParam = nullptr;
     float* swingDampParam = nullptr;
     float* swingModesParam = nullptr;
+    float* gainParamDB = nullptr;
 
     void calcStickerCoverage();
     float stickerAmt = 0.0f;
@@ -66,6 +68,7 @@ private:
 
     WaterSynth synth;
     StrikerFilter strikerFilter;
+    Gain gain;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WaterbottleSynthAudioProcessor)
 };

@@ -129,4 +129,7 @@ void BModalVoice::renderNextBlock (AudioSampleBuffer& buffer, int startSample, i
                 x[n] += m->getNextSample();
         }
     }
+
+    if (buffer.getMagnitude (0, buffer.getNumSamples()) < 0.0005f)
+        clearCurrentNote();
 }

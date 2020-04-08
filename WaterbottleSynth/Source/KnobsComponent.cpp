@@ -25,6 +25,12 @@ KnobsComponent::KnobsComponent (WaterbottleSynthAudioProcessor& p)
     swingModesSlide.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     swingModesSlide.setTextBoxStyle (Slider::TextBoxBelow, false, 60, 15);
     swingModesAttach.reset (new AudioProcessorValueTreeState::SliderAttachment (p.vts, "swingmodes", swingModesSlide));
+
+    // Gain slider
+    addAndMakeVisible (gainSlide);
+    gainSlide.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
+    gainSlide.setTextBoxStyle (Slider::TextBoxBelow, false, 60, 15);
+    gainAttach.reset (new AudioProcessorValueTreeState::SliderAttachment (p.vts, "gain", gainSlide));
 }
 
 void KnobsComponent::paint (Graphics& g)
@@ -34,7 +40,8 @@ void KnobsComponent::paint (Graphics& g)
     g.setColour (Colours::white);
     g.drawFittedText ("Water", 0, 5, 100, 10, Justification::centred, 1);
     g.drawFittedText ("Swing Damp", 0, 155, 100, 10, Justification::centred, 1);
-    g.drawFittedText ("Swing Modes", 0, 305, 100, 10, Justification::centred, 1);
+    g.drawFittedText ("Swing Modes", 0, 270, 100, 10, Justification::centred, 1);
+    g.drawFittedText ("Gain [dB]", 0, 385, 100, 10, Justification::centred, 1);
 }
 
 void KnobsComponent::resized()
@@ -43,5 +50,6 @@ void KnobsComponent::resized()
     strikerBox.setBounds  (5, 115, 90, 20);
     
     swingDampSlide.setBounds  (10, 160, 80, 90);
-    swingModesSlide.setBounds (10, 310, 80, 90);
+    swingModesSlide.setBounds (10, 275, 80, 90);
+    gainSlide.setBounds (10, 390, 80, 90);
 }

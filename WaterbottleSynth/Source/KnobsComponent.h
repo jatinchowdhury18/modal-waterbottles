@@ -39,6 +39,9 @@ private:
     Slider swingModesSlide;
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> swingModesAttach;
 
+    Slider gainSlide;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> gainAttach;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KnobsComponent)
 };
 
