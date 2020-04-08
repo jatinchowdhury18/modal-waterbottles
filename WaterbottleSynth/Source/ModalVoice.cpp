@@ -63,10 +63,12 @@ void ModalVoice::setCurrentPlaybackSampleRate (double sampleRate)
     }
 }
 
-void ModalVoice::setParameters (float water, float stickers)
+void ModalVoice::setParameters (float water, float stickers, float newSwingDamp, int newSwingModes)
 {
     waterLevel = water;
     stickersAmt = stickers;
+    swingDampFactor = newSwingDamp;
+    swingModes = newSwingModes;
 
     for (int ch = 0; ch < 2; ++ch)
     {
@@ -88,16 +90,14 @@ void ModalVoice::startNote (int midiNoteNumber, float velocity, SynthesiserSound
 
     auto swingDamp = 0.0f;
     if (waterLevel > 1.0f / 64.0f)
-        swingDamp = 1.0f - powf (waterLevel, 7.0f);
-
-    const int swingCutoff = 5;
+        swingDamp = powf (swingDampFactor, (float) 1.0e-4) * (1.0f - powf (waterLevel, 7.0f));
 
     for (int ch = 0; ch < 2; ++ch)
     {
-        for (int m = 0; m < swingCutoff; ++m)
-            mode[m][ch]->triggerNote (freqMult, velocity, swingDamp, swingFreq*2);
+        for (int m = 0; m < jmin (swingModes, numModes); ++m)
+            mode[m][ch]->triggerNote (freqMult, velocity, swingDamp, swingFreq);
 
-        for (int m = swingCutoff; m < numModes; ++m)
+        for (int m = swingModes; m < numModes; ++m)
             mode[m][ch]->triggerNote (freqMult, velocity);
     }
 }

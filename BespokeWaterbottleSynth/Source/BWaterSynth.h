@@ -17,22 +17,27 @@ public:
                 voiceCast->reload (bottleFile);
     }
 
-    void setWater (float water)
+    void setParameters (float water, float newSwingDamp, int newSwingModes)
     {
-        if (water == waterLevel) // no updating needed
+        if (water == waterLevel && swingDamp == newSwingDamp
+         && swingModes == newSwingModes) // no updating needed
             return;
 
         waterLevel = water;
+        swingDamp = newSwingDamp;
+        swingModes = newSwingModes;
 
         for (auto* voice : voices)
         {
             if (auto* voiceCast = dynamic_cast<BModalVoice*> (voice))
-                voiceCast->setWater (waterLevel);
+                voiceCast->setParameters (waterLevel, swingDamp, swingModes);
         }
     }
 
 private:
     float waterLevel = 0.0f;
+    float swingDamp = 0.0f;
+    int swingModes = 0;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BWaterSynth)
 };

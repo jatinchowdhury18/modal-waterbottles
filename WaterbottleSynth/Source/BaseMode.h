@@ -30,7 +30,7 @@ public:
             calcOscCoef();
         }
 
-        auto y = ampCoef * x + oscCoef * decayCoef * y1;
+        auto y = x + totCoef * y1;
 
         y1 = y;
         x = 0.0f;
@@ -39,11 +39,12 @@ public:
 
 private:
     std::complex<float> y1 = 0.0f;
-    float x = 0.0f;
+    std::complex<float> x = 0.0f;
 
     std::complex<float> decayCoef = 0.0f;
     std::complex<float> oscCoef = 0.0f;
     std::complex<float> ampCoef = 0.0f;
+    std::complex<float> totCoef = 0.0f;
 
     const float stickerFactor;
     float stickerCoef = 1.0f;

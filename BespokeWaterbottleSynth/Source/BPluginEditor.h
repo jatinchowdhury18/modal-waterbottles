@@ -41,6 +41,12 @@ private:
     ComboBox strikerBox;
     std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> strikerAttach;
 
+    Slider swingDampSlide;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> swingDampAttach;
+
+    Slider swingModesSlide;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> swingModesAttach;
+
     MidiKeyboardComponent keyboard;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BespokeWaterbottleSynthAudioProcessorEditor)

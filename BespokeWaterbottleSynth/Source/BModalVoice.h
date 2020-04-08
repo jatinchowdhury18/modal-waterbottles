@@ -25,7 +25,7 @@ public:
     void pitchWheelMoved (int) override      {}
     void controllerMoved (int, int) override {}
 
-    void setWater (float water);
+    void setParameters (float water, float newSwingDamp, int newSwingModes);
 
     void renderNextBlock (AudioSampleBuffer& outputBuffer, int startSample, int numSamples) override;
 
@@ -35,7 +35,9 @@ private:
     OwnedArray<BaseMode> modes[2];
 
     float waterLevel = 0.0f;
-    float swingFreq = 0.0f;
+    float swingFreq = 10.0f;
+    float swingDampFactor = 0.0f;
+    int swingModes = 0;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BModalVoice)
 };

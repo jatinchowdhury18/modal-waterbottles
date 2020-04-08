@@ -74,6 +74,8 @@ private:
     AudioProcessorValueTreeState vts;
     float* waterParam = nullptr;
     float* strikerParam = nullptr;
+    float* swingDampParam = nullptr;
+    float* swingModesParam = nullptr;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BespokeWaterbottleSynthAudioProcessor)

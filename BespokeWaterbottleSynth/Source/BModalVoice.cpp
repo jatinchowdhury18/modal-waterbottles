@@ -62,12 +62,14 @@ void BModalVoice::setCurrentPlaybackSampleRate (double sampleRate)
     }
 }
 
-void BModalVoice::setWater (float water)
+void BModalVoice::setParameters (float water, float newSwingDamp, int newSwingModes)
 {
     if (modes[0].isEmpty())
         return;
 
     waterLevel = water;
+    swingDampFactor = newSwingDamp;
+    swingModes = newSwingModes;
 
     auto baseFreq = modes[0][0]->getBaseFreq();
     auto newBaseFreq = baseFreq * (1.0f + water);
@@ -90,9 +92,9 @@ void BModalVoice::startNote (int midiNoteNumber, float velocity, SynthesiserSoun
 
     auto swingDamp = 0.0f;
     if (waterLevel > 1.0f / 64.0f)
-        swingDamp = 1.0f - powf (waterLevel, 7.0f);
+        swingDamp = powf (swingDampFactor, (float) 1.0e-4) * (1.0f - powf (waterLevel, 7.0f));
 
-    const int swingCutoff = jmin (modes[0].size(), 5);
+    const int swingCutoff = jmin (modes[0].size(), swingModes);
 
     for (int ch = 0; ch < 2; ++ch)
     {
@@ -127,6 +129,4 @@ void BModalVoice::renderNextBlock (AudioSampleBuffer& buffer, int startSample, i
                 x[n] += m->getNextSample();
         }
     }
-
-    // buffer.applyGain (0.5f);
 }

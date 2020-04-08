@@ -49,7 +49,7 @@ void BaseMode::setParameters (float water, float stickers)
 void BaseMode::triggerNote (float newFreqMult, float velocity, float newSwingDamp, float newSwingFreq)
 {
     swingDamp = newSwingDamp;
-    freqOff = velocity * freq / 25.0f;
+    freqOff = velocity * freq / 10.0f;
     swingCoef = newSwingDamp * exp (jImag * MathConstants<float>::twoPi * newSwingFreq / fs);
 
     freqMult = newFreqMult;
@@ -58,19 +58,20 @@ void BaseMode::triggerNote (float newFreqMult, float velocity, float newSwingDam
     if (freq * freqMult > fs / 2.0f) // no aliasing
         velocity = 0.0f;
 
-    x = powf (velocity, 1.0f);
+    x = ampCoef * powf (velocity, 1.0f);
 }
 
 void BaseMode::calcCoefs()
 {
-    calcOscCoef();
     calcDecayCoef();
+    calcOscCoef();
     ampCoef = 1000.0f*amp;
 }
 
 void BaseMode::calcOscCoef()
 {
     oscCoef = exp (jImag * MathConstants<float>::twoPi * (freq + std::imag (freqOff)) * freqMult / fs);
+    totCoef = oscCoef * decayCoef;
 }
 
 void BaseMode::calcDecayCoef()

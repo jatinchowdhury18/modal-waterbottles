@@ -57,6 +57,8 @@ private:
     static AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     float* waterParam = nullptr;
     float* strikerParam = nullptr;
+    float* swingDampParam = nullptr;
+    float* swingModesParam = nullptr;
 
     void calcStickerCoverage();
     float stickerAmt = 0.0f;
