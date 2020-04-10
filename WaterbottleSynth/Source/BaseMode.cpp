@@ -50,7 +50,7 @@ void BaseMode::triggerNote (float newFreqMult, float velocity, float newSwingDam
 {
     swingDamp = newSwingDamp;
     freqOff = velocity * freq / 10.0f;
-    swingCoef = newSwingDamp * exp (jImag * MathConstants<float>::twoPi * newSwingFreq / fs);
+    swingCoef = newSwingDamp * exp (jImag * MathConstants<float>::twoPi * newSwingFreq / (fs / swingCount));
 
     freqMult = newFreqMult;
     calcCoefs();

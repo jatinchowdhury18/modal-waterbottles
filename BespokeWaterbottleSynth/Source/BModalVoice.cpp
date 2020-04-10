@@ -90,7 +90,7 @@ void BModalVoice::startNote (int midiNoteNumber, float velocity, SynthesiserSoun
     auto freq = MidiMessage::getMidiNoteInHertz (midiNoteNumber);
     auto freqMult = freq / modes[0][0]->getBaseFreq();
 
-    auto swingDamp = 0.0f;
+    swingDamp = 0.0f;
     if (waterLevel > 1.0f / 64.0f)
         swingDamp = powf (swingDampFactor, (float) 1.0e-4) * (1.0f - powf (waterLevel, 7.0f));
 
@@ -119,17 +119,38 @@ void BModalVoice::stopNote (float /*velocity*/, bool  allowTailOff)
 
 void BModalVoice::renderNextBlock (AudioSampleBuffer& buffer, int startSample, int numSamples)
 {
+    if (getCurrentlyPlayingSound() == nullptr)
+        return;
+    
     for (int ch = 0; ch < buffer.getNumChannels(); ++ch)
     {
         auto* x = buffer.getWritePointer (ch);
 
-        for (int n = 0; n < buffer.getNumSamples(); ++n)
+        if (swingDamp > 0.0f)
         {
-            for (auto* m : modes[ch])
-                x[n] += m->getNextSample();
+            for (int n = 0; n < buffer.getNumSamples(); ++n)
+            {
+                for (int m = 0; m < jmin (modes[0].size(), swingModes); ++m)
+                {
+                    modes[ch][m]->updateSwing();
+                    x[n] += modes[ch][m]->getNextSample();
+                }
+                
+                for (int m = swingModes; m < modes[0].size(); ++m)
+                    x[n] += modes[ch][m]->getNextSample();
+            }
+        }
+        else
+        {
+        
+            for (int n = 0; n < buffer.getNumSamples(); ++n)
+            {
+                for (auto* m : modes[ch])
+                    x[n] += m->getNextSample();
+            }
         }
     }
 
-    if (buffer.getMagnitude (0, buffer.getNumSamples()) < 0.0005f)
+    if (buffer.getMagnitude (0, buffer.getNumSamples()) < 0.001f)
         clearCurrentNote();
 }

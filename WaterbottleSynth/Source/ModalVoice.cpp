@@ -88,7 +88,7 @@ void ModalVoice::startNote (int midiNoteNumber, float velocity, SynthesiserSound
     auto freq = MidiMessage::getMidiNoteInHertz (midiNoteNumber);
     auto freqMult = freq / mode[0][0]->getBaseFreq();
 
-    auto swingDamp = 0.0f;
+    swingDamp = 0.0f;
     if (waterLevel > 1.0f / 64.0f)
         swingDamp = powf (swingDampFactor, (float) 1.0e-4) * (1.0f - powf (waterLevel, 7.0f));
 
@@ -115,17 +115,37 @@ void ModalVoice::stopNote (float /*velocity*/, bool  allowTailOff)
 
 void ModalVoice::renderNextBlock (AudioSampleBuffer& buffer, int startSample, int numSamples)
 {
+    if (getCurrentlyPlayingSound() == nullptr)
+        return;
+
     for (int ch = 0; ch < buffer.getNumChannels(); ++ch)
     {
         auto* x = buffer.getWritePointer (ch);
 
-        for (int n = 0; n < buffer.getNumSamples(); ++n)
+        if (swingDamp > 0.0f)
         {
-            for (int m = 0; m < numModes; ++m)
-                x[n] += mode[m][ch]->getNextSample();
+            for (int n = 0; n < buffer.getNumSamples(); ++n)
+            {
+                for (int m = 0; m < jmin (swingModes, numModes); ++m)
+                {
+                    mode[m][ch]->updateSwing();
+                    x[n] += mode[m][ch]->getNextSample();
+                }
+
+                for (int m = swingModes; m < numModes; ++m)
+                    x[n] += mode[m][ch]->getNextSample();
+            }
+        }
+        else
+        {
+            for (int n = 0; n < buffer.getNumSamples(); ++n)
+            {
+                for (int m = 0; m < numModes; ++m)
+                    x[n] += mode[m][ch]->getNextSample();
+            }
         }
     }
 
-    if (buffer.getMagnitude (0, buffer.getNumSamples()) < 0.0005f)
+    if (buffer.getMagnitude (0, buffer.getNumSamples()) < 0.001f)
         clearCurrentNote();
 }

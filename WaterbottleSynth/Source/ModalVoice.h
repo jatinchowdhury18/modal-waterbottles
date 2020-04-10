@@ -32,6 +32,7 @@ public:
 private:
     float waterLevel = 0.0f;
     float stickersAmt = 0.0f;
+    float swingDamp = 0.0f;
     float swingDampFactor = 0.0f;
     int swingModes = 0;
 

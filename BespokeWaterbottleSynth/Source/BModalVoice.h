@@ -36,6 +36,7 @@ private:
 
     float waterLevel = 0.0f;
     float swingFreq = 10.0f;
+    float swingDamp = 0.0f;
     float swingDampFactor = 0.0f;
     int swingModes = 0;
 
