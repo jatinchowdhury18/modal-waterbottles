@@ -20,12 +20,8 @@ def get_data(lamb, indL, indH):
 
 # mode_freqs = get_data(np.abs, None, 40)
 mode_taus = get_data(np.abs, 40, 80)
-# mode_amps = get_data(np.abs, 80, None)
-# mode_phases = get_data(np.angle, 80, None)
-mode_damps = np.exp(-1.0 / mode_taus)
-damp_norm = mode_damps[0,:]
-mode_damps /= damp_norm
-mode_taus_normalized = np.log(mode_damps)
+tau_gains = np.exp(-1.0 / mode_taus)
+t60s = np.log(0.001) / (48000 * np.log(tau_gains))
 
 # args = np.where(mode_taus_normalized[4,:] <= -0.0006)
 # print(args)
@@ -36,20 +32,23 @@ mode_taus_normalized = np.log(mode_damps)
 # %%
 # it seems like only the damping changes
 plt.figure()
-for i in range(len(mode_taus_normalized[0,:])):
-    plt.plot(x, mode_taus_normalized[:,i], label='Mode #{}'.format(i+1))
+for i in range(len(t60s[0,:10])):
+    plt.plot(x, t60s[:,i], label='Mode #{}'.format(i+1), marker='x')
 
-plt.title('Mode Dampings')
+# plt.title('Mode Dampings')
 plt.xlabel('Amount of Stickers')
-plt.ylabel('Tau')
+plt.ylabel(r'$T_{60}$ [seconds]')
+plt.legend()
+plt.grid()
+plt.savefig('Figures/StickerDamping.png')
 
 # %%
-slopes = []
-for i in range(len(mode_taus_normalized[0,:])):
-    z = np.polyfit(x, mode_taus_normalized[:,i], deg=1)
-    slopes.append(z[0])
+# slopes = []
+# for i in range(len(mode_taus_normalized[0,:])):
+#     z = np.polyfit(x, mode_taus_normalized[:,i], deg=1)
+#     slopes.append(z[0])
 
-print(slopes)
+# print(slopes)
 
 # %%
 # super-rough curve fit

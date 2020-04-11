@@ -1,5 +1,6 @@
 # %%
 from do_mode_fitting import *
+import scipy.stats as stats
 
 # %%
 # print(get_fields('HydroFlask.mat', 'HydroFlask'))
@@ -24,6 +25,7 @@ for m in modes:
 # get_mode_freqs(xs[i], modes[i])
 
 # %%
+PLOT=False
 mode_data = np.zeros((len(modes), 120), dtype=np.complex128)
 for i, m in enumerate(modes):
     x = xs[i]
@@ -35,6 +37,50 @@ for i, m in enumerate(modes):
     mode_data[i][:40] = freqs
     mode_data[i][40:80] = taus
     mode_data[i][80:] = amps
+
+    if PLOT:
+        # Pick modes
+        X = np.fft.rfft(x)
+        f = np.linspace(0, 48000/2, num=len(X))
+        maxX = np.max(np.abs(X))
+        plt.semilogx(f, 20 * np.log10(np.abs(X / maxX)), zorder=0)
+        plt.scatter(freqs, 20*np.log10(peaks / maxX), marker='x', color='r', zorder=1)
+        plt.ylabel('Magnitude [dB]')
+        plt.xlabel('Frequency [Hz]')
+        plt.xlim(100)
+        plt.ylim(-60)
+        plt.savefig('Figures/ModePick_ex.png')
+
+        # Decay rate
+        x_filt = adsp.filt_mode(x, freqs[0], 48000, 30)
+        env = adsp.normalize(adsp.energy_envelope(x_filt, 48000, 0.005))
+
+        start = int(np.argwhere(20 * np.log10(env) > -1)[0])
+        end = int(np.argwhere(20 * np.log10(env[start:]) < -20)[0])
+        slope, _, _, _, _ = stats.linregress(
+            np.arange(len(env[start:end])), 20 * np.log10(env[start:end]))
+
+        gamma = 10**(slope/20)
+        tau = -1 / np.log(gamma)
+
+        plt.figure()
+        # plt.title('Decay model for mode = {0:.2f} Hz'.format(freq))
+        n = np.arange(len(env))
+        plt.plot(n / 48000, 20*np.log10(x_filt))
+        plt.plot(n / 48000, 20*np.log10(env))
+        plt.plot(n / 48000, 20*np.log10(np.exp(-1.0 * n / tau)), color='r')
+        plt.xlabel('Time [s]')
+        plt.ylim(-20 * 2, 5)
+        plt.savefig('Figures/DecayFit_ex.png')
+
+        plt.figure()
+        plot_signals(x, y, title='')
+        plt.savefig('Figures/Model_ex.png')
+        
+        plt.show()
+        exit()
+
+
 
     # plt.figure()
     # plot_signals(x, y, title='HydroFlask {} Modal Model'.format(m['tag']))

@@ -50,9 +50,9 @@ impacts.append(create_impact_dict('knucklesOne_meas2', 'One Knuckle', off=125))
 impacts.append(create_impact_dict('palm_meas5', 'Palm', off=125))
 impacts.append(create_impact_dict('shoulder_meas7', 'Shoulder', off=65))
 impacts.append(create_impact_dict('toe_meas1', 'Toe', off=90))
-impacts.append(create_impact_dict('fingerNails_meas2', 'Nail', off=60, skip=35, take=40))
-impacts.append(create_impact_dict('brush_damp_meas1', 'Brush', off=130, skip=35, take=45))
-impacts.append(create_impact_dict('dafxbottle_meas4', 'DAFx', off=160, skip=25, take=40))
+# impacts.append(create_impact_dict('fingerNails_meas2', 'Nail', off=60, skip=35, take=40))
+# impacts.append(create_impact_dict('brush_damp_meas1', 'Brush', off=130, skip=35, take=45))
+# impacts.append(create_impact_dict('dafxbottle_meas4', 'DAFx', off=160, skip=25, take=40))
 
 # %%
 def get_impact_response(impact_dict):
@@ -73,19 +73,20 @@ def get_impact_response(impact_dict):
 # %%
 impact_wavs = []
 plt.figure()
-plt.title('Waterbottle Impacts')
+# plt.title('Waterbottle Impacts')
 for i in impacts:
     impact_wavs.append(get_impact_response(i))
 plt.legend()
 plt.xlabel('Time [samples]')
 plt.ylabel('Magnitude')
-# plt.savefig('Figures/Impacts_time.png')
+plt.grid()
+plt.savefig('Figures/Impacts_time.png')
 
 # %%
 worN = np.logspace(1, 3.35, base=20, num=1000)
 legend = []
 plt.figure()
-plt.title('Waterbottle Impacts Frequency Responses')
+# plt.title('Waterbottle Impacts Frequency Responses')
 for idx, wav in enumerate(impact_wavs):
     adsp.plot_magnitude_response(wav, [1], worN=worN, fs=48000, norm=True)
     legend.append(impacts[idx]['name'])
@@ -93,6 +94,7 @@ for idx, wav in enumerate(impact_wavs):
 
 plt.legend(legend)
 plt.ylim(-60)
-# plt.savefig('Figures/Impacts_freq.png')
+plt.grid()
+plt.savefig('Figures/Impacts_freq.png')
 
 plt.show()
