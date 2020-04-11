@@ -31,6 +31,7 @@ BespokeWaterbottleSynthAudioProcessor::BespokeWaterbottleSynthAudioProcessor()
     swingDampParam = vts.getRawParameterValue ("swingdamp");
     swingModesParam = vts.getRawParameterValue ("swingmodes");
     gainDBParam = vts.getRawParameterValue ("gain");
+    numModesParam = vts.getRawParameterValue ("nummodes");
 
     for (int i = 0; i < nVoices; ++i)
         synth.addVoice (new BModalVoice);
@@ -51,6 +52,7 @@ AudioProcessorValueTreeState::ParameterLayout BespokeWaterbottleSynthAudioProces
     params.push_back (std::make_unique<AudioParameterFloat> ("swingdamp", "Swing Damp", 0.0f, 1.0f, 0.0f));
     params.push_back (std::make_unique<AudioParameterInt> ("swingmodes", "Swing Modes", 0, 10, 0));
     params.push_back (std::make_unique<AudioParameterFloat> ("gain", "Gain [dB]", -30.0f, 30.0f, 0.0f));
+    params.push_back (std::make_unique<AudioParameterInt> ("nummodes", "# Modes", 1, 50, 50));
 
     return { params.begin(), params.end() };
 }
@@ -162,7 +164,8 @@ void BespokeWaterbottleSynthAudioProcessor::processBlock (AudioBuffer<float>& bu
 
     keyboardState.processNextMidiBuffer (midiMessages, 0, buffer.getNumSamples(), true);
 
-    synth.setParameters (*waterParam, 1.0f - *swingDampParam, (int) *swingModesParam);
+    synth.setParameters (*waterParam, 1.0f - *swingDampParam,
+        (int) *swingModesParam, (int) *numModesParam);
     synth.renderNextBlock (buffer, midiMessages, 0, buffer.getNumSamples());
 
     strikerFilter.setStriker ((int) *strikerParam);

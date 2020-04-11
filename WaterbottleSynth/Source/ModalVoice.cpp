@@ -63,12 +63,13 @@ void ModalVoice::setCurrentPlaybackSampleRate (double sampleRate)
     }
 }
 
-void ModalVoice::setParameters (float water, float stickers, float newSwingDamp, int newSwingModes)
+void ModalVoice::setParameters (float water, float stickers, float newSwingDamp, int newSwingModes, int newNumModes)
 {
     waterLevel = water;
     stickersAmt = stickers;
     swingDampFactor = newSwingDamp;
     swingModes = newSwingModes;
+    numModesUsed = jmin (newNumModes, numModes);
 
     for (int ch = 0; ch < 2; ++ch)
     {
@@ -76,7 +77,7 @@ void ModalVoice::setParameters (float water, float stickers, float newSwingDamp,
 
         for (int m = 1; m < numModes; ++m)
         {
-            auto freqMult = mode[m][ch]->getBaseFreq() / mode[0][ch]->getBaseFreq();
+            auto freqMult = freq / mode[0][ch]->getBaseFreq();
             mode[m][ch]->setParameters (waterLevel, stickersAmt);
             mode[m][ch]->setFrequency (freqMult);
         }
@@ -85,7 +86,7 @@ void ModalVoice::setParameters (float water, float stickers, float newSwingDamp,
 
 void ModalVoice::startNote (int midiNoteNumber, float velocity, SynthesiserSound*, int /*currentPitchWheelPosition*/)
 {
-    auto freq = MidiMessage::getMidiNoteInHertz (midiNoteNumber);
+    freq = MidiMessage::getMidiNoteInHertz (midiNoteNumber);
     auto freqMult = freq / mode[0][0]->getBaseFreq();
 
     swingDamp = 0.0f;
@@ -94,10 +95,10 @@ void ModalVoice::startNote (int midiNoteNumber, float velocity, SynthesiserSound
 
     for (int ch = 0; ch < 2; ++ch)
     {
-        for (int m = 0; m < jmin (swingModes, numModes); ++m)
+        for (int m = 0; m < jmin (swingModes, numModesUsed); ++m)
             mode[m][ch]->triggerNote (freqMult, velocity, swingDamp, swingFreq);
 
-        for (int m = swingModes; m < numModes; ++m)
+        for (int m = swingModes; m < numModesUsed; ++m)
             mode[m][ch]->triggerNote (freqMult, velocity);
     }
 }
@@ -126,13 +127,13 @@ void ModalVoice::renderNextBlock (AudioSampleBuffer& buffer, int startSample, in
         {
             for (int n = 0; n < buffer.getNumSamples(); ++n)
             {
-                for (int m = 0; m < jmin (swingModes, numModes); ++m)
+                for (int m = 0; m < jmin (swingModes, numModesUsed); ++m)
                 {
                     mode[m][ch]->updateSwing();
                     x[n] += mode[m][ch]->getNextSample();
                 }
 
-                for (int m = swingModes; m < numModes; ++m)
+                for (int m = swingModes; m < numModesUsed; ++m)
                     x[n] += mode[m][ch]->getNextSample();
             }
         }
@@ -140,7 +141,7 @@ void ModalVoice::renderNextBlock (AudioSampleBuffer& buffer, int startSample, in
         {
             for (int n = 0; n < buffer.getNumSamples(); ++n)
             {
-                for (int m = 0; m < numModes; ++m)
+                for (int m = 0; m < numModesUsed; ++m)
                     x[n] += mode[m][ch]->getNextSample();
             }
         }

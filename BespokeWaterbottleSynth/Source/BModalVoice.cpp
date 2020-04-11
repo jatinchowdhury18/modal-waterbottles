@@ -5,7 +5,7 @@ BModalVoice::BModalVoice()
     for (int ch = 0; ch < 2; ++ch)
     {
         for (int i = 0; i < 4; ++i)
-            modes[ch].add (std::make_unique<BaseMode> (100.0f*(i+1), 20000.0f, std::complex<float> (1.4482e-4, 1.9481e-4)));
+            modes[ch].add (std::make_unique<BaseMode> (100.0f*(i+1), 40000.0f, std::complex<float> (1.4482e-4, 1.9481e-4)));
     }
 }
 
@@ -49,6 +49,8 @@ void BModalVoice::reload (File& bottleFile)
         for (int ch = 0; ch < 2; ++ch)
             modes[ch].add (std::make_unique<BaseMode> (freq, tau, std::complex<float> (real, imag), 0.0f, fsMeasure));
     }
+
+    numModesUsed = jmin (numModes, numModesUsed);
 }
 
 void BModalVoice::setCurrentPlaybackSampleRate (double sampleRate)
@@ -62,7 +64,7 @@ void BModalVoice::setCurrentPlaybackSampleRate (double sampleRate)
     }
 }
 
-void BModalVoice::setParameters (float water, float newSwingDamp, int newSwingModes)
+void BModalVoice::setParameters (float water, float newSwingDamp, int newSwingModes, int newNumModes)
 {
     if (modes[0].isEmpty())
         return;
@@ -70,15 +72,14 @@ void BModalVoice::setParameters (float water, float newSwingDamp, int newSwingMo
     waterLevel = water;
     swingDampFactor = newSwingDamp;
     swingModes = newSwingModes;
-
-    auto baseFreq = modes[0][0]->getBaseFreq();
-    auto newBaseFreq = baseFreq * (1.0f + water);
-    auto freqMult = newBaseFreq / modes[0][0]->getBaseFreq();
+    numModesUsed = jmin (modes[0].size(), newNumModes);
 
     for (int ch = 0; ch < 2; ++ch)
     {
-        for (auto* m : modes[ch])
-            m->setFrequency (freqMult);
+        auto newBaseFreq = modes[ch][0]->getBaseFreq() * (1.0f + water);
+
+        for (int m = 1; m < modes[ch].size(); ++m)
+            modes[ch][m]->setFrequency (freq / newBaseFreq);
     }
 }
 
@@ -87,22 +88,30 @@ void BModalVoice::startNote (int midiNoteNumber, float velocity, SynthesiserSoun
     if (modes[0].isEmpty())
         return;
 
-    auto freq = MidiMessage::getMidiNoteInHertz (midiNoteNumber);
-    auto freqMult = freq / modes[0][0]->getBaseFreq();
+    freq = MidiMessage::getMidiNoteInHertz (midiNoteNumber);
+    auto freqMult = freq / (modes[0][0]->getBaseFreq() * (1.0f + waterLevel));
 
     swingDamp = 0.0f;
     if (waterLevel > 1.0f / 64.0f)
         swingDamp = powf (swingDampFactor, (float) 1.0e-4) * (1.0f - powf (waterLevel, 7.0f));
 
-    const int swingCutoff = jmin (modes[0].size(), swingModes);
-
     for (int ch = 0; ch < 2; ++ch)
     {
-        for (int m = 0; m < swingCutoff; ++m)
-            modes[ch][m]->triggerNote (freqMult, velocity, swingDamp, swingFreq);
+        for (int m = 0; m < jmin (numModesUsed, swingModes); ++m)
+        {
+            if (m == 0)
+                modes[ch][m]->triggerNote (freq / modes[0][0]->getBaseFreq(), velocity, swingDamp, swingFreq);
+            else
+                modes[ch][m]->triggerNote (freqMult, velocity, swingDamp, swingFreq);
+        }
 
-        for (int m = swingCutoff; m < modes[0].size(); ++m)
-            modes[ch][m]->triggerNote (freqMult, velocity);
+        for (int m = swingModes; m < numModesUsed; ++m)
+        {
+            if (m == 0)
+                modes[ch][m]->triggerNote (freq / modes[0][0]->getBaseFreq(), velocity);
+            else
+                modes[ch][m]->triggerNote (freqMult, velocity);
+        }
     }
 }
 
@@ -130,13 +139,13 @@ void BModalVoice::renderNextBlock (AudioSampleBuffer& buffer, int startSample, i
         {
             for (int n = 0; n < buffer.getNumSamples(); ++n)
             {
-                for (int m = 0; m < jmin (modes[0].size(), swingModes); ++m)
+                for (int m = 0; m < jmin (numModesUsed, swingModes); ++m)
                 {
                     modes[ch][m]->updateSwing();
                     x[n] += modes[ch][m]->getNextSample();
                 }
                 
-                for (int m = swingModes; m < modes[0].size(); ++m)
+                for (int m = swingModes; m < numModesUsed; ++m)
                     x[n] += modes[ch][m]->getNextSample();
             }
         }
@@ -145,8 +154,8 @@ void BModalVoice::renderNextBlock (AudioSampleBuffer& buffer, int startSample, i
         
             for (int n = 0; n < buffer.getNumSamples(); ++n)
             {
-                for (auto* m : modes[ch])
-                    x[n] += m->getNextSample();
+                for (int m = 0; m < numModesUsed; ++m)
+                    x[n] += modes[ch][m]->getNextSample();
             }
         }
     }

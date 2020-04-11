@@ -22,7 +22,7 @@ public:
     void startNote (int midiNoteNumber, float velocity, SynthesiserSound*, int /*pitchWheelPos*/) override;
     void stopNote (float /*velocity*/, bool allowTailOff) override;
 
-    void setParameters (float water, float stickers, float newSwingDamp, int newSwingModes);
+    void setParameters (float water, float stickers, float newSwingDamp, int newSwingModes, int newNumModes);
 
     void pitchWheelMoved (int) override      {}
     void controllerMoved (int, int) override {}
@@ -30,11 +30,14 @@ public:
     void renderNextBlock (AudioSampleBuffer& outputBuffer, int startSample, int numSamples) override;
 
 private:
+    float freq = 0.0f;
+
     float waterLevel = 0.0f;
     float stickersAmt = 0.0f;
     float swingDamp = 0.0f;
     float swingDampFactor = 0.0f;
     int swingModes = 0;
+    int numModesUsed = 0;
 
     const static int numModes = 40;
     std::unique_ptr<BaseMode> mode[numModes][2];

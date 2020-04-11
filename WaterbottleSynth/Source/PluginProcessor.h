@@ -61,6 +61,7 @@ private:
     float* swingDampParam = nullptr;
     float* swingModesParam = nullptr;
     float* gainParamDB = nullptr;
+    float* numModesParam = nullptr;
 
     void calcStickerCoverage();
     float stickerAmt = 0.0f;

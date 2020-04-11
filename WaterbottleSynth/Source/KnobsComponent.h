@@ -42,6 +42,9 @@ private:
     Slider gainSlide;
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> gainAttach;
 
+    Slider numSlide;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> numAttach;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KnobsComponent)
 };
 

@@ -17,6 +17,7 @@ KnobsComponent::KnobsComponent (WaterbottleSynthAudioProcessor& p)
     setupSlider (swingDampSlide, swingDampAttach, "swingdamp");
     setupSlider (swingModesSlide, swingModesAttach, "swingmodes");
     setupSlider (gainSlide, gainAttach, "gain");
+    setupSlider (numSlide, numAttach, "nummodes");
 
     // Strikers combobox
     addAndMakeVisible (strikerBox);
@@ -38,6 +39,7 @@ void KnobsComponent::paint (Graphics& g)
     makeName (swingDampSlide);
     makeName (swingModesSlide);
     makeName (gainSlide);
+    makeName (numSlide);
 }
 
 void KnobsComponent::resized()
@@ -47,5 +49,7 @@ void KnobsComponent::resized()
     
     swingDampSlide.setBounds  (10, 160, 80, 90);
     swingModesSlide.setBounds (10, 275, 80, 90);
+
     gainSlide.setBounds (10, 390, 80, 90);
+    numSlide.setBounds  (10, 505, 80, 90);
 }

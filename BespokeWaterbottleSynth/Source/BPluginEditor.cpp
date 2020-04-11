@@ -17,7 +17,7 @@ BespokeWaterbottleSynthAudioProcessorEditor::BespokeWaterbottleSynthAudioProcess
     processor (p),
     keyboard (p.keyboardState, MidiKeyboardComponent::Orientation::horizontalKeyboard)
 {
-    setSize (560, 200);
+    setSize (600, 200);
 
     startTimer (400);
 
@@ -49,6 +49,7 @@ BespokeWaterbottleSynthAudioProcessorEditor::BespokeWaterbottleSynthAudioProcess
     setupSlider (swingDampSlide, swingDampAttach, "swingdamp");
     setupSlider (swingModesSlide, swingModesAttach, "swingmodes");
     setupSlider (gainSlide, gainAttach, "gain");
+    setupSlider (numSlide, numAttach, "nummodes");
 
     // Striker combobox
     addAndMakeVisible (strikerBox);
@@ -85,16 +86,18 @@ void BespokeWaterbottleSynthAudioProcessorEditor::paint (Graphics& g)
     makeName (swingDampSlide);
     makeName (swingModesSlide);
     makeName (gainSlide);
+    makeName (numSlide);
 }
 
 void BespokeWaterbottleSynthAudioProcessorEditor::resized()
 {
     reloadButton.setBounds (10, 140, 80, 20);
     strikerBox.setBounds   (10,  40, 90, 20);
-    waterSlide.setBounds       (110,  10, 90, 85);
-    swingDampSlide.setBounds   (210,  10, 90, 85);
-    swingModesSlide.setBounds  (310,  10, 90, 85);
-    gainSlide.setBounds        (410,  10, 90, 85);
+    waterSlide.setBounds       (110, 10, 90, 85);
+    swingDampSlide.setBounds   (210, 10, 90, 85);
+    swingModesSlide.setBounds  (310, 10, 90, 85);
+    gainSlide.setBounds        (410, 10, 90, 85);
+    numSlide.setBounds         (510, 10, 90, 85);
 
-    keyboard.setBounds (getBounds().removeFromRight (460).removeFromBottom (100));
+    keyboard.setBounds (getBounds().removeFromRight (500).removeFromBottom (100));
 }

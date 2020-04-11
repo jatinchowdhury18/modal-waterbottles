@@ -30,3 +30,6 @@ JuceLibraryCode
 *.blg
 *.out
 *.log
+
+# Demo stuff
+*.mp4
