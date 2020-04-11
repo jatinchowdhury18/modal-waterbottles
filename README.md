@@ -26,7 +26,7 @@ Associated materials:
 - [DAFx Paper]() (Coming soon...)
 - [Audio examples webpage](https://ccrma.stanford.edu/~jatin/Waterbottles/)
 - [Waterbottle analysis web app](http://ccrmawaterbottles.pythonanywhere.com/)
-- [Video demo]() (Coming soon...)
+- [Video demo](https://youtu.be/MwhBluJqePE)
 
 ## Plugins
 
