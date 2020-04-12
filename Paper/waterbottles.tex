@@ -276,9 +276,9 @@ Finally, we also wanted some understanding of different impacts on the water bot
 
 \begin{figure*}
     \centering
-    \includegraphics[width=2.25in]{../Figures/ModePick_ex}
-    \includegraphics[width=2.25in]{../Figures/DecayFit_ex}
-    \includegraphics[width=2.25in]{../Figures/Model_ex}
+    \includegraphics[width=2.25in,trim={0 0 1cm 1cm},clip]{../Figures/ModePick_ex}
+    \includegraphics[width=2.25in,trim={0 0 1cm 1cm},clip]{../Figures/DecayFit_ex}
+    \includegraphics[width=2.25in,trim={0 0 1cm 1cm},clip]{../Figures/Model_ex}
     \caption{\it{Modal analysis pipeline: (left) picking the mode frequencies,
     (center) estimating the decay rate of a single mode,
     (right) using a least-squares fit to estimate the complex
@@ -432,7 +432,7 @@ shown in \cref{fig:water-mode-freq}.
 %
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=3in]{../Figures/Water_Freq}
+    \includegraphics[width=\linewidth,trim={0 0 1cm 1cm},clip]{../Figures/Water_Freq}
     \caption{\it{Variation of the first mode frequency of the HydroFlask
                 with the amount of water in the bottle}}
     \label{fig:water-mode-freq}
@@ -444,12 +444,14 @@ Further analysis shows that the damping of the lowest two modes
 varies with water level as well. We can similarly model the
 variation of the mode decay rates with water level, using a
 quartic polynomial to fit the average of decay rates of the first
-two modes (see \cref{fig:water-mode-damp}). Note that we choose
-to not separately
+two modes (see \cref{fig:water-mode-damp}). Note that the dampings
+of the first two modes can be modelled separately, however we chose
+to use a combined model due to the rough similarity between the
+two separate models.
 %
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=3in]{../Figures/Water_Damping}
+    \includegraphics[width=\linewidth,trim={0 0 1cm 1cm},clip]{../Figures/Water_Damping}
     \caption{\it{Variation of the first two modes decay rates
                  with the amount of water in the HydroFlask}}
     \label{fig:water-mode-damp}
@@ -467,7 +469,7 @@ variations (see \cref{fig:sticker-mode-damp}).
 %
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=3in]{../Figures/StickerDamping}
+    \includegraphics[width=\linewidth,trim={0 0 1cm 1cm},clip]{../Figures/StickerDamping}
     \caption{\it{Variation of the first ten modes decay rates
                  with the amount of stickers on the HydroFlask}}
     \label{fig:sticker-mode-damp}
@@ -525,7 +527,7 @@ for the reader to determine for their own specific use cases.
 %
 \begin{figure}
     \centering
-    \includegraphics[width=3in]{../Figures/Specgrams/Vibrato.png}
+    \includegraphics[width=\linewidth,trim={0 0 1cm 1cm},clip]{../Figures/Specgrams/Vibrato.png}
     \caption{\it{A spectrogram of a synthesized waterbottle with exaggerated swinging vibrato on the lowest five modes.}}
     \label{fig:swinging-vibrato}
 \end{figure}
@@ -545,12 +547,12 @@ measurements of the various impact types. We can use any of these measurements a
 \centering
     \begin{subfigure}[b]{\columnwidth}
          \centering
-         \includegraphics[width=\columnwidth]{../Figures/Impacts_time}
+         \includegraphics[width=\linewidth,trim={0 0 1cm 1cm},clip]{../Figures/Impacts_time}
          \caption{Time Domain}
     \end{subfigure}
     \begin{subfigure}[b]{\columnwidth}
          \centering
-         \includegraphics[width=\columnwidth]{../Figures/Impacts_freq}
+         \includegraphics[width=\linewidth,trim={0 0 1cm 1cm},clip]{../Figures/Impacts_freq}
          \caption{Frequency Domain}
     \end{subfigure}
     \caption{Time and frequency domain measurements of various impact drives.}
@@ -562,13 +564,13 @@ measurements of the various impact types. We can use any of these measurements a
 %
 Some general results \dots
 %
-\subsection{Water bottle Synthesizers} \label{sec:synth}
+\subsection{Water Bottle Synthesizers} \label{sec:synth}
 
 \subsubsection{Hydroflask Synthesizer}
 To demonstrate the musical power of water bottle synthesis, we have
 implemented a modal model of the 32 Oz. Wide Mouth Hydroflask
 as an 8-voice synthesizer plugin (VST/AU), using the JUCE/C++
-framework.\footnote{\url{https://github.com/weAreROLI/JUCE}}
+framework (see \cref{fig:plugin}).\footnote{\url{https://github.com/weAreROLI/JUCE}}
 The synthesizer includes controls for the amount of water in the bottle,
 the number and placement of stickers on the bottle, and the option to
 strike the water bottle with a variety of objects. 
@@ -587,6 +589,14 @@ a second audio plugin that can recreate a modal water bottle synthesizer
 (including variable strikers and water amounts) from any \texttt{.waterbottle}
 file. Users can then download the modal characteristics of any water
 bottle in the database and use it in their synthesizer.
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=3in]{../Figures/WaterbottleSynthPlugin.png}
+    \caption{\it{Real-time modal synthesizer model of the HydroFlask
+    32 oz. Wide Mouth.}}
+    \label{fig:plugin}
+\end{figure}
 
 Video demos of each plugin can be found on
 YouTube,\footnote{\url{https://youtu.be/MwhBluJqePE}}
@@ -617,7 +627,7 @@ determining the optimally acoustic water bottle currently in production.
 
 \section{Acknowledgements}
 %
-The authors would like to thank Kim Kawczinski for helping us to contact
+The authors would like to thank Eric Lawrence at Polytec for inviting us to use the scanning vibrometer and Kim Kawczinski for helping us to contact
 the HydroFlask corporation.
 
 %\newpage
