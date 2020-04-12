@@ -70,6 +70,7 @@ for i, m in enumerate(modes):
         plt.plot(n / 48000, 20*np.log10(env))
         plt.plot(n / 48000, 20*np.log10(np.exp(-1.0 * n / tau)), color='r')
         plt.xlabel('Time [s]')
+        plt.ylabel('Magnitude [dB]')
         plt.ylim(-20 * 2, 5)
         plt.savefig('Figures/DecayFit_ex.png')
 
