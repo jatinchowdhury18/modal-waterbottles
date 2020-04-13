@@ -4,7 +4,7 @@ ModalVoice::ModalVoice()
 {
     for (int ch = 0; ch < 2; ++ch)
     {
-        mode[0][ch]  = std::make_unique<BaseMode> ([] (float x) { return -220*x*x*x + 315*x*x - 27.44f*x + 149.8f; }, [] (float x) { return (float) -1.471e6*x*x*x*x + (float) 3.345e6*x*x*x - (float) 2.392e6*x*x + (float) 5.137e5*x + (float) 2.49e4; }, std::complex<float> (1.6375e-4, 8.2776e-4), -0.0001141f);
+        mode[0][ch]  = std::make_unique<BaseMode> ([] (float x) { return 70.911258f * (1.0f - (1.0f / (1.0f + exp (-8.3632f * (x - 0.5404f))))) + 147.7403f; }, [] (float x) { return (float) -1.471e6*x*x*x*x + (float) 3.345e6*x*x*x - (float) 2.392e6*x*x + (float) 5.137e5*x + (float) 2.49e4; }, std::complex<float> (1.6375e-4, 8.2776e-4), -0.0001141f);
         mode[1][ch]  = std::make_unique<BaseMode> ([] (float) { return 735.0f; }, [] (float x) { return (float) -1.471e6*x*x*x*x + (float) 3.345e6*x*x*x - (float) 2.392e6*x*x + (float) 5.137e5*x + (float) 2.49e4; }, std::complex<float> (2.4356e-3, -1.492e-3), -0.0001210f);
         mode[2][ch]  = std::make_unique<BaseMode> (927.3f,  21474.8f, std::complex<float> (1.4482e-3, 1.9481e-3), -0.0001877f);
         mode[3][ch]  = std::make_unique<BaseMode> (977.0f,  21694.8f, std::complex<float> (5.4375e-4, 2.6515e-3), -0.0001502f);
