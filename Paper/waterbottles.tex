@@ -237,7 +237,7 @@ resonance generated in a wine glass coupled to a vibrating string.
 In this writing, we take measurements from a 32 oz. Wide Mouth
 HydroFlask,\footnote{\url{https://www.hydroflask.com/32-oz-wide-mouth/}}
 compared to the water bottle given to attendees of the 2019 DAFx
-conference (seen in Fig.~\ref{fig:dafx_measure}), measured containing different amounts of water and with different placements of stickers on the exteriors of the
+conference (seen in ~\Cref{fig:dafx_measure}), measured containing different amounts of water and with different placements of stickers on the exteriors of the
 bottles.
 
 The structure of the paper is as follows: in \S\ref{sec:measure} we describe
@@ -256,7 +256,7 @@ implementation of a full water bottle synthesizer.
 
 \section{Measurements} \label{sec:measure}
 %
-In this study, we want to study the vibrational modes of the water bottle independently from the method it is struck. To do this, we strike the water bottle with a force hammer and measure the surface velocity of the water bottle at a corresponding point using a laser Doppler vibrometer. We additionally captured the near field radiation using a pressure microphone. From both these measurements, we deconvolve out of the signal the impact of the force hammer. The full setup can be seen in \cref{fig:dafx_measure}.
+In this study, we want to study the vibrational modes of the water bottle independently from the method it is struck. To do this, we strike the water bottle with a force sensing hammer and measure the surface velocity of the water bottle at a corresponding point using a laser Doppler vibrometer. We additionally captured the near field radiation using a pressure microphone. From both these measurements, we deconvolve out of the signal the impact of the force hammer. The full setup can be seen in \Cref{fig:dafx_measure}. We also used a scanning vibrometer to observe the mode shapes and gain further insight into the vibrational characteristics of the bottles. 
 
 We made measurements of both a 32 oz. Wide mouth Hydroflask and the complimentary DAFx19 water bottles with no water as well as $1/32$, $1/16$, $1/8$, $1/4$, $1/2$, and full with water. We additionally made measurements of the Hydroflask with the exterior covered in vinyl stickers as well as several intermediate and differently placed amounts of stickers. 
 
@@ -313,7 +313,7 @@ This process involves the following steps:
     \item Estimate the complex amplitude of each mode.
 \end{enumerate}
 %
-The steps of the process are shown in  full in \cref{fig:modal_analysis}.
+The steps of the process are shown in  full in \Cref{fig:modal_analysis}.
 
 For finding the mode frequencies, we use a simple peak-picking
 algorithm over the Fourier Transform of the original signal.
@@ -325,7 +325,7 @@ We then apply a Root-Mean-Squared level detector as defined
 in \cite{giannoulis2012compressor} to estimate the energy
 envelope of the mode. Finally, we use a linear regression
 to estimate the slope of the energy envelope (measured in
-Decibels per sample).
+decibels per sample).
 
 After computing the mode frequencies and decay
 rate, we can do a simple least squares fit to
@@ -367,7 +367,7 @@ changes as the water level in the water bottle changes.
 
 Measurements of the HydroFlask bottle show that as the water
 level increases, the first mode frequency decreases, while the
-higher modes stay at the same frequency. This suggests that the higher frequency modes are associated with vibration similar to that of a cylindrical shell, while the lowest frequency resonance is more similar to that of a beam clamped at one end. Vibrometer scans support this hypothesis \hl{include scan images, reference scans in text}
+higher modes stay at the same frequency. This suggests that the higher frequency modes are associated with vibration similar to that of a cylindrical shell, while the lowest frequency resonance is more similar to that of a beam clamped at one end with an additional mass at the end. Figure \ref{fig:scans} shows vibrometer scans of the HydroFlask filled roughly 40\% with water as well as empty for three different mode shapes. The scans support the model hypothesis as the frequency of two higher shell modes are similar, while the frequency of the lowest beam-like mode decreases in frequency with added mass. 
 
 \begin{figure}[!t]
     \centering
@@ -402,8 +402,8 @@ higher modes stay at the same frequency. This suggests that the higher frequency
          \caption{1780\ Hz}
     \end{subfigure}
     
-    \label{fig:scans}
-    \caption{Vibrometer scans with (top) and without (bottom) water.}
+    \caption{\it{Vibrometer scans without (bottom) and with roughly 40 \% water (top).}}
+        \label{fig:scans}
 \end{figure}
 
 %
@@ -415,20 +415,11 @@ higher modes stay at the same frequency. This suggests that the higher frequency
 \end{figure}
 %
 
-\hl{@TODO: Describe physics of cantilever beam/thin shell}
-\begin{equation}
-    \frac{1}{f} = \frac{2\pi r}{k\sqrt{f}}
-\end{equation}
-where 
-\begin{equation}
-    f \propto \frac{1}{r^2}
-\end{equation}
-from rossing citing rayleigh citing fenkner (1879)
-%
+
 
 We can use a cubic spline to model the movement of the first
 mode frequency as the water level changes continuously, as
-shown in \cref{fig:water-mode-freq}.
+shown in \Cref{fig:water-mode-freq}.
 %
 \begin{figure}[!htb]
     \centering
@@ -444,7 +435,7 @@ Further analysis shows that the damping of the lowest two modes
 varies with water level as well. We can similarly model the
 variation of the mode decay rates with water level, using a
 quartic polynomial to fit the average of decay rates of the first
-two modes (see \cref{fig:water-mode-damp}). Note that the dampings
+two modes (see \Cref{fig:water-mode-damp}). Note that the dampings
 of the first two modes can be modelled separately, however we chose
 to use a combined model due to the rough similarity between the
 two separate models.
@@ -465,7 +456,7 @@ timbres. We then proceeded to take measurements of the
 bottle covered in varying amount of (removable) vinyl stickers. We found
 that the mode frequencies remained mostly unchanged with the
 addition of stickers, but that the mode dampings had noticeable
-variations (see \cref{fig:sticker-mode-damp}).
+variations (see \Cref{fig:sticker-mode-damp}).
 %
 \begin{figure}[!htb]
     \centering
@@ -481,7 +472,7 @@ When a water bottle is struck in such a way to produce an acoustic
 response, it often swings back and forth a little bit. This swinging
 causes the water within the bottle to move with the swinging, thereby
 causing some of the lower mode frequencies to oscillate (see
-\cref{fig:swinging-vibrato}). This oscillation
+\Cref{fig:swinging-vibrato}). This oscillation
 manifests itself perceptually as a sort of vibrato effect. In
 order to model this ``swinging vibrato'' we use the following
 steps:
@@ -555,7 +546,7 @@ measurements of the various impact types. We can use any of these measurements a
          \includegraphics[width=\linewidth,trim={0 0 1cm 1cm},clip]{../Figures/Impacts_freq}
          \caption{Frequency Domain}
     \end{subfigure}
-    \caption{Time and frequency domain measurements of various impact drives.}
+    \caption{\it{Time and frequency domain measurements of various impact drives.}}
     \label{fig:impact}
 \end{figure}
 
@@ -570,7 +561,7 @@ Some general results \dots
 To demonstrate the musical power of water bottle synthesis, we have
 implemented a modal model of the 32 Oz. Wide Mouth Hydroflask
 as an 8-voice synthesizer plugin (VST/AU), using the JUCE/C++
-framework (see \cref{fig:plugin}).\footnote{\url{https://github.com/weAreROLI/JUCE}}
+framework (see \Cref{fig:plugin}).\footnote{\url{https://github.com/weAreROLI/JUCE}}
 The synthesizer includes controls for the amount of water in the bottle,
 the number and placement of stickers on the bottle, and the option to
 strike the water bottle with a variety of objects. 
