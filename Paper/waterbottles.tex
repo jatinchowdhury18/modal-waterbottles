@@ -334,7 +334,7 @@ most accurately resynthesizes the original recording.
 
 
 %
-\subsection{Modal Reynthesis} \label{sec:synthesis}
+\subsection{Modal Resynthesis} \label{sec:synthesis}
 %
 For synthesizing the modes we use the Max Matthews
 phasor filter, as introduced in \cite{phasorfilter}.
@@ -414,12 +414,15 @@ higher modes stay at the same frequency. This suggests that the higher frequency
     \label{fig:hydro-different-water-levels}
 \end{figure}
 %
+We can model the dependence between the frequency of the
+first mode and the water level using a modified sigmoid
+function of the form:
+\begin{equation}
+    f(x) = C \left(1 - \frac{1}{1 + \exp(-b(x-a))} \right) + d
+    \label{eq:mod_sigmoid}
+\end{equation}
 
-
-
-We can use a cubic spline to model the movement of the first
-mode frequency as the water level changes continuously, as
-shown in \Cref{fig:water-mode-freq}.
+A comparison of the model with the measured data can be seen in \Cref{fig:water-mode-freq}.
 %
 \begin{figure}[!htb]
     \centering
