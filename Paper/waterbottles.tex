@@ -150,7 +150,7 @@
 \title{\papertitle}
 
 \affiliation{
-\paperauthorA \, \thanks{}}
+\paperauthorA \, }
 {\href{http://ccrma.stanford.edu}{Center for Computer Research in Music and Acoustics} \\ Stanford University \\ Palo Alto, CA \\ {\tt\{jatin|kermit|mrau\}@ccrma.stanford.edu}}
 
 \begin{document}
@@ -165,8 +165,7 @@
 %
 \begin{abstract}
 We present a method for accurately synthesizing the acoustic response
-of a water bottle using modal signal processing. We take extensive
-measurements of two water bottles with considerations for how the level of water inside the bottles, amount of stickers attached to the exterior
+of a water bottle using modal signal processing. We start with extensive measurements of two water bottles with considerations for how the level of water inside the bottles, amount of stickers attached to the exterior
 of the bottles, and the method of striking the bottles affect their sound. We perform modal analysis of these measurements and implement  a real-time modal water bottle synthesizer.
 \end{abstract}
 
@@ -258,7 +257,21 @@ implementation of a full water bottle synthesizer.
 %
 In this study, we want to study the vibrational modes of the water bottle independently from the method it is struck. To do this, we strike the water bottle with a force sensing hammer and measure the surface velocity of the water bottle at a corresponding point using a laser Doppler vibrometer. We additionally captured the near field radiation using a pressure microphone. From both these measurements, we deconvolve out of the signal the impact of the force hammer. The full setup can be seen in \Cref{fig:dafx_measure}. We also used a scanning vibrometer to observe the mode shapes and gain further insight into the vibrational characteristics of the bottles. 
 
-We made measurements of both a 32 oz. Wide mouth Hydroflask and the complimentary DAFx19 water bottles with no water as well as $1/32$, $1/16$, $1/8$, $1/4$, $1/2$, and full with water. We additionally made measurements of the Hydroflask with the exterior covered in vinyl stickers as well as several intermediate and differently placed amounts of stickers. 
+We made measurements of both a 32 oz. Wide Mouth Hydroflask and the complimentary DAFx19 water bottles with no water as well as $1/32$, $1/16$, $1/8$, $1/4$, $1/2$, and full with water. We additionally made measurements of the Hydroflask with the exterior covered in vinyl stickers as well as several intermediate and differently placed amounts of stickers. 
+
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=2.25in,trim={0 0 1cm 1cm},clip]{../Figures/ModePick_ex}
+    \includegraphics[width=2.25in,trim={0 0 1cm 1cm},clip]{../Figures/DecayFit_ex}
+    \includegraphics[width=2.25in,trim={0 0 1cm 1cm},clip]{../Figures/Model_ex}
+    \caption{\it{Modal analysis pipeline: (left) picking the mode frequencies,
+    (center) estimating the decay rate of a single mode,
+    (right) using a least-squares fit to estimate the complex
+    amplitudes of the modes that ideally resynthesize the
+    original signal.}}
+    \label{fig:modal_analysis}
+\end{figure*}
 
 Finally, we also wanted some understanding of different impacts on the water bottles. To make these measurements, we adhered an accelerometer to the inside of the Hydroflask and struck the outside (at the location of the accelerometer) with a variety of drum mallets and body parts.  
 
@@ -274,18 +287,6 @@ Finally, we also wanted some understanding of different impacts on the water bot
 %
 
 
-\begin{figure*}
-    \centering
-    \includegraphics[width=2.25in,trim={0 0 1cm 1cm},clip]{../Figures/ModePick_ex}
-    \includegraphics[width=2.25in,trim={0 0 1cm 1cm},clip]{../Figures/DecayFit_ex}
-    \includegraphics[width=2.25in,trim={0 0 1cm 1cm},clip]{../Figures/Model_ex}
-    \caption{\it{Modal analysis pipeline: (left) picking the mode frequencies,
-    (center) estimating the decay rate of a single mode,
-    (right) using a least-squares fit to estimate the complex
-    amplitudes of the modes that ideally resynthesize the
-    original signal.}}
-    \label{fig:modal_analysis}
-\end{figure*}
 
 \section{Analysis} \label{sec:analysis}
 
@@ -328,7 +329,7 @@ to estimate the slope of the energy envelope (measured in
 decibels per sample).
 
 After computing the mode frequencies and decay
-rate, we can do a simple least squares fit to
+rate, we perform a simple least squares fit to
 estimate the complex amplitude of each mode that
 most accurately resynthesizes the original recording.
 
@@ -367,7 +368,7 @@ changes as the water level in the water bottle changes.
 
 Measurements of the HydroFlask bottle show that as the water
 level increases, the first mode frequency decreases, while the
-higher modes stay at the same frequency. This suggests that the higher frequency modes are associated with vibration similar to that of a cylindrical shell, while the lowest frequency resonance is more similar to that of a beam clamped at one end with an additional mass at the end. Figure \ref{fig:scans} shows vibrometer scans of the HydroFlask filled roughly 40\% with water as well as empty for three different mode shapes. The scans support the model hypothesis as the frequency of two higher shell modes are similar, while the frequency of the lowest beam-like mode decreases in frequency with added mass. 
+higher modes stay at the same frequency. This suggests that the higher frequency modes are associated with vibration similar to that of a cylindrical shell, while the lowest frequency resonance is more similar to that of a beam clamped at one end with an additional mass at the end \cite{qatu2004vibration}. Figure~\ref{fig:scans} shows vibrometer scans of the HydroFlask filled roughly 40\% with water as well as empty for three different mode shapes. The scans support the model hypothesis as the frequency of two higher shell modes are similar, while the frequency of the lowest beam-like mode decreases in frequency with added mass. The measured frequency responses for the Hydroflask filled with different levels of water can be seen in fig.~\ref{fig:hydro-different-water-levels}.
 
 \begin{figure}[!t]
     \centering
@@ -441,7 +442,8 @@ quartic polynomial to fit the average of decay rates of the first
 two modes (see \Cref{fig:water-mode-damp}). Note that the dampings
 of the first two modes can be modelled separately, however we chose
 to use a combined model due to the rough similarity between the
-two separate models.
+two separate models. The water level has very little impact on the dampings of the higher modes. Since the mass-loading affects the beam-like modes more than the cylindrical shell-like modes
+We assume the lowest modes most affected by the water as the additional mass-loading aff
 %
 \begin{figure}[!htb]
     \centering
@@ -458,8 +460,8 @@ with stickers, one without, and noted that they had markedly different
 timbres. We then proceeded to take measurements of the
 bottle covered in varying amount of (removable) vinyl stickers. We found
 that the mode frequencies remained mostly unchanged with the
-addition of stickers, but that the mode dampings had noticeable
-variations (see \Cref{fig:sticker-mode-damp}).
+addition of stickers, however, the mode dampings had noticeable
+variations (see \cref{fig:sticker-mode-damp}). Much like a moon gel on a drum head, a small application of stickers dramatically increases the damping. Adding a larger amount of stickers continues to increase the damping, although it has a less pronounced effect. 
 %
 \begin{figure}[!htb]
     \centering
