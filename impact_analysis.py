@@ -41,15 +41,16 @@ def get_next_power_of_two(n):
 # %%
 impacts = []
 impacts.append(create_impact_dict('head_meas6', 'Head'))
-impacts.append(create_impact_dict('elbow_meas1', 'Elbow', off=80))
+impacts.append(create_impact_dict('toe_meas1', 'Toe', off=90))
+# impacts.append(create_impact_dict('elbow_meas1', 'Elbow', off=80))
 impacts.append(create_impact_dict('gongMalletVF_damp_meas1', 'Gong_Mallet', off=20))
 impacts.append(create_impact_dict('heal_meas5', 'Heel', off=150))
 impacts.append(create_impact_dict('knee_meas5', 'Knee', off=170))
-impacts.append(create_impact_dict('knuckles_meas2', 'Knuckles', off=105))
-impacts.append(create_impact_dict('knucklesOne_meas2', 'One Knuckle', off=125))
-impacts.append(create_impact_dict('palm_meas5', 'Palm', off=125))
-impacts.append(create_impact_dict('shoulder_meas7', 'Shoulder', off=65))
-impacts.append(create_impact_dict('toe_meas1', 'Toe', off=90))
+# impacts.append(create_impact_dict('knuckles_meas2', 'Knuckles', off=105))
+# impacts.append(create_impact_dict('knucklesOne_meas2', 'One Knuckle', off=125))
+# impacts.append(create_impact_dict('palm_meas5', 'Palm', off=125))
+# impacts.append(create_impact_dict('shoulder_meas7', 'Shoulder', off=65))
+
 # impacts.append(create_impact_dict('fingerNails_meas2', 'Nail', off=60, skip=35, take=40))
 # impacts.append(create_impact_dict('brush_damp_meas1', 'Brush', off=130, skip=35, take=45))
 # impacts.append(create_impact_dict('dafxbottle_meas4', 'DAFx', off=160, skip=25, take=40))
@@ -93,8 +94,12 @@ for idx, wav in enumerate(impact_wavs):
     # wavfile.write('Impacts/Wavs/{}.wav'.format(impacts[idx]['name']), 48000, wav)
 
 plt.legend(legend)
-plt.ylim(-60)
+plt.ylim(-45)
+plt.xlim(20, 5000)
 plt.grid()
 plt.savefig('Figures/Impacts_freq.png')
 
 plt.show()
+
+
+# %%
