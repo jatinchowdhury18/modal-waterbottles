@@ -335,7 +335,21 @@ rate, we perform a simple least squares fit to
 estimate the complex amplitude of each mode that
 most accurately resynthesizes the original recording.
 
-
+\begin{figure}[t]
+\centering
+    \begin{subfigure}[b]{\columnwidth}
+         \centering
+         \includegraphics[width=\linewidth,trim={0 0 1.5cm 0.5cm},clip]{../Figures/Specgrams/HydroFlask Full Recorded.png}
+         \caption{Recorded}
+    \end{subfigure}
+    \begin{subfigure}[b]{\columnwidth}
+         \centering
+         \includegraphics[width=\linewidth,trim={0 0 1.5cm 0.5cm},clip]{../Figures/Specgrams/HydroFlask Full Model.png}
+         \caption{Resynthesized}
+    \end{subfigure}
+    \caption{\it{Spectrograms of the full HydroFlask recorded (above) and resynthesized (below).}}
+    \label{fig:hydroflask-specs}
+\end{figure}
 %
 \subsection{Modal Resynthesis} \label{sec:synthesis}
 %
@@ -355,7 +369,8 @@ stable regardless of real-time parameter modulation.
 While the output of the filter is complex, a real signal can
 be constructed by taking either the real or imaginary part of
 the output signal (the two parts will be identical aside from
-a quarter-cycle phase shift).
+a quarter-cycle phase shift). The results of the resynthesis
+process can be seen in \cref{fig:hydroflask-specs}.
 
 \subsection{Water Level Analysis} \label{sec:water}
 %
