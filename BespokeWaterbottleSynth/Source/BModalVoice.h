@@ -36,7 +36,7 @@ private:
 
     const float log1000 = std::log (1000.0f);
     inline float tau2t60 (float tau) const noexcept { return 1.0f / (std::log (std::exp (48000.0f / tau)) / log1000); }
-    inline double maxFreq() const noexcept { return currentSampleRate * 0.45; }
+    inline double maxFreq() const noexcept { return getSampleRate() * 0.45; }
     inline int curNumModes() const noexcept { return jmin (curMaxModes, (int) *numModesParam); }
 
     // parameters
