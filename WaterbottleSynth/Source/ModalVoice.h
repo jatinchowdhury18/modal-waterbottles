@@ -1,7 +1,7 @@
 #ifndef MODALVOICE_H_INCLUDED
 #define MODALVOICE_H_INCLUDED
 
-#include "BaseMode.h"
+#include "Mode.h"
 
 struct ModalSound : public SynthesiserSound
 {
@@ -14,33 +14,53 @@ struct ModalSound : public SynthesiserSound
 class ModalVoice :  public SynthesiserVoice
 {
 public:
-    ModalVoice();
+    ModalVoice (AudioProcessorValueTreeState& vts);
 
     bool canPlaySound (SynthesiserSound* sound) override;
 
-    void setCurrentPlaybackSampleRate (double sampleRate) override;
+    void prepareToPlay (double sampleRate, int samplesPerBlock);
     void startNote (int midiNoteNumber, float velocity, SynthesiserSound*, int /*pitchWheelPos*/) override;
-    void stopNote (float /*velocity*/, bool allowTailOff) override;
+    void stopNote (float velocity, bool allowTailOff) override;
 
-    void setParameters (float water, float stickers, float newSwingDamp, int newSwingModes, int newNumModes);
+    void setStickers (float stickers);
 
-    void pitchWheelMoved (int) override      {}
+    void pitchWheelMoved (int) override;
     void controllerMoved (int, int) override {}
 
     void renderNextBlock (AudioSampleBuffer& outputBuffer, int startSample, int numSamples) override;
 
 private:
-    float freq = 0.0f;
+    void updateParams();
+    void updateModeFreqs();
+    void updateDecays();
+    bool isNotePlaying();
+    void triggerSwing (float velocity);
 
-    float waterLevel = 0.0f;
+    inline float freq0 (float x) const noexcept { return 70.911258f * (1.0f - (1.0f / (1.0f + exp (-8.3632f * (x - 0.5404f))))) + 147.7403f; }
+    inline float decay0 (float x) const noexcept { return (float) -1.471e6*x*x*x*x + (float) 3.345e6*x*x*x - (float) 2.392e6*x*x + (float) 5.137e5*x + (float) 2.49e4; };
+    inline float decay1 (float x) const noexcept { return (float) -1.471e6*x*x*x*x + (float) 3.345e6*x*x*x - (float) 2.392e6*x*x + (float) 5.137e5*x + (float) 2.49e4; };
+    
+    const float log1000 = std::log (1000.0f);
+    inline float tau2t60 (float tau) const noexcept { return 1.0f / (std::log (std::exp (48000.0f / tau)) / log1000); }
+    inline double maxFreq() const noexcept { return currentSampleRate * 0.45; }
+
+    // parameters
     float stickersAmt = 0.0f;
-    float swingDamp = 0.0f;
-    float swingDampFactor = 0.0f;
-    int swingModes = 0;
-    int numModesUsed = 0;
+    float* waterParam = nullptr;
+    float* swingDampParam = nullptr;
+    float* swingModesParam = nullptr;
+    float* numModesParam = nullptr;
 
-    const static int numModes = 40;
-    std::unique_ptr<BaseMode> mode[numModes][2];
+    float fundamental = 0.0f;
+    int midiNote = 0;
+
+    static const int numModes = 40;
+    Mode modes[numModes];
+    AudioBuffer<float> renderBuffer;
+
+    static const int maxSwingModes = 10;
+    Mode swingModes[maxSwingModes];
+    AudioBuffer<float> swingBuffer;
 
     const float bottleHeight = 0.239f; // meters
     const float swingFreq = 1.0f / (MathConstants<float>::twoPi * sqrtf(bottleHeight / 9.8f));

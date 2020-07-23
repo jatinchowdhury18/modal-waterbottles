@@ -8,33 +8,35 @@ class WaterSynth : public Synthesiser
 public:
     WaterSynth() {}
 
-    void setParameters (float water, float stickers, float newSwingDamp, int newSwingModes, int newNumModes)
+    static void addParameters (std::vector<std::unique_ptr<RangedAudioParameter>>& params)
     {
-        if (water == waterLevel && stickers == stickersAmt
-         && swingDamp == newSwingDamp && swingModes == newSwingModes
-         && numModes == newNumModes) // no need to update
-            return;
+        params.push_back (std::make_unique<AudioParameterFloat> ("water", "Water", 0.0f, 1.0f, 0.0f));
+        params.push_back (std::make_unique<AudioParameterFloat> ("swingdamp", "Swing Damp", 0.0f, 1.0f, 0.0f));
+        params.push_back (std::make_unique<AudioParameterInt> ("swingmodes", "Swing Modes", 0, 10, 0));
+        params.push_back (std::make_unique<AudioParameterInt> ("nummodes", "# Modes", 1, 40, 40));
+    }
 
-        waterLevel = jlimit (0.0f, 1.0f, water);
-        stickersAmt = jlimit (0.0f, 1.0f, stickers);
-        swingDamp = newSwingDamp;
-        swingModes = newSwingModes;
-        numModes = newNumModes;
+    void prepareToPlay (double fs, int samplesPerBlock)
+    {
+        setCurrentPlaybackSampleRate (fs);
 
+        for (auto voice : voices)
+        {
+            if (auto voiceCast = dynamic_cast<ModalVoice*> (voice))
+                voiceCast->prepareToPlay (fs, samplesPerBlock);
+        }
+    }
+
+    void setStickers (float stickers)
+    {
         for (auto* voice : voices)
         {
             if (auto* voiceCast = dynamic_cast<ModalVoice*> (voice))
-                voiceCast->setParameters (waterLevel, stickersAmt, swingDamp, swingModes, numModes);
+                voiceCast->setStickers (stickers);
         }
     }
 
 private:
-    float waterLevel = 0.0f;
-    float stickersAmt = 0.0f;
-    float swingDamp = 0.0f;
-    int swingModes = 0;
-    int numModes = 0;
-
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WaterSynth)
 };
 

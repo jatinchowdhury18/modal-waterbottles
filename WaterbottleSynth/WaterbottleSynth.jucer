@@ -34,35 +34,37 @@
       <FILE id="OkKUEF" name="water.png" compile="0" resource="1" file="Resources/water.png"/>
     </GROUP>
     <GROUP id="{573A3561-25C8-0EE1-A88F-DD1CDE61DE49}" name="Source">
+      <FILE id="d1gmqa" name="BottleComponent.cpp" compile="1" resource="0"
+            file="Source/BottleComponent.cpp"/>
+      <FILE id="JNDDSV" name="BottleComponent.h" compile="0" resource="0"
+            file="Source/BottleComponent.h"/>
+      <FILE id="rcx5aS" name="BottomComponent.cpp" compile="1" resource="0"
+            file="Source/BottomComponent.cpp"/>
+      <FILE id="kgKaTH" name="BottomComponent.h" compile="0" resource="0"
+            file="Source/BottomComponent.h"/>
       <FILE id="JpGJC1" name="Gain.h" compile="0" resource="0" file="Source/Gain.h"/>
       <FILE id="GOPNmn" name="KnobsComponent.cpp" compile="1" resource="0"
             file="Source/KnobsComponent.cpp"/>
       <FILE id="fkOzbx" name="KnobsComponent.h" compile="0" resource="0"
             file="Source/KnobsComponent.h"/>
-      <FILE id="HP4dZL" name="StrikerFilter.cpp" compile="1" resource="0"
-            file="Source/StrikerFilter.cpp"/>
-      <FILE id="nhZiiw" name="StrikerFilter.h" compile="0" resource="0" file="Source/StrikerFilter.h"/>
-      <FILE id="rcx5aS" name="BottomComponent.cpp" compile="1" resource="0"
-            file="Source/BottomComponent.cpp"/>
-      <FILE id="kgKaTH" name="BottomComponent.h" compile="0" resource="0"
-            file="Source/BottomComponent.h"/>
-      <FILE id="xxNchN" name="Stickers.h" compile="0" resource="0" file="Source/Stickers.h"/>
-      <FILE id="d1gmqa" name="BottleComponent.cpp" compile="1" resource="0"
-            file="Source/BottleComponent.cpp"/>
-      <FILE id="JNDDSV" name="BottleComponent.h" compile="0" resource="0"
-            file="Source/BottleComponent.h"/>
-      <FILE id="HsAuri" name="WaterSynth.h" compile="0" resource="0" file="Source/WaterSynth.h"/>
       <FILE id="mt6wCb" name="ModalVoice.cpp" compile="1" resource="0" file="Source/ModalVoice.cpp"/>
       <FILE id="ZCdQER" name="ModalVoice.h" compile="0" resource="0" file="Source/ModalVoice.h"/>
-      <FILE id="w9DWHV" name="BaseMode.cpp" compile="1" resource="0" file="Source/BaseMode.cpp"/>
-      <FILE id="sb63Ma" name="BaseMode.h" compile="0" resource="0" file="Source/BaseMode.h"/>
+      <FILE id="wcMBmd" name="Mode.cpp" compile="1" resource="0" file="Source/Mode.cpp"/>
+      <FILE id="cAayBA" name="Mode.h" compile="0" resource="0" file="Source/Mode.h"/>
+      <FILE id="GgTAwN" name="ModeOscillator.h" compile="0" resource="0"
+            file="Source/ModeOscillator.h"/>
+      <FILE id="j1rjnm" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="sHeFT1" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
       <FILE id="noNj5i" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="MllIrl" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
-      <FILE id="j1rjnm" name="PluginEditor.cpp" compile="1" resource="0"
-            file="Source/PluginEditor.cpp"/>
-      <FILE id="sHeFT1" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="xxNchN" name="Stickers.h" compile="0" resource="0" file="Source/Stickers.h"/>
+      <FILE id="HP4dZL" name="StrikerFilter.cpp" compile="1" resource="0"
+            file="Source/StrikerFilter.cpp"/>
+      <FILE id="nhZiiw" name="StrikerFilter.h" compile="0" resource="0" file="Source/StrikerFilter.h"/>
+      <FILE id="HsAuri" name="WaterSynth.h" compile="0" resource="0" file="Source/WaterSynth.h"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>

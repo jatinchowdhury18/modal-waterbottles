@@ -17,30 +17,26 @@ public:
                 voiceCast->reload (bottleFile);
     }
 
-    void setParameters (float water, float newSwingDamp, int newSwingModes, int newNumModes)
+    static void addParameters (std::vector<std::unique_ptr<RangedAudioParameter>>& params)
     {
-        if (water == waterLevel && swingDamp == newSwingDamp
-         && swingModes == newSwingModes && numModes == newNumModes) // no updating needed
-            return;
+        params.push_back (std::make_unique<AudioParameterFloat> ("water", "Water", 0.0f, 1.0f, 0.0f));
+        params.push_back (std::make_unique<AudioParameterFloat> ("swingdamp", "Swing Damp", 0.0f, 1.0f, 0.0f));
+        params.push_back (std::make_unique<AudioParameterInt> ("swingmodes", "Swing Modes", 0, 10, 0));
+        params.push_back (std::make_unique<AudioParameterInt> ("nummodes", "# Modes", 1, 50, 50));
+    }
 
-        waterLevel = water;
-        swingDamp = newSwingDamp;
-        swingModes = newSwingModes;
-        numModes = newNumModes;
+    void prepareToPlay (double fs, int samplesPerBlock)
+    {
+        setCurrentPlaybackSampleRate (fs);
 
-        for (auto* voice : voices)
+        for (auto voice : voices)
         {
-            if (auto* voiceCast = dynamic_cast<BModalVoice*> (voice))
-                voiceCast->setParameters (waterLevel, swingDamp, swingModes, numModes);
+            if (auto voiceCast = dynamic_cast<BModalVoice*> (voice))
+                voiceCast->prepareToPlay (fs, samplesPerBlock);
         }
     }
 
 private:
-    float waterLevel = 0.0f;
-    float swingDamp = 0.0f;
-    int swingModes = 0;
-    int numModes = 0;
-
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BWaterSynth)
 };
 

@@ -20,9 +20,11 @@
       <FILE id="uSQKLy" name="Toe.wav" compile="0" resource="1" file="../Impact_Wavs/Toe.wav"/>
     </GROUP>
     <GROUP id="{694DC864-FF33-B70B-C23F-38ECB1304B4A}" name="Shared">
-      <FILE id="RsNmI5" name="BaseMode.cpp" compile="1" resource="0" file="../WaterbottleSynth/Source/BaseMode.cpp"/>
-      <FILE id="k3QId1" name="BaseMode.h" compile="0" resource="0" file="../WaterbottleSynth/Source/BaseMode.h"/>
       <FILE id="PiYwio" name="Gain.h" compile="0" resource="0" file="../WaterbottleSynth/Source/Gain.h"/>
+      <FILE id="hRt9j8" name="Mode.cpp" compile="1" resource="0" file="../WaterbottleSynth/Source/Mode.cpp"/>
+      <FILE id="E9SIcn" name="Mode.h" compile="0" resource="0" file="../WaterbottleSynth/Source/Mode.h"/>
+      <FILE id="IuaZNb" name="ModeOscillator.h" compile="0" resource="0"
+            file="../WaterbottleSynth/Source/ModeOscillator.h"/>
       <FILE id="LR16xb" name="StrikerFilter.cpp" compile="1" resource="0"
             file="../WaterbottleSynth/Source/StrikerFilter.cpp"/>
       <FILE id="PItbHX" name="StrikerFilter.h" compile="0" resource="0" file="../WaterbottleSynth/Source/StrikerFilter.h"/>
