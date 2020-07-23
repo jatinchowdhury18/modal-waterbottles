@@ -13,7 +13,7 @@ BModalVoice::BModalVoice (AudioProcessorValueTreeState& vts)
     const float ampAbs = std::abs (ampComplex);
     for (int i = 0; i < curMaxModes; ++i)
     {
-        auto modeAmp = std::pow (ampComplex, i+1) / ampAbs;
+        auto modeAmp = std::pow (ampComplex, (float) i + 1.0f) / ampAbs;
         modes[i].setModeAmp (modeAmp);
         modes[i].setDecayTime (1.0f * std::pow (0.9f, i));
         FREQS[i] = 100.0f * (i + 1);
