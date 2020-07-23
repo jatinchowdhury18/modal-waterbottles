@@ -9,10 +9,11 @@ BModalVoice::BModalVoice (AudioProcessorValueTreeState& vts)
 
     // initial synthesized sound
     curMaxModes = 4;
-    std::complex<float> amp (1.4482e-4, 1.9481e-4);
+    const std::complex<float> ampComplex (1.4482e-4, 1.9481e-4);
+    const float ampAbs = std::abs (ampComplex);
     for (int i = 0; i < curMaxModes; ++i)
     {
-        modes[i].setModeAmp (std::pow (amp, i+1) / static_cast<std::complex<float>> (std::abs (amp)));
+        modes[i].setModeAmp (std::pow (ampComplex, i+1) / ampAbs);
         modes[i].setDecayTime (1.0f * std::pow (0.9f, i));
         FREQS[i] = 100.0f * (i + 1);
     }
