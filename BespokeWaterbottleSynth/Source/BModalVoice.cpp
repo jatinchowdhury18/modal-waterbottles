@@ -12,7 +12,7 @@ BModalVoice::BModalVoice (AudioProcessorValueTreeState& vts)
     std::complex<float> amp (1.4482e-4, 1.9481e-4);
     for (int i = 0; i < curMaxModes; ++i)
     {
-        modes[i].setModeAmp (std::pow (amp, i+1) / std::abs (amp));
+        modes[i].setModeAmp (std::pow (amp, i+1) / static_cast<std::complex<float>> (std::abs (amp)));
         modes[i].setDecayTime (1.0f * std::pow (0.9f, i));
         FREQS[i] = 100.0f * (i + 1);
     }
@@ -50,7 +50,7 @@ void BModalVoice::reload (File& bottleFile)
         float imag = (float) line[3].getDoubleValue();
     
         if (i == 0)
-            baseAmp = std::complex (real, imag);
+            baseAmp = std::complex<float> (real, imag);
 
         if (i == 1) // use freq of second mode to calc waterbottle length
         {
