@@ -167,7 +167,7 @@
 %
 \begin{abstract}
 We present a method for accurately synthesizing the acoustic response
-of a water bottle using modal signal processing. We start with extensive measurements of two water bottles with considerations for how the level of water inside the bottles, the number and placement of stickers attached to the exterior
+of a water bottle using modal signal processing. We start with extensive measurements of two water bottles with considerations for how the level of water inside the bottles, the area covered by stickers attached to the exterior
 of the bottles, and the method of striking the bottles affect their sound. We perform modal analysis of these measurements and implement  a real-time modal water bottle synthesizer.
 \end{abstract}
 
@@ -181,17 +181,7 @@ rau:das:canfielddafilou:carillon:2019}, artificial reverberation
 research to use modal synthesis for the accurate modelling of water bottle 
 acoustics.
 
-Although most water bottles are not designed to function primarily as musical
-instruments, the authors have noticed that certain water bottles
-can produce a pleasing resonant sound when struck with a knee, hand,
-or other body part. The authors further noticed that water bottles can
-produce a great variety of sounds, depending not only on the shape and
-material of the bottle, but also on the amount of liquid contained
-within the bottle, as well as the amount and placement of stickers on the
-exterior of the bottle. Water bottle acoustics have not gone unnoticed
-by water bottle manufacturers, as at least one prominent manufacturer claims
-to be well aware of the pleasing acoustic properties of their bottles
-\cite{hydroflask_email}.
+Although water bottles are not designed to function primarily as musical instruments, the authors have noticed that certain water bottles produce a pleasing resonant sound when struck with a mallet, knuckle, or other body part. The authors further noticed that water bottles can produce a great variety of sounds, depending not only on the shape and material of the bottle, but also on the amount of liquid contained within the bottle, as well as the amount and placement of stickers on the exterior of the bottle. Water bottle acoustics have not gone unnoticed by water bottle manufacturers, as at least one prominent manufacturer claims to be well aware of the pleasing acoustic properties of their bottles \cite{hydroflask_email}.
 
 There exists considerable physics literature concerning the harmonic
 responses of various liquid containers and other thin-shell objects.
@@ -210,7 +200,7 @@ morrison2014acoustics}.
 within a glass, while \cite{apfel1982whispering} examines the circular
 capillary waves on the surface of the liquid of a resonating wine glass.
 Finally, the authors of \cite{arbel2017wine} explored the sympathetic
-resonance generated in a wine glass coupled to a vibrating string.
+resonance generated in a wine glass coupled to a vibrating string. Perhaps most closely related to the present research, \cite{sturm2004spectral} considers the musical possibilities of an iced tea can. 
 
 % https://research.cs.cornell.edu/HarmonicShells/HarmonicShells09.pdf
 % https://www.springer.com/gp/book/9783642164071
@@ -238,12 +228,12 @@ resonance generated in a wine glass coupled to a vibrating string.
 We take measurements from a 32 oz. Wide Mouth
 HydroFlask,\footnote{\url{https://www.hydroflask.com/32-oz-wide-mouth/}}
 compared to the water bottle given to attendees of the 2019 DAFx
-conference (seen in ~\Cref{fig:dafx_measure}), measured containing different amounts of water and with different placements of stickers on the exteriors of the
+conference (seen in \cref{fig:dafx_measure}), measured containing different amounts of water and with different placements of stickers on the exteriors of the
 bottles.
 
 The structure of the paper is as follows: in \S\ref{sec:measure} we describe
 our water bottle acoustical measurement procedure. \S\ref{sec:analysis}
-contains modal analysis of the water bottle measurement data.
+contains modal analysis of the water bottle measurements.
 Finally in \S\ref{sec:results} we discuss our results, and the
 implementation of a full water bottle synthesizer.
 
@@ -257,7 +247,7 @@ implementation of a full water bottle synthesizer.
 
 \section{Measurements} \label{sec:measure}
 %
-We wish to study the vibrational modes of the water bottle independent of the method by which it is struck. To do this, we strike the water bottle with a force sensing hammer and measure the surface velocity of the water bottle at a corresponding point using a laser Doppler vibrometer. We additionally captured the near field radiation using a pressure microphone. From both these measurements, we deconvolve out of the signal the impact of the force hammer. The full setup can be seen in \Cref{fig:dafx_measure}. We also used a scanning vibrometer to observe the mode shapes and gain further insight into the vibrational characteristics of the bottles. 
+We wish to study the vibrational modes of the water bottle independent of the method by which it is struck. To do this, we strike the water bottle with a force sensing hammer and measure the surface velocity of the wate2r bottle at a corresponding point using a laser Doppler vibrometer. We additionally captured the near field radiation using a pressure microphone. From both these measurements, we deconvolve out of the signal the impact of the force hammer. The full measurement setup can be seen in \cref{fig:dafx_measure}. We also used a scanning vibrometer to observe the mode shapes and gain further insight into the vibrational characteristics of the bottles.
 
 We made measurements of both a 32 oz. Wide Mouth HydroFlask and the complimentary DAFx19 water bottles with no water as well as $1/32$, $1/16$, $1/8$, $1/4$, $1/2$, and full with water. We additionally made measurements of the HydroFlask with the exterior covered in vinyl stickers as well as several intermediate and differently placed amounts of stickers. 
 
@@ -312,11 +302,11 @@ provided by the \texttt{Python} audio signal processing library
 This process involves the following steps:
 \begin{enumerate}
     \item Picking the modal frequencies from the original recording.
-    \item Estimate the decay rate of each mode.
-    \item Estimate the complex amplitude of each mode.
+    \item Estimating the decay rate of each mode.
+    \item Estimating the complex amplitude of each mode.
 \end{enumerate}
 %
-The steps of the process are shown in  full in \Cref{fig:modal_analysis}.
+The steps of the process are shown in  full in \cref{fig:modal_analysis}.
 
 For finding the mode frequencies, we use a simple peak-picking
 algorithm over the Fourier Transform of the original signal.
@@ -331,7 +321,7 @@ to estimate the slope of the energy envelope (measured in
 decibels per sample).
 
 After computing the mode frequencies and decay
-rate, we perform a simple least squares fit to
+rate, we perform a least squares fit to
 estimate the complex amplitude of each mode that
 most accurately resynthesizes the original recording.
 
@@ -339,12 +329,13 @@ most accurately resynthesizes the original recording.
 \centering
     \begin{subfigure}[b]{\columnwidth}
          \centering
-         \includegraphics[width=\linewidth,trim={0 0 1.5cm 0.5cm},clip]{../Figures/Specgrams/HydroFlask Full Recorded.png}
+         \includegraphics[width=\linewidth,trim={0 0.25cm 1.5cm 1.35cm},clip]{../Figures/Specgrams/HydroFlask Full Recorded.png}
          \caption{Recorded}
     \end{subfigure}
+    \par\medskip
     \begin{subfigure}[b]{\columnwidth}
          \centering
-         \includegraphics[width=\linewidth,trim={0 0 1.5cm 0.5cm},clip]{../Figures/Specgrams/HydroFlask Full Model.png}
+         \includegraphics[width=\linewidth,trim={0 0.25cm 1.5cm 1.35cm},clip]{../Figures/Specgrams/HydroFlask Full Model.png}
          \caption{Resynthesized}
     \end{subfigure}
     \caption{\it{Spectrograms of the full HydroFlask recorded (above) and resynthesized (below).}}
@@ -374,7 +365,7 @@ process can be seen in \cref{fig:hydroflask-specs}.
 
 \subsection{Water Level Analysis} \label{sec:water}
 %
-Next we examine the how the modal response of the water bottle
+Next we examine how the modal response of the water bottle
 changes as the water level in the water bottle changes. 
 %
 \subsubsection{Frequency Variation} \label{sec:water-freq}
@@ -390,7 +381,7 @@ changes as the water level in the water bottle changes.
 
 Measurements of the HydroFlask bottle show that as the water
 level increases, the first mode frequency decreases, while the
-higher modes stay at the same frequency. This suggests that the higher frequency modes are associated with vibration similar to that of a cylindrical shell, while the lowest frequency resonance is more similar to that of a beam clamped at one end with an additional mass at the end \cite{qatu2004vibration}. Figure~\ref{fig:scans} shows vibrometer scans of the HydroFlask filled roughly 40\% with water as well as empty for three different mode shapes. The scans support the model hypothesis as the frequency of two higher shell modes are similar, while the frequency of the lowest beam-like mode decreases in frequency with added mass. The measured frequency responses for the HydroFlask filled with different levels of water can be seen in fig.~\ref{fig:hydro-different-water-levels}.
+higher modes stay at the same frequency. This suggests that the higher frequency modes are associated with vibration similar to that of a cylindrical shell, while the lowest frequency resonance is more similar to that of a beam clamped at one end with an additional mass at the end \cite{qatu2004vibration}. \Cref{fig:scans} shows vibrometer scans of the HydroFlask filled roughly 40\% with water as well as empty for three different mode shapes. The scans support the model hypothesis as the frequency of two higher shell modes are similar, while the frequency of the lowest beam-like mode decreases in frequency with added mass. The measured frequency responses for the HydroFlask filled with different levels of water can be seen in \cref{fig:hydro-different-water-levels}.
 
 \begin{figure}[!t]
     \centering
@@ -401,8 +392,8 @@ higher modes stay at the same frequency. This suggests that the higher frequency
     \end{subfigure}
     \begin{subfigure}[b]{.32\columnwidth}
          \centering
-         \includegraphics[width=\columnwidth]{Paper/Figures/Water_735_6.jpg}
-         \caption{735.6\ Hz}
+         \includegraphics[trim=0 3 2 0, clip, width=\columnwidth]{Paper/Figures/Water_731_6_new.jpg}
+         \caption{731.6\ Hz}
     \end{subfigure}
     \begin{subfigure}[b]{.32\columnwidth}
          \centering
@@ -425,7 +416,7 @@ higher modes stay at the same frequency. This suggests that the higher frequency
          \caption{1780\ Hz}
     \end{subfigure}
     
-    \caption{\it{Vibrometer scans without (bottom) and with roughly 40 \% water (top).}}
+    \caption{\it{Vibrometer scans with roughly 40 \% water (top) and without water (bottom).}}
         \label{fig:scans}
 \end{figure}
 
@@ -445,7 +436,7 @@ function of the form:
     \label{eq:mod_sigmoid}
 \end{equation}
 
-A comparison of the model with the measured data can be seen in \Cref{fig:water-mode-freq}.
+A comparison of the model with the measured data can be seen in \cref{fig:water-mode-freq}.
 %
 \begin{figure}[!htb]
     \centering
@@ -460,11 +451,8 @@ A comparison of the model with the measured data can be seen in \Cref{fig:water-
 Further analysis shows that the damping of the lowest two modes
 varies with water level as well (see \cref{fig:hydro-different-water-levels}). We can similarly model the
 variation of the mode decay rates with water level, using a
-5-th order polynomial to fit the decay rates of the first
-two modes (see \Cref{fig:water-mode-damp}). Note that the dampings
-of the first two modes can be modelled separately, however we chose
-to use a combined model due to the rough similarity between the
-two separate models. The water level has very little impact on the dampings of the higher modes. This supports the hypothesis presented in \S\ref{sec:water-freq} that the lowest modes are beam-like modes while the higher modes are cylindrical shell-like modes, as the mass loading disproportionately affects the beam-like modes. 
+5th order polynomial to fit the decay rates of the first
+two modes (see \Cref{fig:water-mode-damp}). The water level has very little impact on the dampings of the higher modes. This supports the hypothesis presented in \S\ref{sec:water-freq} that the lowest modes are beam-like modes while the higher modes are cylindrical shell-like modes, as the mass loading disproportionately affects the beam-like modes. 
 %
 \begin{figure}[!t]
     \centering
@@ -482,7 +470,7 @@ timbres. We then proceeded to take measurements of the
 bottle covered in varying amount of (removable) vinyl stickers. We found
 that the mode frequencies remained mostly unchanged with the
 addition of stickers, however, the mode dampings had noticeable
-variations (see \cref{fig:sticker-mode-damp}). Much like a moon gel on a drum head, a small application of stickers dramatically increases the damping. Adding a larger amount of stickers naturally increases the damping, although it has a less pronounced effect than the difference between no stickers and some stickers. 
+variations (see \cref{fig:sticker-mode-damp}). Much like a ``Moongel'' damper pad on a drum head, a small application of stickers dramatically increases the damping. Adding a larger amount of stickers naturally increases the damping, although it has a less pronounced effect than the difference between no stickers and some stickers. 
 %
 \begin{figure}[!htb]
     \centering
@@ -497,17 +485,22 @@ variations (see \cref{fig:sticker-mode-damp}). Much like a moon gel on a drum he
 When a water bottle is struck in such a way to produce an acoustic
 response, it often swings back and forth a little bit. This swinging
 causes the water within the bottle to move with the swinging, thereby
-causing some of the lower mode frequencies to oscillate (see
-\Cref{fig:swinging-vibrato}). This oscillation
-manifests itself perceptually as a sort of vibrato effect. In
-order to model this ``swinging vibrato'' we use the following
-steps:
+causing some of the lower mode frequencies to oscillate. This oscillation
+manifests itself perceptually as a sort of vibrato effect which we refer
+to as ``swinging vibrato.'' We attempted to measure this swinging vibrato
+using the measurement setup described is \S\ref{sec:measure}, however the 
+movement of the bottle caused the laser vibrometer to go out of focus, 
+resulting in noisy measurements. In lieu of usable measurements, we develop
+a physics-based model for swinging vibrato using the following steps:
 \begin{enumerate}
     \item Measure (or estimate) the height of the bottle.
     \item Calculate the swinging frequency of the bottle.
     \item Synthesize an initial amplitude and damping factor
         for the swinging oscillations.
 \end{enumerate}
+%
+An exaggerated example of swinging vibrato is shown in 
+\cref{fig:swinging-vibrato}.
 %
 \subsubsection{Bottle Height}
 %
@@ -530,8 +523,12 @@ The frequency of a pendulum can be derived from Newton's Laws as:
     f_{swing} = \frac{1}{2\pi} \sqrt{\frac{g}{L}}
     \label{eq:swing-freq}
 \end{equation}
-where $g = 9.8 \text{ m}/\text{s}^2$ is the acceleration due to gravity at the surface
-of Earth.
+where $g = 9.8 \text{ m}/\text{s}^2$ is the acceleration due to gravity at
+the surface of Earth. It should be noted that the water bottle with
+water inside is not an ideal pendulum, resulting in an oscillation that
+is not purely sinusoidal. However in the first approximation, particularly
+for small-angle oscillations, using a sinusoidal oscillation with frequency
+$f_{swing}$ is sufficient for synthesizing a swinging vibrato effect.
 %
 \subsubsection{Swinging Amplitude and Damping}
 %
@@ -552,13 +549,12 @@ for the reader to determine for their own specific use cases.
 %
 \subsection{Impact Analysis} \label{sec:impact}
 %
-In real-world situations, a water bottle is typically struck using a body part
-(knee, elbow, knuckles, etc), or using a striker that can be easily found in
-nature, for instance a stick. With the goal of being able to synthesize these
-types of impacts, we used an accelerometer to measure the impacts of
-several body parts, as well as several types of drumsticks on a water bottle.
-\Cref{fig:impact} shows the time and frequency domain
-measurements of the various impact types. We can use any of these measurements as the input $x(t)$ in \eqref{eq:phasor} to synthesize the sound of a water bottle struck by the desired striker.
+In real-world situations, a water bottle is typically struck using a body parts, such as one's knees or knuckles, or using a striker such as a stick or mallet.  With the goal of being able to synthesize these types of impacts, we used an accelerometer to measure the impacts of
+several body parts, as well as several types of drumsticks on a water bottle. The accelerometer was adhered to the inside of the water bottle corresponding to the location where the bottle was struck on the outside. \Cref{fig:impact} shows the time and frequency domain
+measurements of the various impact types. Note that the apparent time
+delay present in the head and, to a lesser extent, the gong mallet impacts
+is due to their relatively soft exteriors.
+We can use any of these measurements as the input $x(t)$ in \eqref{eq:phasor} to synthesize the sound of a water bottle struck by the desired striker.
 
 \begin{figure}[t]
 \centering
@@ -579,7 +575,7 @@ measurements of the various impact types. We can use any of these measurements a
 
 \section{Results} \label{sec:results}
 %
-While one may expect the acoustic profile of the humble water bottle to be dramatically simple, the measurements and analysis presented here demonstrate how significantly the sound changes when the water bottle is filled by different amounts of water and covered by different amounts of stickers. 
+While one may expect the acoustic profile of a water bottle to be relatively simple, the measurements and analysis presented here demonstrate how significantly the sound changes when the water bottle is filled by different amounts of water and covered by different amounts of stickers. 
 
 %
 \subsection{Water Bottle Synthesizers} \label{sec:synth}
@@ -588,12 +584,12 @@ While one may expect the acoustic profile of the humble water bottle to be drama
 To demonstrate the musical power of water bottle synthesis, we have
 implemented a modal model of the 32 Oz. Wide Mouth HydroFlask
 as an 8-voice synthesizer plugin (VST/AU), using the JUCE/C++
-framework (see \Cref{fig:plugin}).\footnote{\url{https://github.com/weAreROLI/JUCE}}
+framework (see \cref{fig:plugin}).\footnote{\url{https://github.com/weAreROLI/JUCE}}
 The synthesizer includes controls for the amount of water in the bottle,
 the number and placement of stickers on the bottle, and the option to
 strike the water bottle with a variety of objects. 
 
-\subsubsection{Bespoke Water bottle Synthesizers}
+\subsubsection{Bespoke Water Bottle Synthesizers}
 Water bottles are often cherished possessions---potentially partially due to the unique sound of a well-loved water bottle covered in memorable stickers and dents. In an effort to expand the world of water bottle synthesis to a wider
 audience, we have developed a system for creating a ``bespoke''
 water bottle synthesizer for any water bottle. The first part of the
@@ -616,13 +612,11 @@ bottle in the database and use it in their synthesizer.
     \label{fig:plugin}
 \end{figure}
 
-Video demos of each plugin can be found on
-YouTube,\footnote{\url{https://youtu.be/MwhBluJqePE}}
-and the source code for both plugins, as well as all the modal
-analysis described in the paper is publicly available on
+Source code for both plugins, as well as all the modal analysis described in
+this paper is publicly available on 
 GitHub.\footnote{\url{https://github.com/jatinchowdhury18/modal-waterbottles}}
 Audio samples of various synthesized water bottles discussed in this
-writing can be found online.\footnote{\url{https://ccrma.stanford.edu/~jatin/Waterbottles}}
+paper, as well as video demos of the water bottle synthesizer plugin can be found online.\footnote{\url{https://ccrma.stanford.edu/~jatin/Waterbottles}}
 
 %
 \section{Conclusion} \label{sec:conclusion}
@@ -645,8 +639,8 @@ determining the optimally acoustic water bottle currently in production.
 
 \section{Acknowledgements}
 %
-The authors would like to thank Eric Lawrence at Polytec for inviting us to use the scanning vibrometer and Kim Kawczinski for helping us to contact
-the HydroFlask corporation.
+The authors would like to thank Eric Lawrence at Polytec for inviting us to use the scanning vibrometer, Kim Kawczinski for helping us to contact the HydroFlask corporation, and Norman Bhuian for providing the original HydroFlask that inspired this research.
+.
 
 %\newpage
 \nocite{*}
