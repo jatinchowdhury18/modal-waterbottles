@@ -9,7 +9,7 @@ BModalVoice::BModalVoice (AudioProcessorValueTreeState& vts)
 
     // initial synthesized sound
     curMaxModes = 4;
-    const std::complex<float> ampComplex (1.4482e-4, 1.9481e-4);
+    const std::complex<float> ampComplex ((float) 1.4482e-4, (float) 1.9481e-4);
     const float ampAbs = std::abs (ampComplex);
     for (int i = 0; i < curMaxModes; ++i)
     {

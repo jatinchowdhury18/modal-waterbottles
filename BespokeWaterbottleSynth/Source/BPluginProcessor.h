@@ -67,7 +67,7 @@ public:
     }
 
 private:
-    const int nVoices = 2;
+    const int nVoices = 8;
     BWaterSynth synth;
     StrikerFilter strikerFilter;
     Gain gain;

@@ -12,6 +12,7 @@ The organization of the repository is as follows:
     ./                       : Python scripts for analyzing waterbottle recordings
     Audio/                   : Audio examples (measured and synthesized)
     BespokeWaterbottleSynth/ : A bespoke waterbottle synthesizer plugin
+    Bin/                     : Builds of the both synthesizer plugins
     Figures/                 : Plots of waterbottle modal analysis
     Impact_Wavs/             : Recordings of waterbottle impact drivers
     Paper/                   : DAFx paper on waterbottle synthesis
@@ -33,7 +34,9 @@ Associated materials:
 The plugins in this repository are built using the
 [JUCE](https://github.com/WeAreROLI/JUCE) framework, specifically JUCE
 v5.4.4. Both plugins can be played through their on-screen keyboards,
-as well as through a connected MIDI keyboard.
+as well as through a connected MIDI keyboard. The plugins are currently
+available in the following formats: VST, VST3, AU, Standalone. To download
+the plugins see the [`Bin/` folder](./Bin/).
 
 ### WaterbottleSynth
 
