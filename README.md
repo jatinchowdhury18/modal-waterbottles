@@ -24,7 +24,7 @@ paper "Water Bottle Synthesis with Modal Signal Processing", by Jatin
 Chowdhury, Elliot Canfield-Dafilou, and Mark Rau.
 
 Associated materials:
-- [DAFx Paper](https://ccrma.stanford.edu/~jatin/papers/modal_waterbottles.pdf)
+- [DAFx Paper](https://dafx2020.mdw.ac.at/proceedings/papers/DAFx2020_paper_24.pdf)
 - [Audio examples webpage](https://ccrma.stanford.edu/~jatin/Waterbottles/)
 - [Waterbottle analysis web app](http://ccrmawaterbottles.pythonanywhere.com/)
 - [Video demo](https://youtu.be/MwhBluJqePE)
