@@ -2,7 +2,8 @@
 
 <JUCERPROJECT id="d8J8WO" name="BespokeWaterbottleSynth" projectType="audioplug"
               jucerVersion="5.4.4" companyName="GASP" pluginFormats="buildAU,buildStandalone,buildVST,buildVST3"
-              cppLanguageStandard="17" headerPath="../../../WaterbottleSynth/Source">
+              cppLanguageStandard="17" headerPath="../../../WaterbottleSynth/Source"
+              pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="GtEpn3" name="BespokeWaterbottleSynth">
     <GROUP id="{327ECF8B-DF07-58A2-0C16-F4DF202D4046}" name="Impact_Wavs">
       <FILE id="bCvsu8" name="Brush.wav" compile="0" resource="1" file="../Impact_Wavs/Brush.wav"/>
